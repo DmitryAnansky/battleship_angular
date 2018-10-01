@@ -1,0 +1,21 @@
+@import "../../theme/variables";
+
+.info-page-container {
+  background: $background-blue;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+
+  .intro-card {
+    border-radius: 3px;
+    width: 200px;
+    height: 100px;
+
+    .card-body {
+      background: $background-grey;
+      border-radius: 8px;
+      text-align: center;
+    }
+  }
+}
