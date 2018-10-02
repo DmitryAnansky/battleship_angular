@@ -72,15 +72,14 @@ export class GameComponent implements OnInit {
   }
 
   onPointClick(e) {
-    const activePointId = parseInt(e.target.id) - 1;
-    console.log(this.selectedShip);
-    console.log(this.selectedFleet);
+    const activePointId = parseInt(e.currentTarget.id);
 
     if (this.shipPlacementPhase) {
-      const point = this.playerGrid.find(element => element.id === activePointId);
+      const point = this.playerGrid.find(element => element.id === activePointId - 1);
 
       point.isMiss = true;
-      console.log(point);
+
+      this.setShip(activePointId, this.selectedShip, this.orientation, this.selectedFleet, "self");
     }
   }
 
@@ -197,17 +196,12 @@ export class GameComponent implements OnInit {
   };
 
   displayShipRight = function (location, ship, point, fleet) {
-    let context = this;
-
     const endPoint = location + ship.length - 2;
+
     if (!(endPoint % 10 >= 0 && endPoint % 10 < ship.length - 1)) {
       for (let i = location; i < (location + ship.length); i++) {
         $(".bottom ." + i).addClass("highlight");
       }
-
-      $(point).on("click", function () {
-        context.setShip(location, ship, shipOrientation.RIGHT, fleet, "self");
-      });
     }
   };
 
