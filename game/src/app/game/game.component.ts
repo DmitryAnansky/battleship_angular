@@ -71,6 +71,19 @@ export class GameComponent implements OnInit {
     this.shipPlacementPhase = true;
   }
 
+  onPointClick(e) {
+    const activePointId = parseInt(e.target.id) - 1;
+    console.log(this.selectedShip);
+    console.log(this.selectedFleet);
+
+    if (this.shipPlacementPhase) {
+      const point = this.playerGrid.find(element => element.id === activePointId);
+
+      point.isMiss = true;
+      console.log(point);
+    }
+  }
+
   onMouseExitPoint(e) {
     if (!this.shipPlacementPhase) {
       return;
@@ -229,20 +242,6 @@ export class GameComponent implements OnInit {
   getRandomInt = function (min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
   };
-
-  removeShipVertical = function (location) {
-    let inc = 0;
-    for (let i = location; i < location + 4; i++) {
-      $(".bottom ." + (location + inc)).removeClass("highlight");
-      inc = inc + 10;
-    }
-  }
-
-  removeShipHorizontal = function (location) {
-    for (let i = location; i < location + 4; i++) {
-      $(".bottom ." + i).removeClass("highlight");
-    }
-  }
 
   setShip = function (location, ship, orientation, genericFleet, type) {
     //if (!(this.checkOverlap(location, ship.length, orientation, genericFleet))) {
