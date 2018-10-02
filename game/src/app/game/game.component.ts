@@ -38,14 +38,14 @@ export class GameComponent implements OnInit {
   ngOnInit() {
     this.titleLeftAlphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
     this.titleTopNumbers = Array.from(Array(11).keys());
-    this.orientation = shipOrientation.BOTTOM;
+    this.orientation = shipOrientation.TOP;
     this.playerGrid = this.getGrid(100);
     this.botGrid = this.getGrid(100);
   }
 
   getGrid(num: number) {
     return Array.from(Array(num).keys()).map((id) => {
-      return {'id': id, 'isShip': false, 'isHit':false, 'isMiss':false, 'isHovered': false};
+      return {'id': id, 'isShip': false, 'isHit': false, 'isMiss': false, 'isHovered': false};
     });
   }
 
@@ -80,11 +80,11 @@ export class GameComponent implements OnInit {
 
     switch (this.orientation) {
       case shipOrientation.TOP: {
-        this.removeShipHorizontal(pointLocation);
+        this.removeShipTop(pointLocation);
         break;
       }
       case shipOrientation.LEFT: {
-        this.removeShipHorizontal(pointLocation);
+        this.removeShipLeft(pointLocation);
         break;
       }
       case shipOrientation.RIGHT: {
@@ -92,11 +92,11 @@ export class GameComponent implements OnInit {
         break;
       }
       case shipOrientation.BOTTOM: {
-        this.removeShipVertical(pointLocation);
+        this.removeShipBottom(pointLocation);
         break;
       }
       default: {
-        this.removeShipHorizontal(pointLocation);
+        this.removeShipBottom(pointLocation);
         break;
       }
     }
@@ -110,15 +110,15 @@ export class GameComponent implements OnInit {
     let mousePosition = e.target.id;
 
     console.log(this.orientation);
-    switch (this.orientation ) {
+    switch (this.orientation) {
       case shipOrientation.TOP: {
-        //TODO: replace
-        this.displayShipRight(parseInt(mousePosition), this.selectedShip, e.target, this.selectedFleet);
+        //TODO: dotShape case improve
+        this.displayShipTop(parseInt(mousePosition), this.selectedShip, e.target, this.selectedFleet);
         break;
       }
       case shipOrientation.LEFT: {
         //TODO: replace
-        this.displayShipRight(parseInt(mousePosition), this.selectedShip, e.target, this.selectedFleet);
+        this.displayShipLeft(parseInt(mousePosition), this.selectedShip, e.target, this.selectedFleet);
         break;
       }
       case shipOrientation.RIGHT: {
@@ -136,27 +136,66 @@ export class GameComponent implements OnInit {
     }
   }
 
-  displayShipTop = function (location, ship, point, fleet) {}
+  displayShipTop = function (location, ship, point, fleet) {
+    let context = this;
+    let inc = 0;
+
+    const endPoint = (ship.length * 10) - 10;
+
+    if (location + endPoint > 60) {
+      for (let i = location; i < (location + ship.length); i++) {
+        $(".bottom ." + (location - inc)).addClass("highlight");
+        inc = inc + 10;
+      }
+
+      $(point).on("click", function () {
+        context.setShip(location, ship, shipOrientation.BOTTOM, fleet, "self");
+      });
+    }
+  };
+
   displayShipBottom = function (location, ship, point, fleet) {
     let context = this;
-    let endPoint = (ship.length * 10) - 10;
     let inc = 0;
+
+    const endPoint = (ship.length * 10) - 10;
 
     if (location + endPoint <= 100) {
       for (let i = location; i < (location + ship.length); i++) {
         $(".bottom ." + (location + inc)).addClass("highlight");
         inc = inc + 10;
       }
+
       $(point).on("click", function () {
         context.setShip(location, ship, shipOrientation.BOTTOM, fleet, "self");
       });
     }
   };
-  displayShipLeft = function (location, ship, point, fleet) {}
-  displayShipRight= function (location, ship, point, fleet) {
-    let context = this;
-    let endPoint = location + ship.length - 2;
 
+  displayShipLeft = function (location, ship, point, fleet) {
+    let context = this;
+
+    const endPoint = location - ship.length - 2;
+    console.log(endPoint);
+    console.log(location);
+    console.log(endPoint % 10);
+    console.log(ship.length - 1);
+
+    if (location % 10 >= 4 || location % 10 === 0) {
+      for (let i = location; i > (location - ship.length); i--) {
+        $(".bottom ." + i).addClass("highlight");
+      }
+
+      $(point).on("click", function () {
+        context.setShip(location, ship, shipOrientation.RIGHT, fleet, "self");
+      });
+    }
+  };
+
+  displayShipRight = function (location, ship, point, fleet) {
+    let context = this;
+
+    const endPoint = location + ship.length - 2;
     if (!(endPoint % 10 >= 0 && endPoint % 10 < ship.length - 1)) {
       for (let i = location; i < (location + ship.length); i++) {
         $(".bottom ." + i).addClass("highlight");
@@ -168,16 +207,35 @@ export class GameComponent implements OnInit {
     }
   };
 
-  removeShipTop = function (location, ship, point, fleet) {}
-  removeShipBottom = function (location, ship, point, fleet) {}
-  removeShipLeft = function (location, ship, point, fleet) {}
-  removeShipRight= function (location) {
+  removeShipTop = function (location) {
+    let inc = 0;
+    for (let i = location; i < location + 4; i++) {
+      $(".bottom ." + (location - inc)).removeClass("highlight");
+      inc = inc + 10;
+    }
+  };
+
+  removeShipBottom = function (location) {
+    let inc = 0;
+    for (let i = location; i < location + 4; i++) {
+      $(".bottom ." + (location + inc)).removeClass("highlight");
+      inc = inc + 10;
+    }
+  };
+
+  removeShipLeft = function (location) {
+    for (let i = location; i > location - 4; i--) {
+      $(".bottom ." + i).removeClass("highlight");
+    }
+  };
+
+  removeShipRight = function (location) {
     for (let i = location; i < location + 4; i++) {
       $(".bottom ." + i).removeClass("highlight");
     }
   };
 
-  getRandomInt = function(min, max) {
+  getRandomInt = function (min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
   };
 
