@@ -3,6 +3,13 @@ import {Fleet} from '../models/fleet.model';
 
 declare var $: any;
 
+const shipOrientation = {
+  TOP: 'TOP',
+  BOTTOM: 'BOTTOM',
+  LEFT: 'LEFT',
+  RIGHT: 'RIGHT'
+};
+
 @Component({
   selector: 'app-game',
   templateUrl: './game.component.html',
@@ -16,13 +23,14 @@ export class GameComponent implements OnInit {
   public botGrid: any;
   public selectedFleet: any;
   public shipPlacementPhase: boolean = false;
+  public gamePhase: boolean = false;
   public titleLeftAlphabet: string[];
   public consoleText: string = 'Please place your ships on the game battle field.\n' +
     ' The Game will start immediately after all ship\'s positioning.';
   public displayRotationControl: boolean = false;
   public playerFleet: Fleet;
   public botFleet: Fleet;
-  public orientation: 'vert' | 'horz';
+  public orientation: string;
 
   constructor() {
   }
@@ -30,12 +38,12 @@ export class GameComponent implements OnInit {
   ngOnInit() {
     this.titleLeftAlphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
     this.titleTopNumbers = Array.from(Array(11).keys());
-    this.orientation = 'vert';
-    this.playerGrid = this.getGridNumber(100);
-    this.botGrid = this.getGridNumber(100);
+    this.orientation = shipOrientation.BOTTOM;
+    this.playerGrid = this.getGrid(100);
+    this.botGrid = this.getGrid(100);
   }
 
-  getGridNumber(num: number) {
+  getGrid(num: number) {
     return Array.from(Array(num).keys()).map((id) => {
       return {'id': id, 'isShip': false, 'isHit':false, 'isMiss':false, 'isHovered': false};
     });
@@ -52,13 +60,46 @@ export class GameComponent implements OnInit {
   }
 
   onRotateClick() {
-    this.orientation = (this.orientation === 'vert') ? 'horz' : 'vert';
+    const orientationOptions = Object.keys(shipOrientation);
+
+    this.orientation = orientationOptions[this.getRandomInt(0, orientationOptions.length)];
   }
 
   placeShip = function (ship, fleet) {
     this.selectedShip = ship;
     this.selectedFleet = fleet;
     this.shipPlacementPhase = true;
+  }
+
+  onMouseExitPoint(e) {
+    if (!this.shipPlacementPhase) {
+      return;
+    }
+
+    const pointLocation = parseInt(e.target.id);
+
+    switch (this.orientation) {
+      case shipOrientation.TOP: {
+        this.removeShipHorizontal(pointLocation);
+        break;
+      }
+      case shipOrientation.LEFT: {
+        this.removeShipHorizontal(pointLocation);
+        break;
+      }
+      case shipOrientation.RIGHT: {
+        this.removeShipRight(pointLocation);
+        break;
+      }
+      case shipOrientation.BOTTOM: {
+        this.removeShipVertical(pointLocation);
+        break;
+      }
+      default: {
+        this.removeShipHorizontal(pointLocation);
+        break;
+      }
+    }
   }
 
   onMouseEnterPoint(e) {
@@ -68,14 +109,35 @@ export class GameComponent implements OnInit {
 
     let mousePosition = e.target.id;
 
-    if (this.orientation == "horz") {
-      this.displayShipHorizontal(parseInt(mousePosition), this.selectedShip, e.target, this.selectedFleet);
-    } else {
-      this.displayShipVertical(parseInt(mousePosition), this.selectedShip, e.target, this.selectedFleet);
+    console.log(this.orientation);
+    switch (this.orientation ) {
+      case shipOrientation.TOP: {
+        //TODO: replace
+        this.displayShipRight(parseInt(mousePosition), this.selectedShip, e.target, this.selectedFleet);
+        break;
+      }
+      case shipOrientation.LEFT: {
+        //TODO: replace
+        this.displayShipRight(parseInt(mousePosition), this.selectedShip, e.target, this.selectedFleet);
+        break;
+      }
+      case shipOrientation.RIGHT: {
+        this.displayShipRight(parseInt(mousePosition), this.selectedShip, e.target, this.selectedFleet);
+        break;
+      }
+      case shipOrientation.BOTTOM: {
+        this.displayShipBottom(parseInt(mousePosition), this.selectedShip, e.target, this.selectedFleet);
+        break;
+      }
+      default: {
+        this.displayShipBottom(parseInt(mousePosition), this.selectedShip, e.target, this.selectedFleet);
+        break;
+      }
     }
   }
 
-  displayShipVertical = function (location, ship, point, fleet) {
+  displayShipTop = function (location, ship, point, fleet) {}
+  displayShipBottom = function (location, ship, point, fleet) {
     let context = this;
     let endPoint = (ship.length * 10) - 10;
     let inc = 0;
@@ -86,16 +148,12 @@ export class GameComponent implements OnInit {
         inc = inc + 10;
       }
       $(point).on("click", function () {
-        context.setShip(location, ship, "vert", fleet, "self");
+        context.setShip(location, ship, shipOrientation.BOTTOM, fleet, "self");
       });
     }
-
-    $(point).on("mouseleave", function () {
-      context.removeShipVertical(location, ship.length);
-    });
-  }
-
-  displayShipHorizontal = function (location, ship, point, fleet) {
+  };
+  displayShipLeft = function (location, ship, point, fleet) {}
+  displayShipRight= function (location, ship, point, fleet) {
     let context = this;
     let endPoint = location + ship.length - 2;
 
@@ -105,25 +163,34 @@ export class GameComponent implements OnInit {
       }
 
       $(point).on("click", function () {
-        context.setShip(location, ship, "horz", fleet, "self");
+        context.setShip(location, ship, shipOrientation.RIGHT, fleet, "self");
       });
     }
+  };
 
-    $(point).on("mouseleave", function () {
-      context.removeShipHorizontal(location, ship.length);
-    });
-  }
+  removeShipTop = function (location, ship, point, fleet) {}
+  removeShipBottom = function (location, ship, point, fleet) {}
+  removeShipLeft = function (location, ship, point, fleet) {}
+  removeShipRight= function (location) {
+    for (let i = location; i < location + 4; i++) {
+      $(".bottom ." + i).removeClass("highlight");
+    }
+  };
 
-  removeShipVertical = function (location, length) {
+  getRandomInt = function(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
+  };
+
+  removeShipVertical = function (location) {
     let inc = 0;
-    for (let i = location; i < location + length; i++) {
+    for (let i = location; i < location + 4; i++) {
       $(".bottom ." + (location + inc)).removeClass("highlight");
       inc = inc + 10;
     }
   }
 
-  removeShipHorizontal = function (location, length) {
-    for (let i = location; i < location + length; i++) {
+  removeShipHorizontal = function (location) {
+    for (let i = location; i < location + 4; i++) {
       $(".bottom ." + i).removeClass("highlight");
     }
   }
@@ -134,7 +201,7 @@ export class GameComponent implements OnInit {
       return;
     }
 
-    if (orientation == "horz") {
+    if (orientation == shipOrientation.RIGHT) {
       genericFleet.ships[genericFleet.currentShip].populateHorzHits(location);
       //$(".text").text(output.placed(genericFleet.ships[genericFleet.currentShip].name + " has"));
       console.log(ship.type);
@@ -154,6 +221,7 @@ export class GameComponent implements OnInit {
 
     } else {
       let inc = 0;
+      console.log(ship.type);
       genericFleet.ships[genericFleet.currentShip].populateVertHits(location);
       //$(".text").text(output.placed(genericFleet.ships[genericFleet.currentShip].name + " has"));
       for (let i = location; i < (location + ship.length); i++) {
@@ -180,7 +248,7 @@ export class GameComponent implements OnInit {
 
   checkOverlap = function (location, length, orientation, genFleet) {
     let loc = location;
-    if (this.orientation == "horz") {
+    if (this.orientation == shipOrientation.RIGHT) {
       let end = location + length;
       for (; location < end; location++) {
         for (let i = 0; i < genFleet.currentShip; i++) {
@@ -204,7 +272,7 @@ export class GameComponent implements OnInit {
       }
     } // end of if/else
     if (genFleet == this.botFleet && genFleet.currentShip < genFleet.numOfShips) {
-      if (orientation == "horz") genFleet.ships[genFleet.currentShip++].populateHorzHits(loc);
+      if (orientation == shipOrientation.RIGHT) genFleet.ships[genFleet.currentShip++].populateHorzHits(loc);
       else genFleet.ships[genFleet.currentShip++].populateVertHits(loc);
       if (genFleet.currentShip == genFleet.numOfShips) {
         // clear the call stack

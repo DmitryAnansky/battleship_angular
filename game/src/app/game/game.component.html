@@ -23,7 +23,9 @@
 
               <ul class="grid">
                 <li *ngFor="let cell of playerGrid" data-id="{{cell.id + 1}}"
-                    (mouseenter) ="onMouseEnterPoint($event)" class="points {{cell.id + 1}}">
+                    (mouseenter) ="onMouseEnterPoint($event)"
+                    (mouseleave)="onMouseExitPoint($event)"
+                    class="points {{cell.id + 1}}">
                   <span [ngClass]="{hole: !cell.isShip}"></span>
                 </li>
               </ul>
