@@ -38,7 +38,7 @@ export class GameComponent implements OnInit {
   ngOnInit() {
     this.titleLeftAlphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
     this.titleTopNumbers = Array.from(Array(11).keys());
-    this.orientation = shipOrientation.TOP;
+    this.orientation = shipOrientation.RIGHT;
     this.playerGrid = this.getGrid(100);
     this.botGrid = this.getGrid(100);
   }
@@ -109,15 +109,12 @@ export class GameComponent implements OnInit {
 
     let mousePosition = e.target.id;
 
-    console.log(this.orientation);
     switch (this.orientation) {
       case shipOrientation.TOP: {
-        //TODO: dotShape case improve
         this.displayShipTop(parseInt(mousePosition), this.selectedShip, e.target, this.selectedFleet);
         break;
       }
       case shipOrientation.LEFT: {
-        //TODO: replace
         this.displayShipLeft(parseInt(mousePosition), this.selectedShip, e.target, this.selectedFleet);
         break;
       }
@@ -142,7 +139,7 @@ export class GameComponent implements OnInit {
 
     const endPoint = (ship.length * 10) - 10;
 
-    if (location + endPoint > 60) {
+    if (ship.length === 1 || location + endPoint > 60) {
       for (let i = location; i < (location + ship.length); i++) {
         $(".bottom ." + (location - inc)).addClass("highlight");
         inc = inc + 10;
@@ -175,13 +172,7 @@ export class GameComponent implements OnInit {
   displayShipLeft = function (location, ship, point, fleet) {
     let context = this;
 
-    const endPoint = location - ship.length - 2;
-    console.log(endPoint);
-    console.log(location);
-    console.log(endPoint % 10);
-    console.log(ship.length - 1);
-
-    if (location % 10 >= 4 || location % 10 === 0) {
+    if (ship.length === 1 || location % 10 >= 4 || location % 10 === 0) {
       for (let i = location; i > (location - ship.length); i--) {
         $(".bottom ." + i).addClass("highlight");
       }
