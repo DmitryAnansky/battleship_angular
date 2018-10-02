@@ -7,12 +7,16 @@ import { AppComponent } from './app.component';
 import { IntroComponent } from './intro/intro.component';
 import { GameComponent } from './game/game.component';
 import {AppRoutingModule} from './app-routing.module';
+import { ControlPanelComponent } from './game/control-panel/control-panel.component';
+import { GameInformationComponent } from './game/game-information/game-information.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     IntroComponent,
-    GameComponent
+    GameComponent,
+    ControlPanelComponent,
+    GameInformationComponent
   ],
   imports: [
     BrowserModule,

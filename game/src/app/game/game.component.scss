@@ -92,35 +92,8 @@
     display: table;
   }
 
-  .control-panel {
-    position: relative;
-    margin: 0 25px;
-    height: 320px;
-    border: 2px solid $background-battle-field;
-    border-radius: 10px;
-    display: block;
-    background: #fff;
-  }
-
-  .progress-info {
-    position: relative;
-    margin: 25px;
-    display: block;
-    background: #fff;
-    border: 2px solid $background-battle-field;
-    border-radius: 10px;
-    height: 320px;
-    padding: 10px;
-  }
-
-  .buttons {
-    position: relative;
-    display: block;
-    width: 150px;
-    height: 40px;
-    margin: 50px auto;
-    text-align: center;
-    cursor: pointer;
+  .lShape, .iShape, .dotShape {
+    background: darkcyan;
   }
 
   .target {

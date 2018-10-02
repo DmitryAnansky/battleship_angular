@@ -1,0 +1,12 @@
+<div class="control-panel">
+  <div class="layout">
+    <button class='buttons btn btn-dark'
+            (click)="onClickPlaceShips()"
+            *ngIf="!displayRotationControl">
+      Place Ships
+    </button>
+    <button class='buttons btn btn-dark' (click)="onClickRotateShips()"
+            *ngIf="displayRotationControl">Rotate</button>
+    <button class='buttons btn btn-dark' (click)="onExitClick()">Exit</button>
+  </div>
+</div>

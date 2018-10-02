@@ -1,0 +1,12 @@
+@import "../../../theme/variables";
+
+.progress-info {
+  position: relative;
+  margin: 25px;
+  display: block;
+  background: #fff;
+  border: 2px solid $background-battle-field;
+  border-radius: 10px;
+  height: 320px;
+  padding: 10px;
+}

@@ -1,0 +1,21 @@
+@import "../../../theme/variables";
+
+.control-panel {
+  position: relative;
+  margin: 0 25px;
+  height: 320px;
+  border: 2px solid $background-battle-field;
+  border-radius: 10px;
+  display: block;
+  background: #fff;
+}
+
+.buttons {
+  position: relative;
+  display: block;
+  width: 150px;
+  height: 40px;
+  margin: 50px auto;
+  text-align: center;
+  cursor: pointer;
+}

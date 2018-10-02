@@ -5,11 +5,11 @@
         <div class="board">
 
             <div class="top">
-              <span *ngFor="let titleNumber of titleTopnumbers"
+              <span *ngFor="let titleNumber of titleTopNumbers"
                     class="title-top" [ngClass]="{hideZero: titleNumber === 0}">{{titleNumber}}</span>
 
               <ul class="grid">
-                <li *ngFor="let i of getGridNumber(100)" class="points {{i + 1}}">
+                <li *ngFor="let i of botGrid" data-id="{{i + 1}}" class="points {{i + 1}}">
                   <span class="hole"></span>
                 </li>
               </ul>
@@ -18,12 +18,13 @@
             </div>
 
             <div class="bottom">
-              <span *ngFor="let titleNumber of titleTopnumbers"
+              <span *ngFor="let titleNumber of titleTopNumbers"
                     class="title-top" [ngClass]="{hideZero: titleNumber === 0}">{{titleNumber}}</span>
 
               <ul class="grid">
-                <li *ngFor="let i of getGridNumber(100)" class="points {{i + 1}}">
-                  <span class="hole"></span>
+                <li *ngFor="let cell of playerGrid" data-id="{{cell.id + 1}}"
+                    (mouseenter) ="onMouseEnterPoint($event)" class="points {{cell.id + 1}}">
+                  <span [ngClass]="{hole: !cell.isShip}"></span>
                 </li>
               </ul>
 
@@ -34,21 +35,8 @@
 
       <div class="col">
         <div class="panel">
-          <div class='progress-info'>
-            > <span class="game-progress-log">{{consoleText}}</span>
-          </div>
-          <div class="control-panel">
-            <div class="layout">
-              <button class='buttons btn btn-dark'
-                      (click)="onPlaceShips()"
-                      *ngIf="!displayRotationControl">
-                Place Ships
-              </button>
-              <button class='buttons btn btn-dark' *ngIf="displayRotationControl">Rotate</button>
-              <button class='buttons btn btn-dark' (click)="onExitClick()">Exit</button>
-            </div>
-          </div>
-
+          <app-game-information [consoleText]="consoleText"></app-game-information>
+          <app-control-panel (onPlaceShips)="onPlaceShips()" (onRotateClick)="onRotateClick()" [displayRotationControl]="displayRotationControl"></app-control-panel>
         </div>
       </div>
     </div>
