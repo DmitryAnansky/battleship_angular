@@ -17,5 +17,4 @@ export class BotGridComponent implements OnInit {
     this.titleLeftAlphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
     this.titleTopNumbers = Array.from(Array(11).keys());
   }
-
 }

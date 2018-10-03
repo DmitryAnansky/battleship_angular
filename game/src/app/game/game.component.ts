@@ -151,21 +151,46 @@ export class GameComponent implements OnInit {
     }
   }
 
+  calculateLShipTop(cellId) {
+    const inc = 10;
+
+    return [cellId, cellId - inc, cellId - 2 * inc, cellId - (2 * inc - 1)]
+  }
+
   displayShipTop(location, ship) {
     const cellId = location - 1;
-    const endPoint = (ship.length * 10) - 10;
 
     let inc = 0;
 
-    if (ship.length === 1 || location + endPoint > 60) {
-      for (let i = location; i < (location + ship.length); i++) {
-        let point = this.playerGrid.find(element => element.id === (cellId - inc));
+    if (ship.type === 'lShape') {
+      const endPoint = ((ship.length + 1) * 10) - 10;
 
-        if (point) {
-          point.isHovered = true;
+      if (ship.length === 1 || location + endPoint > 60) {
+        console.log('Some LSHAPED');
+
+        const shipPoints = this.calculateLShipTop(cellId);
+
+        shipPoints.map(id => {
+          let point = this.playerGrid.find(element => element.id === id);
+
+          if (point) {
+            point.isHovered = true;
+          }
+        });
+      }
+    } else {
+      const endPoint = (ship.length * 10) - 10;
+
+      if (ship.length === 1 || location + endPoint > 60) {
+        for (let i = location; i < (location + ship.length); i++) {
+          let point = this.playerGrid.find(element => element.id === (cellId - inc));
+
+          if (point) {
+            point.isHovered = true;
+          }
+
+          inc = inc + 10;
         }
-
-        inc = inc + 10;
       }
     }
   };
@@ -217,14 +242,18 @@ export class GameComponent implements OnInit {
 
     let inc = 0;
 
-    for (let i = location; i < location + 4; i++) {
-      let point = this.playerGrid.find(element => element.id === (cellId - inc));
+    if (this.selectedShip.type === 'lShape') {
+      // TODO: implement
+    } else {
+      for (let i = location; i < location + 4; i++) {
+        let point = this.playerGrid.find(element => element.id === (cellId - inc));
 
-      if (point) {
-        point.isHovered = false;
+        if (point) {
+          point.isHovered = false;
+        }
+
+        inc = inc + 10;
       }
-
-      inc = inc + 10;
     }
   };
 
