@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Fleet} from '../models/fleet.model';
+import {Ship} from '../models/ship.model';
 
 declare var $: any;
 
@@ -38,7 +39,7 @@ export class GameComponent implements OnInit {
   ngOnInit() {
     this.titleLeftAlphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
     this.titleTopNumbers = Array.from(Array(11).keys());
-    this.orientation = shipOrientation.RIGHT;
+    this.orientation = shipOrientation.LEFT;
     this.playerGrid = this.getGrid(100);
     this.botGrid = this.getGrid(100);
   }
@@ -65,7 +66,7 @@ export class GameComponent implements OnInit {
     this.orientation = orientationOptions[this.getRandomInt(0, orientationOptions.length)];
   }
 
-  placeShip = function (ship, fleet) {
+  placeShip = function (ship: Ship, fleet: Fleet) {
     this.selectedShip = ship;
     this.selectedFleet = fleet;
     this.shipPlacementPhase = true;
@@ -123,113 +124,142 @@ export class GameComponent implements OnInit {
 
     switch (this.orientation) {
       case shipOrientation.TOP: {
-        this.displayShipTop(parseInt(mousePosition), this.selectedShip, e.target, this.selectedFleet);
+        this.displayShipTop(parseInt(mousePosition), this.selectedShip);
         break;
       }
       case shipOrientation.LEFT: {
-        this.displayShipLeft(parseInt(mousePosition), this.selectedShip, e.target, this.selectedFleet);
+        this.displayShipLeft(parseInt(mousePosition), this.selectedShip);
         break;
       }
       case shipOrientation.RIGHT: {
-        this.displayShipRight(parseInt(mousePosition), this.selectedShip, e.target, this.selectedFleet);
+        this.displayShipRight(parseInt(mousePosition), this.selectedShip);
         break;
       }
       case shipOrientation.BOTTOM: {
-        this.displayShipBottom(parseInt(mousePosition), this.selectedShip, e.target, this.selectedFleet);
+        this.displayShipBottom(parseInt(mousePosition), this.selectedShip);
         break;
       }
       default: {
-        this.displayShipBottom(parseInt(mousePosition), this.selectedShip, e.target, this.selectedFleet);
+        this.displayShipBottom(parseInt(mousePosition), this.selectedShip);
         break;
       }
     }
   }
 
-  displayShipTop = function (location, ship, point, fleet) {
-    let context = this;
-    let inc = 0;
-
+  displayShipTop = function (location, ship) {
+    const cellId = location - 1;
     const endPoint = (ship.length * 10) - 10;
+
+    let inc = 0;
 
     if (ship.length === 1 || location + endPoint > 60) {
       for (let i = location; i < (location + ship.length); i++) {
-        $(".bottom ." + (location - inc)).addClass("highlight");
+        let point = this.playerGrid.find(element => element.id === (cellId - inc));
+
+        if (point) {
+          point.isHovered = true;
+        }
+
         inc = inc + 10;
       }
-
-      $(point).on("click", function () {
-        context.setShip(location, ship, shipOrientation.BOTTOM, fleet, "self");
-      });
     }
   };
 
-  displayShipBottom = function (location, ship, point, fleet) {
-    let context = this;
-    let inc = 0;
-
+  displayShipBottom = function (location, ship) {
+    const cellId = location - 1;
     const endPoint = (ship.length * 10) - 10;
+
+    let inc = 0;
 
     if (location + endPoint <= 100) {
       for (let i = location; i < (location + ship.length); i++) {
-        $(".bottom ." + (location + inc)).addClass("highlight");
+        let point = this.playerGrid.find(element => element.id === (cellId + inc));
+
+        if (point) {
+          point.isHovered = true;
+        }
+
         inc = inc + 10;
       }
-
-      $(point).on("click", function () {
-        context.setShip(location, ship, shipOrientation.BOTTOM, fleet, "self");
-      });
     }
   };
 
-  displayShipLeft = function (location, ship, point, fleet) {
-    let context = this;
+  displayShipLeft = function (location, ship) {
+    const cellId = location - 1;
 
     if (ship.length === 1 || location % 10 >= 4 || location % 10 === 0) {
-      for (let i = location; i > (location - ship.length); i--) {
-        $(".bottom ." + i).addClass("highlight");
+      for (let i = cellId; i > (cellId - ship.length); i--) {
+        let point = this.playerGrid.find(element => element.id === i);
+        point.isHovered = true;
       }
-
-      $(point).on("click", function () {
-        context.setShip(location, ship, shipOrientation.RIGHT, fleet, "self");
-      });
     }
   };
 
-  displayShipRight = function (location, ship, point, fleet) {
+  displayShipRight = function (location, ship) {
+    const cellId = location - 1;
     const endPoint = location + ship.length - 2;
 
     if (!(endPoint % 10 >= 0 && endPoint % 10 < ship.length - 1)) {
-      for (let i = location; i < (location + ship.length); i++) {
-        $(".bottom ." + i).addClass("highlight");
+      for (let i = cellId; i < (cellId + ship.length); i++) {
+        let point = this.playerGrid.find(element => element.id === i);
+        point.isHovered = true;
       }
     }
   };
 
   removeShipTop = function (location) {
+    const cellId = location - 1;
+
     let inc = 0;
+
     for (let i = location; i < location + 4; i++) {
-      $(".bottom ." + (location - inc)).removeClass("highlight");
+      let point = this.playerGrid.find(element => element.id === (cellId - inc));
+
+      if (point) {
+        point.isHovered = false;
+      }
+
       inc = inc + 10;
     }
   };
 
   removeShipBottom = function (location) {
+    const cellId = location - 1;
+
     let inc = 0;
+
     for (let i = location; i < location + 4; i++) {
-      $(".bottom ." + (location + inc)).removeClass("highlight");
+      let point = this.playerGrid.find(element => element.id === (cellId + inc));
+
+      if (point) {
+        point.isHovered = false;
+      }
+
       inc = inc + 10;
     }
   };
 
   removeShipLeft = function (location) {
-    for (let i = location; i > location - 4; i--) {
-      $(".bottom ." + i).removeClass("highlight");
+    const cellId = location - 1;
+
+    for (let i = cellId; i > cellId - 4; i--) {
+      let point = this.playerGrid.find(element => element.id === i);
+
+      if (point) {
+        point.isHovered = false;
+      }
     }
   };
 
   removeShipRight = function (location) {
-    for (let i = location; i < location + 4; i++) {
-      $(".bottom ." + i).removeClass("highlight");
+    const cellId = location - 1;
+
+    for (let i = cellId; i < location + 3; i++) {
+      let point = this.playerGrid.find(element => element.id === i);
+
+      if (point) {
+        point.isHovered = false;
+      }
     }
   };
 
