@@ -9,6 +9,7 @@ import { GameComponent } from './game/game.component';
 import {AppRoutingModule} from './app-routing.module';
 import { ControlPanelComponent } from './game/control-panel/control-panel.component';
 import { GameInformationComponent } from './game/game-information/game-information.component';
+import { BotGridComponent } from './game/bot-grid/bot-grid.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { GameInformationComponent } from './game/game-information/game-informati
     IntroComponent,
     GameComponent,
     ControlPanelComponent,
-    GameInformationComponent
+    GameInformationComponent,
+    BotGridComponent
   ],
   imports: [
     BrowserModule,
