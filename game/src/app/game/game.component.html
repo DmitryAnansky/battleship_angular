@@ -26,7 +26,10 @@
                     (mouseenter) ="onMouseEnterPoint($event)"
                     (mouseleave)="onMouseExitPoint($event)"
                     (click)="onPointClick($event)"
-                    [ngClass]="{highlight: cell.isHovered, missed: cell.isMiss}"
+                    [ngClass]="{highlight: cell.isHovered,
+                     missed: cell.isMiss,
+                     ship: cell.isShip
+                     }"
                     class="points {{cell.id + 1}}">
                   <span [ngClass]="{hole: !cell.isShip}"></span>
                 </li>

@@ -39,14 +39,20 @@ export class GameComponent implements OnInit {
   ngOnInit() {
     this.titleLeftAlphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
     this.titleTopNumbers = Array.from(Array(11).keys());
-    this.orientation = shipOrientation.LEFT;
+    this.orientation = shipOrientation.TOP;
     this.playerGrid = this.getGrid(100);
     this.botGrid = this.getGrid(100);
   }
 
   getGrid(num: number) {
     return Array.from(Array(num).keys()).map((id) => {
-      return {'id': id, 'isShip': false, 'isHit': false, 'isMiss': false, 'isHovered': false};
+      return {
+        id: id,
+        isShip: false,
+        isHit: false,
+        isMiss: false,
+        isHovered: false
+      };
     });
   }
 
@@ -54,7 +60,7 @@ export class GameComponent implements OnInit {
     this.displayRotationControl = true;
     this.consoleText = 'Use the mouse to place your ships on the battle field.';
 
-    this.playerFleet = new Fleet("Player");
+    this.playerFleet = new Fleet('Player');
     this.playerFleet.initShips();
 
     this.placeShip(this.playerFleet.ships[this.playerFleet.currentShip], this.playerFleet);
@@ -79,8 +85,7 @@ export class GameComponent implements OnInit {
       const point = this.playerGrid.find(element => element.id === activePointId - 1);
 
       point.isMiss = true;
-
-      this.setShip(activePointId, this.selectedShip, this.orientation, this.selectedFleet, "self");
+      this.setShip(activePointId, this.selectedShip, this.orientation, this.selectedFleet);
     }
   }
 
@@ -146,7 +151,7 @@ export class GameComponent implements OnInit {
     }
   }
 
-  displayShipTop = function (location, ship) {
+  displayShipTop(location, ship) {
     const cellId = location - 1;
     const endPoint = (ship.length * 10) - 10;
 
@@ -165,7 +170,7 @@ export class GameComponent implements OnInit {
     }
   };
 
-  displayShipBottom = function (location, ship) {
+  displayShipBottom(location, ship) {
     const cellId = location - 1;
     const endPoint = (ship.length * 10) - 10;
 
@@ -184,7 +189,7 @@ export class GameComponent implements OnInit {
     }
   };
 
-  displayShipLeft = function (location, ship) {
+  displayShipLeft(location, ship) {
     const cellId = location - 1;
 
     if (ship.length === 1 || location % 10 >= 4 || location % 10 === 0) {
@@ -195,7 +200,7 @@ export class GameComponent implements OnInit {
     }
   };
 
-  displayShipRight = function (location, ship) {
+  displayShipRight(location, ship) {
     const cellId = location - 1;
     const endPoint = location + ship.length - 2;
 
@@ -207,7 +212,7 @@ export class GameComponent implements OnInit {
     }
   };
 
-  removeShipTop = function (location) {
+  removeShipTop(location) {
     const cellId = location - 1;
 
     let inc = 0;
@@ -223,7 +228,7 @@ export class GameComponent implements OnInit {
     }
   };
 
-  removeShipBottom = function (location) {
+  removeShipBottom(location) {
     const cellId = location - 1;
 
     let inc = 0;
@@ -239,7 +244,7 @@ export class GameComponent implements OnInit {
     }
   };
 
-  removeShipLeft = function (location) {
+  removeShipLeft(location) {
     const cellId = location - 1;
 
     for (let i = cellId; i > cellId - 4; i--) {
@@ -251,7 +256,7 @@ export class GameComponent implements OnInit {
     }
   };
 
-  removeShipRight = function (location) {
+  removeShipRight(location) {
     const cellId = location - 1;
 
     for (let i = cellId; i < location + 3; i++) {
@@ -263,60 +268,155 @@ export class GameComponent implements OnInit {
     }
   };
 
-  getRandomInt = function (min, max) {
+  getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
   };
 
-  setShip = function (location, ship, orientation, genericFleet, type) {
+  setShipTop(location, ship, orientation, genericFleet) {
+    const cellId = location - 1;
+    // TODO: render ships based on type
+    console.log(ship.type);
+
+    let inc = 0;
+
+    // TODO: change this part
+    genericFleet.ships[genericFleet.currentShip].populateVertHits(location);
+
+    this.consoleText = `${this.selectedShip.type} has been placed
+     [${genericFleet.currentShip + 1}/${genericFleet.numOfShips}]`;
+
+    for (let i = location; i < (location + ship.length); i++) {
+      let point = this.playerGrid.find(element => element.id === cellId - inc);
+
+      if (point) {
+        point.isShip = true;
+      }
+
+      inc = inc + 10;
+    }
+
+    if (++genericFleet.currentShip == genericFleet.numOfShips) {
+      // TODO: generate bot FLEET
+      // createCpuFleet
+    } else {
+      this.placeShip(genericFleet.ships[genericFleet.currentShip], genericFleet);
+    }
+  }
+
+  setShipBottom(location, ship, orientation, genericFleet) {
+    const cellId = location - 1;
+    // TODO: render ships based on type
+    console.log(ship.type);
+
+    let inc = 0;
+
+    // TODO: change this part
+    genericFleet.ships[genericFleet.currentShip].populateVertHits(location);
+
+    this.consoleText = `${this.selectedShip.type} has been placed
+     [${genericFleet.currentShip + 1}/${genericFleet.numOfShips}]`;
+
+    for (let i = cellId; i < (cellId + ship.length); i++) {
+      let point = this.playerGrid.find(element => element.id === cellId + inc);
+
+      if (point) {
+        point.isShip = true;
+      }
+
+      inc = inc + 10;
+    }
+
+    if (++genericFleet.currentShip == genericFleet.numOfShips) {
+      // TODO: generate bot FLEET
+      // createCpuFleet
+    } else {
+      this.placeShip(genericFleet.ships[genericFleet.currentShip], genericFleet);
+    }
+  }
+
+  setShipRight(location, ship, orientation, genericFleet) {
+    const cellId = location - 1;
+    // TODO: render ships based on type
+    console.log(ship.type);
+
+    // TODO: change this part
+    genericFleet.ships[genericFleet.currentShip].populateHorzHits(location);
+
+    this.consoleText = `${this.selectedShip.type} has been placed
+     [${genericFleet.currentShip + 1}/${genericFleet.numOfShips}]`;
+
+    for (let i = cellId; i < (cellId + ship.length); i++) {
+      let point = this.playerGrid.find(element => element.id === i);
+
+      if (point) {
+        point.isShip = true;
+      }
+    }
+
+    if (++genericFleet.currentShip == genericFleet.numOfShips) {
+      // TODO: generate bot FLEET
+      // this.createCpuFleet
+    } else {
+      this.placeShip(genericFleet.ships[genericFleet.currentShip], genericFleet);
+    }
+  }
+
+  setShipLeft(location, ship, orientation, genericFleet) {
+    const cellId = location - 1;
+    // TODO: render ships based on type
+    console.log(ship.type);
+
+    // TODO: change this part
+    genericFleet.ships[genericFleet.currentShip].populateHorzHits(location);
+
+    this.consoleText = `${this.selectedShip.type} has been placed
+     [${genericFleet.currentShip + 1}/${genericFleet.numOfShips}]`;
+
+    for (let i = cellId; i > (cellId - ship.length); i--) {
+      let point = this.playerGrid.find(element => element.id === i);
+
+      if (point) {
+        point.isShip = true;
+      }
+    }
+
+    if (++genericFleet.currentShip == genericFleet.numOfShips) {
+      // TODO: generate bot FLEET
+      // this.createCpuFleet
+    } else {
+      this.placeShip(genericFleet.ships[genericFleet.currentShip], genericFleet);
+    }
+  }
+
+  setShip(location, ship, orientation, genericFleet) {
     //if (!(this.checkOverlap(location, ship.length, orientation, genericFleet))) {
     if (!genericFleet.ships[genericFleet.currentShip]) {
       return;
     }
 
-    if (orientation == shipOrientation.RIGHT) {
-      genericFleet.ships[genericFleet.currentShip].populateHorzHits(location);
-      //$(".text").text(output.placed(genericFleet.ships[genericFleet.currentShip].name + " has"));
-      console.log(ship.type);
-      for (var i = location; i < (location + ship.length); i++) {
-        $(".bottom ." + i).addClass(genericFleet.ships[genericFleet.currentShip].type);
-        $(".bottom ." + i).children().removeClass("hole");
+    switch (this.orientation) {
+      case shipOrientation.TOP: {
+        this.setShipTop(location, ship, orientation, genericFleet);
+        break;
       }
-      if (++genericFleet.currentShip == genericFleet.numOfShips) {
-        //$(".text").text(output.placed("ships have"));
-        $(".bottom").find(".points").off("mouseenter");
-        // clear the call stack
-        //setTimeout(this.createCpuFleet, 100);
-      } else {
-        if (type == "random") this.randomSetup(genericFleet);
-        else this.placeShip(genericFleet.ships[genericFleet.currentShip], genericFleet);
+      case shipOrientation.LEFT: {
+        this.setShipLeft(location, ship, orientation, genericFleet);
+        break;
       }
-
-    } else {
-      let inc = 0;
-      console.log(ship.type);
-      genericFleet.ships[genericFleet.currentShip].populateVertHits(location);
-      //$(".text").text(output.placed(genericFleet.ships[genericFleet.currentShip].name + " has"));
-      for (let i = location; i < (location + ship.length); i++) {
-        $(".bottom ." + (location + inc)).addClass(genericFleet.ships[genericFleet.currentShip].type);
-        $(".bottom ." + (location + inc)).children().removeClass("hole");
-        inc = inc + 10;
+      case shipOrientation.RIGHT: {
+        this.setShipRight(location, ship, orientation, genericFleet);
+        break;
       }
-      if (++genericFleet.currentShip == genericFleet.numOfShips) {
-        //$(".text").text(output.placed("ships have"));
-        $(".bottom").find(".points").off("mouseenter");
-        // clear the call stack
-        //setTimeout(createCpuFleet, 100);
-      } else {
-        if (type == "random") this.randomSetup(genericFleet);
-        else this.placeShip(genericFleet.ships[genericFleet.currentShip], genericFleet);
+      case shipOrientation.BOTTOM: {
+        this.setShipBottom(location, ship, orientation, genericFleet);
+        break;
+      }
+      default: {
+        this.setShipBottom(location, ship, orientation, genericFleet);
+        break;
       }
     }
-    //} else {
-    // if (type == "random") this.randomSetup(genericFleet);
-    // else $(".text").text(output.overlap);
-    //}
-  }
-
+  };
 
   checkOverlap = function (location, length, orientation, genFleet) {
     let loc = location;
@@ -349,7 +449,9 @@ export class GameComponent implements OnInit {
       if (genFleet.currentShip == genFleet.numOfShips) {
         // clear the call stack
         setTimeout(this.startGame, 500);
-      } else this.randomSetup(genFleet);
+      } else {
+        //this.randomSetup(genFleet);
+      }
     }
     return false;
   }
