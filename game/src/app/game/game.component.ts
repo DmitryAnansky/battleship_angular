@@ -40,7 +40,7 @@ export class GameComponent implements OnInit {
   ngOnInit() {
     this.titleLeftAlphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
     this.titleTopNumbers = Array.from(Array(11).keys());
-    this.orientation = shipOrientation.LEFT;
+    this.orientation = shipOrientation.BOTTOM;
     this.playerGrid = this.getGrid(100);
     this.botGrid = this.getGrid(100);
   }
@@ -379,123 +379,152 @@ export class GameComponent implements OnInit {
     });
   }
 
+  setLShip(shipPoints) {
+    shipPoints.map(id => {
+      let point = this.playerGrid.find(element => element.id === id);
+
+      if (point) {
+        point.isShip = true;
+      }
+    });
+  }
+
   getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
   };
 
   setShipTop(location, ship, orientation, genericFleet) {
     const cellId = location - 1;
-    // TODO: render ships based on type
-    console.log(ship.type);
-
-    let inc = 0;
-
     // TODO: change this part
     genericFleet.ships[genericFleet.currentShip].populateVertHits(location);
 
     this.consoleText = `${this.selectedShip.type} has been placed
      [${genericFleet.currentShip + 1}/${genericFleet.numOfShips}]`;
 
-    for (let i = location; i < (location + ship.length); i++) {
-      let point = this.playerGrid.find(element => element.id === cellId - inc);
+    if (ship.type === lShaped) {
+      const endPoint = ((ship.length + 1) * 10) - 10;
 
-      if (point) {
-        point.isShip = true;
+      if (ship.length === 1 || (location + endPoint > 60 && location % 10 !== 0)) {
+        const shipPoints = this.calculateLShipTop(cellId);
+
+        this.setLShip(shipPoints);
+        this.displayNextShip(genericFleet);
+      }
+    } else {
+      let inc = 0;
+
+      for (let i = location; i < (location + ship.length); i++) {
+        let point = this.playerGrid.find(element => element.id === cellId - inc);
+
+        if (point) {
+          point.isShip = true;
+        }
+
+        inc = inc + 10;
       }
 
-      inc = inc + 10;
-    }
-
-    if (++genericFleet.currentShip == genericFleet.numOfShips) {
-      // TODO: generate bot FLEET
-      // createCpuFleet
-    } else {
-      this.placeShip(genericFleet.ships[genericFleet.currentShip], genericFleet);
+      this.displayNextShip(genericFleet);
     }
   }
 
   setShipBottom(location, ship, orientation, genericFleet) {
     const cellId = location - 1;
-    // TODO: render ships based on type
-    console.log(ship.type);
-
-    let inc = 0;
-
     // TODO: change this part
     genericFleet.ships[genericFleet.currentShip].populateVertHits(location);
 
     this.consoleText = `${this.selectedShip.type} has been placed
      [${genericFleet.currentShip + 1}/${genericFleet.numOfShips}]`;
 
-    for (let i = cellId; i < (cellId + ship.length); i++) {
-      let point = this.playerGrid.find(element => element.id === cellId + inc);
+    if (ship.type === lShaped) {
+      const endPoint = ((ship.length - 1) * 10) - 10;
 
-      if (point) {
-        point.isShip = true;
+      if (location + endPoint <= 100 && location % 10 !== 0) {
+        const shipPoints = this.calculateLShipBottom(cellId);
+
+        this.setLShip(shipPoints);
+        this.displayNextShip(genericFleet);
+      }
+    } else {
+      let inc = 0;
+
+      for (let i = cellId; i < (cellId + ship.length); i++) {
+        let point = this.playerGrid.find(element => element.id === cellId + inc);
+
+        if (point) {
+          point.isShip = true;
+        }
+
+        inc = inc + 10;
       }
 
-      inc = inc + 10;
-    }
-
-    if (++genericFleet.currentShip == genericFleet.numOfShips) {
-      // TODO: generate bot FLEET
-      // createCpuFleet
-    } else {
-      this.placeShip(genericFleet.ships[genericFleet.currentShip], genericFleet);
+      this.displayNextShip(genericFleet);
     }
   }
 
   setShipRight(location, ship, orientation, genericFleet) {
     const cellId = location - 1;
-    // TODO: render ships based on type
-    console.log(ship.type);
-
     // TODO: change this part
     genericFleet.ships[genericFleet.currentShip].populateHorzHits(location);
 
     this.consoleText = `${this.selectedShip.type} has been placed
      [${genericFleet.currentShip + 1}/${genericFleet.numOfShips}]`;
 
-    for (let i = cellId; i < (cellId + ship.length); i++) {
-      let point = this.playerGrid.find(element => element.id === i);
+    if (ship.type === lShaped) {
+      const shipPoints = this.calculateLShipRight(cellId);
+      const endPoint = 90;
 
-      if (point) {
-        point.isShip = true;
+      if (location <= endPoint && (location % 10 === 0 || location % 10 > 2)) {
+        this.setLShip(shipPoints);
+        this.displayNextShip(genericFleet);
       }
-    }
-
-    if (++genericFleet.currentShip == genericFleet.numOfShips) {
-      // TODO: generate bot FLEET
-      // this.createCpuFleet
     } else {
-      this.placeShip(genericFleet.ships[genericFleet.currentShip], genericFleet);
+      for (let i = cellId; i < (cellId + ship.length); i++) {
+        let point = this.playerGrid.find(element => element.id === i);
+
+        if (point) {
+          point.isShip = true;
+        }
+      }
+
+      this.displayNextShip(genericFleet);
     }
   }
 
   setShipLeft(location, ship, orientation, genericFleet) {
     const cellId = location - 1;
-    // TODO: render ships based on type
-    console.log(ship.type);
-
     // TODO: change this part
     genericFleet.ships[genericFleet.currentShip].populateHorzHits(location);
 
     this.consoleText = `${this.selectedShip.type} has been placed
      [${genericFleet.currentShip + 1}/${genericFleet.numOfShips}]`;
 
-    for (let i = cellId; i > (cellId - ship.length); i--) {
-      let point = this.playerGrid.find(element => element.id === i);
+    if (ship.type === lShaped) {
+      const shipPoints = this.calculateLShipLeft(cellId);
+      const endPoint = 10;
 
-      if (point) {
-        point.isShip = true;
+      if (location > endPoint && location % 10 < 9 && location % 10 != 0) {
+        this.setLShip(shipPoints);
+        this.displayNextShip(genericFleet);
       }
-    }
+    } else {
+      for (let i = cellId; i > (cellId - ship.length); i--) {
+        let point = this.playerGrid.find(element => element.id === i);
 
-    if (++genericFleet.currentShip == genericFleet.numOfShips) {
+        if (point) {
+          point.isShip = true;
+        }
+      }
+
+      this.displayNextShip(genericFleet);
+    }
+  }
+
+  displayNextShip(fleet) {
+    if (++fleet.currentShip == fleet.numOfShips) {
       // TODO: generate bot FLEET
       // this.createCpuFleet
     } else {
-      this.placeShip(genericFleet.ships[genericFleet.currentShip], genericFleet);
+      this.placeShip(fleet.ships[fleet.currentShip], fleet);
     }
   }
 
