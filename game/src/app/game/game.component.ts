@@ -41,7 +41,7 @@ export class GameComponent implements OnInit {
   ngOnInit() {
     this.titleLeftAlphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
     this.titleTopNumbers = Array.from(Array(11).keys());
-    this.orientation = shipOrientation.TOP;
+    this.orientation = shipOrientation.RIGHT;
     this.playerGrid = this.getGrid(100);
     this.botGrid = this.getGrid(100);
   }
@@ -230,6 +230,7 @@ export class GameComponent implements OnInit {
 
       if (location > endPoint && location % 10 < 9 && location % 10 != 0) {
         this.displayShip(shipPoints);
+        this.displayShipBorder(location, ship);
       }
     } else {
       if (ship.length === 1 || location % 10 >= 4 || location % 10 === 0) {
@@ -237,6 +238,8 @@ export class GameComponent implements OnInit {
           let point = this.playerGrid.find(element => element.id === i);
           point.isHovered = true;
         }
+
+        this.displayShipBorder(location, ship);
       }
     }
   };
@@ -250,6 +253,7 @@ export class GameComponent implements OnInit {
 
       if (location <= endPoint && (location % 10 === 0 || location % 10 > 2)) {
         this.displayShip(shipPoints);
+        this.displayShipBorder(location, ship);
       }
     } else {
       const endPoint = location + ship.length - 2;
@@ -259,6 +263,8 @@ export class GameComponent implements OnInit {
           let point = this.playerGrid.find(element => element.id === i);
           point.isHovered = true;
         }
+
+        this.displayShipBorder(location, ship);
       }
     }
   };
@@ -327,6 +333,8 @@ export class GameComponent implements OnInit {
         }
       }
     }
+
+    this.removeShipBorder(location, this.selectedShip);
   };
 
   removeShipRight(location) {
@@ -345,6 +353,8 @@ export class GameComponent implements OnInit {
         }
       }
     }
+
+    this.removeShipBorder(location, this.selectedShip);
   };
 
   removeShip(shipPoints) {
@@ -367,7 +377,7 @@ export class GameComponent implements OnInit {
     });
   }
 
-  displayShipBorder(location, ship) {
+  displayShipBorder(location: number, ship: any) {
     const borderPoints = this.shipService.calculateBorderPoints(location, ship, this.orientation);
 
     borderPoints.map(id => {
@@ -379,7 +389,7 @@ export class GameComponent implements OnInit {
     });
   }
 
-  removeShipBorder(location, ship) {
+  removeShipBorder(location: number, ship: any) {
     const borderPoints = this.shipService.calculateBorderPoints(location, ship, this.orientation);
 
     borderPoints.map(id => {
@@ -391,7 +401,7 @@ export class GameComponent implements OnInit {
     });
   }
 
-  setLShip(shipPoints) {
+  setLShip(shipPoints: number[]) {
     shipPoints.map(id => {
       let point = this.playerGrid.find(element => element.id === id);
 
@@ -500,6 +510,7 @@ export class GameComponent implements OnInit {
         }
       }
 
+      this.removeShipBorder(location, this.selectedShip);
       this.displayNextShip(genericFleet);
     }
   }
@@ -529,6 +540,7 @@ export class GameComponent implements OnInit {
         }
       }
 
+      this.removeShipBorder(location, ship);
       this.displayNextShip(genericFleet);
     }
   }
