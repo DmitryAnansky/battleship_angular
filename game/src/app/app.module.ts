@@ -6,10 +6,11 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { IntroComponent } from './intro/intro.component';
 import { GameComponent } from './game/game.component';
-import {AppRoutingModule} from './app-routing.module';
+import { AppRoutingModule } from './app-routing.module';
 import { ControlPanelComponent } from './game/control-panel/control-panel.component';
 import { GameInformationComponent } from './game/game-information/game-information.component';
 import { BotGridComponent } from './game/bot-grid/bot-grid.component';
+import { ShipService } from './services/ship.service';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,7 @@ import { BotGridComponent } from './game/bot-grid/bot-grid.component';
     FormsModule,
     HttpModule
   ],
-  providers: [],
+  providers: [ShipService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

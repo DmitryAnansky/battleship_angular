@@ -16,7 +16,8 @@
                     (click)="onPointClick($event)"
                     [ngClass]="{highlight: cell.isHovered,
                      missed: cell.isMiss,
-                     ship: cell.isShip
+                     ship: cell.isShip,
+                     shipBorder: cell.isBorder
                      }"
                     class="points {{cell.id + 1}}">
                   <span [ngClass]="{hole: !cell.isShip}"></span>
