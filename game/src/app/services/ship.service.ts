@@ -212,34 +212,72 @@ export class ShipService {
     }
   }
 
-  calculateLShipBorderPoints(location: number, cellId: number, inc, ship: any, orientation: string) {
+  calculateLShipBorderPoints(location: number, cellId: number, ship: any, orientation: string) {
+    const inc = 10;
+
     switch (orientation) {
       case shipOrientation.TOP: {
 
-        break;
+        return [];
       }
       case shipOrientation.LEFT: {
 
-        break;
+        return [];
       }
       case shipOrientation.RIGHT: {
 
-        break;
+        return [];
       }
       case shipOrientation.BOTTOM: {
+        let lShapedBottomBorder = [];
 
-        break;
+        // add right side
+        if (location % 10 !== 9) {
+          lShapedBottomBorder = [
+            ...lShapedBottomBorder,
+            ...[
+              cellId + inc + 2,
+              cellId + inc * 2 + 2,
+              cellId + inc * 3 + 2
+            ]
+          ];
+        }
+
+        // add left side
+        if (location % 10 !== 1) {
+          lShapedBottomBorder = [
+            ...lShapedBottomBorder,
+            ...[
+              cellId + inc * 3 - 1,
+              cellId + inc * 2 - 1,
+              cellId + inc - 1,
+              cellId - 1,
+              cellId - inc - 1,
+            ]
+          ];
+        }
+
+        return [
+          ...lShapedBottomBorder,
+          ... [
+            cellId - inc,
+            cellId + inc * 3,
+            cellId + inc * 3 + 1,
+            cellId + inc + 1,
+            cellId + 1,
+            cellId - inc + 1,
+          ]
+        ];
       }
       default: {
-
-        break;
+        return [];
       }
     }
-
-    return [];
   }
 
-  calculateDotShipBorderPoints(location: number, cellId: number, inc) {
+  calculateDotShipBorderPoints(location: number, cellId: number) {
+    const inc = 10;
+
     let dotShapedShipBorder = [];
 
     // add right side
@@ -262,15 +300,14 @@ export class ShipService {
   }
 
   calculateBorderPoints(location: number, ship: any, orientation: string) {
-    const inc = 10;
     const cellId = location - 1;
 
     if (ship.type === lShaped) {
-      return this.calculateLShipBorderPoints(location, cellId, inc, ship, orientation);
+      return this.calculateLShipBorderPoints(location, cellId, ship, orientation);
     }
 
     if (ship.length === 1) {
-      return this.calculateDotShipBorderPoints(location, cellId, inc);
+      return this.calculateDotShipBorderPoints(location, cellId);
     }
 
     return this.calculateIShipBorderPoints(location, cellId, ship, orientation);

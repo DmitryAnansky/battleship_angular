@@ -41,7 +41,7 @@ export class GameComponent implements OnInit {
   ngOnInit() {
     this.titleLeftAlphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
     this.titleTopNumbers = Array.from(Array(11).keys());
-    this.orientation = shipOrientation.RIGHT;
+    this.orientation = shipOrientation.BOTTOM;
     this.playerGrid = this.getGrid(100);
     this.botGrid = this.getGrid(100);
   }
@@ -75,7 +75,7 @@ export class GameComponent implements OnInit {
     this.orientation = orientationOptions[this.getRandomInt(0, orientationOptions.length)];
   }
 
-  placeShip = function (ship: Ship, fleet: Fleet) {
+  placeShip(ship: Ship, fleet: Fleet) {
     this.selectedShip = ship;
     this.selectedFleet = fleet;
     this.shipPlacementPhase = true;
@@ -154,7 +154,7 @@ export class GameComponent implements OnInit {
     }
   }
 
-  displayShipTop(location, ship) {
+  displayShipTop(location: number, ship: any) {
     const cellId = location - 1;
 
     let inc = 0;
@@ -187,7 +187,7 @@ export class GameComponent implements OnInit {
     }
   };
 
-  displayShipBottom(location, ship) {
+  displayShipBottom(location: number, ship: any) {
     const cellId = location - 1;
 
     let inc = 0;
@@ -221,7 +221,7 @@ export class GameComponent implements OnInit {
     }
   };
 
-  displayShipLeft(location, ship) {
+  displayShipLeft(location: number, ship: any) {
     const cellId = location - 1;
 
     if (ship.type === lShaped) {
@@ -244,7 +244,7 @@ export class GameComponent implements OnInit {
     }
   };
 
-  displayShipRight(location, ship) {
+  displayShipRight(location: number, ship: any) {
     const cellId = location - 1;
 
     if (this.selectedShip.type === lShaped) {
@@ -269,7 +269,7 @@ export class GameComponent implements OnInit {
     }
   };
 
-  removeShipTop(location) {
+  removeShipTop(location: number) {
     const cellId = location - 1;
 
     let inc = 0;
@@ -293,7 +293,7 @@ export class GameComponent implements OnInit {
     this.removeShipBorder(location, this.selectedShip);
   };
 
-  removeShipBottom(location) {
+  removeShipBottom(location: number) {
     const cellId = location - 1;
 
     let inc = 0;
@@ -317,7 +317,7 @@ export class GameComponent implements OnInit {
     this.removeShipBorder(location, this.selectedShip);
   };
 
-  removeShipLeft(location) {
+  removeShipLeft(location: number) {
     const cellId = location - 1;
 
     if (this.selectedShip.type === lShaped) {
@@ -337,7 +337,7 @@ export class GameComponent implements OnInit {
     this.removeShipBorder(location, this.selectedShip);
   };
 
-  removeShipRight(location) {
+  removeShipRight(location: number) {
     const cellId = location - 1;
 
     if (this.selectedShip.type === lShaped) {
@@ -357,7 +357,7 @@ export class GameComponent implements OnInit {
     this.removeShipBorder(location, this.selectedShip);
   };
 
-  removeShip(shipPoints) {
+  removeShip(shipPoints: number[]) {
     shipPoints.map(id => {
       let point = this.playerGrid.find(element => element.id === id);
 
@@ -367,7 +367,7 @@ export class GameComponent implements OnInit {
     });
   }
 
-  displayShip(shipPoints) {
+  displayShip(shipPoints: number[]) {
     shipPoints.map(id => {
       let point = this.playerGrid.find(element => element.id === id);
 
@@ -415,7 +415,7 @@ export class GameComponent implements OnInit {
     return Math.floor(Math.random() * (max - min)) + min;
   };
 
-  setShipTop(location, ship, orientation, genericFleet) {
+  setShipTop(location: number, ship: any, orientation: string, genericFleet: any) {
     const cellId = location - 1;
     // TODO: change this part
     genericFleet.ships[genericFleet.currentShip].populateVertHits(location);
@@ -465,6 +465,7 @@ export class GameComponent implements OnInit {
         const shipPoints = this.shipService.calculateLShipBottom(cellId);
 
         this.setLShip(shipPoints);
+        this.removeShipBorder(location, ship);
         this.displayNextShip(genericFleet);
       }
     } else {
@@ -485,7 +486,7 @@ export class GameComponent implements OnInit {
     }
   }
 
-  setShipRight(location, ship, orientation, genericFleet) {
+  setShipRight(location: number, ship: any, orientation: string, genericFleet: any) {
     const cellId = location - 1;
     // TODO: change this part
     genericFleet.ships[genericFleet.currentShip].populateHorzHits(location);
@@ -515,7 +516,7 @@ export class GameComponent implements OnInit {
     }
   }
 
-  setShipLeft(location, ship, orientation, genericFleet) {
+  setShipLeft(location: number, ship: any, orientation: string, genericFleet: any) {
     const cellId = location - 1;
     // TODO: change this part
     genericFleet.ships[genericFleet.currentShip].populateHorzHits(location);
@@ -554,7 +555,7 @@ export class GameComponent implements OnInit {
     }
   }
 
-  setShip(location, ship, orientation, genericFleet) {
+  setShip(location: number, ship: any, orientation: string, genericFleet: any) {
     //if (!(this.checkOverlap(location, ship.length, orientation, genericFleet))) {
     if (!genericFleet.ships[genericFleet.currentShip]) {
       return;
