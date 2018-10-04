@@ -10,6 +10,7 @@ const shipOrientation = {
   LEFT: 'LEFT',
   RIGHT: 'RIGHT'
 };
+const lShaped = 'lShape';
 
 @Component({
   selector: 'app-game',
@@ -39,7 +40,7 @@ export class GameComponent implements OnInit {
   ngOnInit() {
     this.titleLeftAlphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
     this.titleTopNumbers = Array.from(Array(11).keys());
-    this.orientation = shipOrientation.BOTTOM;
+    this.orientation = shipOrientation.LEFT;
     this.playerGrid = this.getGrid(100);
     this.botGrid = this.getGrid(100);
   }
@@ -154,13 +155,25 @@ export class GameComponent implements OnInit {
   calculateLShipTop(cellId) {
     const inc = 10;
 
-    return [cellId, cellId - inc, cellId - 2 * inc, cellId - (2 * inc - 1)]
+    return [cellId, cellId - inc, cellId - 2 * inc, cellId - (2 * inc - 1)];
   }
 
   calculateLShipBottom(cellId) {
     const inc = 10;
 
-    return [cellId, cellId + inc, cellId + 2 * inc, cellId + (2 * inc + 1)]
+    return [cellId, cellId + inc, cellId + 2 * inc, cellId + (2 * inc + 1)];
+  }
+
+  calculateLShipRight(cellId) {
+    const inc = 10;
+
+    return [cellId, cellId + inc, cellId + (inc - 1), cellId + (inc - 2)];
+  }
+
+  calculateLShipLeft(cellId) {
+    const inc = 10;
+
+    return [cellId, cellId - inc, cellId - (inc - 1), cellId - (inc - 2)];
   }
 
   displayShipTop(location, ship) {
@@ -168,19 +181,13 @@ export class GameComponent implements OnInit {
 
     let inc = 0;
 
-    if (ship.type === 'lShape') {
+    if (ship.type === lShaped) {
       const endPoint = ((ship.length + 1) * 10) - 10;
 
       if (ship.length === 1 || (location + endPoint > 60 && location % 10 !== 0)) {
         const shipPoints = this.calculateLShipTop(cellId);
 
-        shipPoints.map(id => {
-          let point = this.playerGrid.find(element => element.id === id);
-
-          if (point) {
-            point.isHovered = true;
-          }
-        });
+        this.displayShip(shipPoints);
       }
     } else {
       const endPoint = (ship.length * 10) - 10;
@@ -204,19 +211,13 @@ export class GameComponent implements OnInit {
 
     let inc = 0;
 
-    if (ship.type === 'lShape') {
+    if (ship.type === lShaped) {
       const endPoint = ((ship.length - 1) * 10) - 10;
 
       if (location + endPoint <= 100 && location % 10 !== 0) {
         const shipPoints = this.calculateLShipBottom(cellId);
 
-        shipPoints.map(id => {
-          let point = this.playerGrid.find(element => element.id === id);
-
-          if (point) {
-            point.isHovered = true;
-          }
-        });
+        this.displayShip(shipPoints);
       }
 
     } else {
@@ -239,22 +240,41 @@ export class GameComponent implements OnInit {
   displayShipLeft(location, ship) {
     const cellId = location - 1;
 
-    if (ship.length === 1 || location % 10 >= 4 || location % 10 === 0) {
-      for (let i = cellId; i > (cellId - ship.length); i--) {
-        let point = this.playerGrid.find(element => element.id === i);
-        point.isHovered = true;
+    if (ship.type === lShaped) {
+      const shipPoints = this.calculateLShipLeft(cellId);
+      const endPoint = 10;
+
+      if (location > endPoint && location % 10 < 9 && location % 10 != 0) {
+        this.displayShip(shipPoints);
+      }
+    } else {
+      if (ship.length === 1 || location % 10 >= 4 || location % 10 === 0) {
+        for (let i = cellId; i > (cellId - ship.length); i--) {
+          let point = this.playerGrid.find(element => element.id === i);
+          point.isHovered = true;
+        }
       }
     }
   };
 
   displayShipRight(location, ship) {
     const cellId = location - 1;
-    const endPoint = location + ship.length - 2;
 
-    if (!(endPoint % 10 >= 0 && endPoint % 10 < ship.length - 1)) {
-      for (let i = cellId; i < (cellId + ship.length); i++) {
-        let point = this.playerGrid.find(element => element.id === i);
-        point.isHovered = true;
+    if (this.selectedShip.type === lShaped) {
+      const shipPoints = this.calculateLShipRight(cellId);
+      const endPoint = 90;
+
+      if (location <= endPoint && (location % 10 === 0 || location % 10 > 2)) {
+        this.displayShip(shipPoints);
+      }
+    } else {
+      const endPoint = location + ship.length - 2;
+
+      if (!(endPoint % 10 >= 0 && endPoint % 10 < ship.length - 1)) {
+        for (let i = cellId; i < (cellId + ship.length); i++) {
+          let point = this.playerGrid.find(element => element.id === i);
+          point.isHovered = true;
+        }
       }
     }
   };
@@ -264,16 +284,10 @@ export class GameComponent implements OnInit {
 
     let inc = 0;
 
-    if (this.selectedShip.type === 'lShape') {
+    if (this.selectedShip.type === lShaped) {
       const shipPoints = this.calculateLShipTop(cellId);
 
-      shipPoints.map(id => {
-        let point = this.playerGrid.find(element => element.id === id);
-
-        if (point) {
-          point.isHovered = false;
-        }
-      });
+      this.removeShip(shipPoints);
     } else {
       for (let i = location; i < location + 4; i++) {
         let point = this.playerGrid.find(element => element.id === (cellId - inc));
@@ -292,16 +306,10 @@ export class GameComponent implements OnInit {
 
     let inc = 0;
 
-    if (this.selectedShip.type === 'lShape') {
+    if (this.selectedShip.type === lShaped) {
       const shipPoints = this.calculateLShipBottom(cellId);
 
-      shipPoints.map(id => {
-        let point = this.playerGrid.find(element => element.id === id);
-
-        if (point) {
-          point.isHovered = false;
-        }
-      });
+      this.removeShip(shipPoints);
     } else {
       for (let i = location; i < location + 4; i++) {
         let point = this.playerGrid.find(element => element.id === (cellId + inc));
@@ -318,11 +326,17 @@ export class GameComponent implements OnInit {
   removeShipLeft(location) {
     const cellId = location - 1;
 
-    for (let i = cellId; i > cellId - 4; i--) {
-      let point = this.playerGrid.find(element => element.id === i);
+    if (this.selectedShip.type === lShaped) {
+      const shipPoints = this.calculateLShipLeft(cellId);
 
-      if (point) {
-        point.isHovered = false;
+      this.removeShip(shipPoints);
+    } else {
+      for (let i = cellId; i > cellId - 4; i--) {
+        let point = this.playerGrid.find(element => element.id === i);
+
+        if (point) {
+          point.isHovered = false;
+        }
       }
     }
   };
@@ -330,14 +344,40 @@ export class GameComponent implements OnInit {
   removeShipRight(location) {
     const cellId = location - 1;
 
-    for (let i = cellId; i < location + 3; i++) {
-      let point = this.playerGrid.find(element => element.id === i);
+    if (this.selectedShip.type === lShaped) {
+      const shipPoints = this.calculateLShipRight(cellId);
+
+      this.removeShip(shipPoints);
+    } else {
+      for (let i = cellId; i < location + 3; i++) {
+        let point = this.playerGrid.find(element => element.id === i);
+
+        if (point) {
+          point.isHovered = false;
+        }
+      }
+    }
+  };
+
+  removeShip(shipPoints) {
+    shipPoints.map(id => {
+      let point = this.playerGrid.find(element => element.id === id);
 
       if (point) {
         point.isHovered = false;
       }
-    }
-  };
+    });
+  }
+
+  displayShip(shipPoints) {
+    shipPoints.map(id => {
+      let point = this.playerGrid.find(element => element.id === id);
+
+      if (point) {
+        point.isHovered = true;
+      }
+    });
+  }
 
   getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
