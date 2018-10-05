@@ -38,9 +38,11 @@ export class PlayerGridComponent implements OnInit {
   @Input() consoleText;
   @Output() consoleTextChange: EventEmitter<string> = new EventEmitter();
 
-  constructor(private shipService: ShipService) { }
+  constructor(private shipService: ShipService) {
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   onPointClick(e) {
     const activePointId = parseInt(e.currentTarget.id);
@@ -418,6 +420,8 @@ export class PlayerGridComponent implements OnInit {
 
   setShipTop(location: number, ship: any, orientation: string, genericFleet: any) {
     const cellId = location - 1;
+    const endPoint = (ship.length * 10) - 10;
+
     // TODO: change this part
     genericFleet.ships[genericFleet.currentShip].populateVertHits(location);
 
@@ -438,23 +442,27 @@ export class PlayerGridComponent implements OnInit {
     } else {
       let inc = 0;
 
-      for (let i = location; i < (location + ship.length); i++) {
-        let point = this.playerGrid.find(element => element.id === cellId - inc);
+      if (ship.length === 1 || location + endPoint > 60) {
+        for (let i = location; i < (location + ship.length); i++) {
+          let point = this.playerGrid.find(element => element.id === cellId - inc);
 
-        if (point) {
-          point.isShip = true;
+          if (point) {
+            point.isShip = true;
+          }
+
+          inc = inc + 10;
         }
 
-        inc = inc + 10;
+        this.removeShipBorder(location, ship);
+        this.displayNextShip(genericFleet);
       }
-
-      this.removeShipBorder(location, ship);
-      this.displayNextShip(genericFleet);
     }
   }
 
   setShipBottom(location: number, ship: any, orientation: string, genericFleet: any) {
     const cellId = location - 1;
+    const endPoint = (ship.length * 10) - 10;
+
     // TODO: change this part
     genericFleet.ships[genericFleet.currentShip].populateVertHits(location);
 
@@ -475,18 +483,20 @@ export class PlayerGridComponent implements OnInit {
     } else {
       let inc = 0;
 
-      for (let i = cellId; i < (cellId + ship.length); i++) {
-        let point = this.playerGrid.find(element => element.id === cellId + inc);
+      if (location + endPoint <= 100) {
+        for (let i = cellId; i < (cellId + ship.length); i++) {
+          let point = this.playerGrid.find(element => element.id === cellId + inc);
 
-        if (point) {
-          point.isShip = true;
+          if (point) {
+            point.isShip = true;
+          }
+
+          inc = inc + 10;
         }
 
-        inc = inc + 10;
+        this.removeShipBorder(location, ship);
+        this.displayNextShip(genericFleet);
       }
-
-      this.removeShipBorder(location, ship);
-      this.displayNextShip(genericFleet);
     }
   }
 
@@ -509,16 +519,20 @@ export class PlayerGridComponent implements OnInit {
         this.displayNextShip(genericFleet);
       }
     } else {
-      for (let i = cellId; i < (cellId + ship.length); i++) {
-        let point = this.playerGrid.find(element => element.id === i);
+      const endPoint = location + ship.length - 2;
 
-        if (point) {
-          point.isShip = true;
+      if (!(endPoint % 10 >= 0 && endPoint % 10 < ship.length - 1)) {
+        for (let i = cellId; i < (cellId + ship.length); i++) {
+          let point = this.playerGrid.find(element => element.id === i);
+
+          if (point) {
+            point.isShip = true;
+          }
         }
-      }
 
-      this.removeShipBorder(location, this.selectedShip);
-      this.displayNextShip(genericFleet);
+        this.removeShipBorder(location, this.selectedShip);
+        this.displayNextShip(genericFleet);
+      }
     }
   }
 
@@ -541,16 +555,18 @@ export class PlayerGridComponent implements OnInit {
         this.displayNextShip(genericFleet);
       }
     } else {
-      for (let i = cellId; i > (cellId - ship.length); i--) {
-        let point = this.playerGrid.find(element => element.id === i);
+      if (ship.length === 1 || location % 10 >= 4 || location % 10 === 0) {
+        for (let i = cellId; i > (cellId - ship.length); i--) {
+          let point = this.playerGrid.find(element => element.id === i);
 
-        if (point) {
-          point.isShip = true;
+          if (point) {
+            point.isShip = true;
+          }
         }
-      }
 
-      this.removeShipBorder(location, ship);
-      this.displayNextShip(genericFleet);
+        this.removeShipBorder(location, ship);
+        this.displayNextShip(genericFleet);
+      }
     }
   }
 

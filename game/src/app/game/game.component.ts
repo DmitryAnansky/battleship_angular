@@ -5,7 +5,7 @@ import {CommonService} from '../services/common.service';
 
 declare var $: any;
 
-const SHIPS_ORIENTATION = {
+const SHIP_ORIENTATIONS = {
   TOP: 'TOP',
   BOTTOM: 'BOTTOM',
   LEFT: 'LEFT',
@@ -39,10 +39,10 @@ export class GameComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.shipsOrientation = SHIPS_ORIENTATION;
+    this.shipsOrientation = SHIP_ORIENTATIONS;
     this.titleLeftAlphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
     this.titleTopNumbers = Array.from(Array(11).keys());
-    this.orientation = this.shipsOrientation.RIGHT;
+    this.orientation = this.shipsOrientation.BOTTOM;
     this.playerGrid = this.getGrid(100);
     this.botGrid = this.getGrid(100);
   }
