@@ -48,9 +48,9 @@ export class PlayerGridComponent implements OnInit {
     const activePointId = parseInt(e.currentTarget.id);
 
     if (this.shipPlacementPhase) {
-      const point = this.playerGrid.find(element => element.id === activePointId - 1);
+      //const point = this.playerGrid.find(element => element.id === activePointId - 1);
 
-      point.isMiss = true;
+      //point.isMiss = true;
       this.setShip(activePointId, this.selectedShip, this.orientation, this.selectedFleet);
     }
   }
@@ -379,43 +379,44 @@ export class PlayerGridComponent implements OnInit {
   }
 
   setShip(location: number, ship: any, orientation: string, genericFleet: any) {
-    //if (!(this.checkOverlap(location, ship.length, orientation, genericFleet))) {
-    if (!genericFleet.ships[genericFleet.currentShip]) {
-      this.shipPlacementPhase = false;
-      this.displayRotationControl = false;
-      this.gamePhase = true;
+    if (!(this.checkOverlap(location, ship, orientation, this.playerGrid))) {
+      if (!genericFleet.ships[genericFleet.currentShip]) {
+        this.shipPlacementPhase = false;
+        this.displayRotationControl = false;
+        this.gamePhase = true;
 
-      this.shipPlacementPhaseChange.emit(this.shipPlacementPhase);
-      this.gamePhaseChange.emit(this.gamePhase);
-      this.displayRotationControlChange.emit(this.displayRotationControl);
+        this.shipPlacementPhaseChange.emit(this.shipPlacementPhase);
+        this.gamePhaseChange.emit(this.gamePhase);
+        this.displayRotationControlChange.emit(this.displayRotationControl);
 
-      return;
+        return;
+      }
+
+      switch (this.orientation) {
+        case this.shipsOrientation.TOP: {
+          this.setShipTop(location, ship, orientation, genericFleet);
+          break;
+        }
+        case this.shipsOrientation.LEFT: {
+          this.setShipLeft(location, ship, orientation, genericFleet);
+          break;
+        }
+        case this.shipsOrientation.RIGHT: {
+          this.setShipRight(location, ship, orientation, genericFleet);
+          break;
+        }
+        case this.shipsOrientation.BOTTOM: {
+          this.setShipBottom(location, ship, orientation, genericFleet);
+          break;
+        }
+        default: {
+          this.setShipBottom(location, ship, orientation, genericFleet);
+          break;
+        }
+      }
+
+      this.playerGridChange.emit(this.playerGrid);
     }
-
-    switch (this.orientation) {
-      case this.shipsOrientation.TOP: {
-        this.setShipTop(location, ship, orientation, genericFleet);
-        break;
-      }
-      case this.shipsOrientation.LEFT: {
-        this.setShipLeft(location, ship, orientation, genericFleet);
-        break;
-      }
-      case this.shipsOrientation.RIGHT: {
-        this.setShipRight(location, ship, orientation, genericFleet);
-        break;
-      }
-      case this.shipsOrientation.BOTTOM: {
-        this.setShipBottom(location, ship, orientation, genericFleet);
-        break;
-      }
-      default: {
-        this.setShipBottom(location, ship, orientation, genericFleet);
-        break;
-      }
-    }
-
-    this.playerGridChange.emit(this.playerGrid);
   }
 
   setShipTop(location: number, ship: any, orientation: string, genericFleet: any) {
@@ -589,7 +590,18 @@ export class PlayerGridComponent implements OnInit {
     this.shipPlacementPhaseChange.emit(this.shipPlacementPhase);
   }
 
-  checkOverlap = function (location, length, orientation, genFleet) {
+  checkOverlap(location, ship, orientation, grid) {
+    const borderPoints = [...this.shipService.calculateBorderPoints(location, ship, orientation), ...[location - 1]];
+    const shipsPoints = grid.filter(element => element.isShip === true).map(ship => ship.id);
+
+    if (!shipsPoints) {
+      return false;
+    }
+
+    // ToDo: calculate intersection
+    console.log(borderPoints);
+    console.log(shipsPoints);
+    return false;
     // ToDo: implement
   }
 }
