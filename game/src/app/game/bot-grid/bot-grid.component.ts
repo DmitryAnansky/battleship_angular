@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'app-bot-grid',
@@ -7,14 +7,11 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class BotGridComponent implements OnInit {
   @Input() botGrid;
-
-  public titleLeftAlphabet: string[];
-  public titleTopNumbers: number[];
+  @Output() botGridChange: EventEmitter<any> = new EventEmitter();
+  @Input() titleTopNumbers;
+  @Input() titleLeftAlphabet;
 
   constructor() { }
 
-  ngOnInit() {
-    this.titleLeftAlphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
-    this.titleTopNumbers = Array.from(Array(11).keys());
-  }
+  ngOnInit() {}
 }
