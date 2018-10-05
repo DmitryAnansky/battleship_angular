@@ -41,7 +41,7 @@ export class GameComponent implements OnInit {
   ngOnInit() {
     this.titleLeftAlphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
     this.titleTopNumbers = Array.from(Array(11).keys());
-    this.orientation = shipOrientation.BOTTOM;
+    this.orientation = shipOrientation.RIGHT;
     this.playerGrid = this.getGrid(100);
     this.botGrid = this.getGrid(100);
   }
@@ -129,6 +129,10 @@ export class GameComponent implements OnInit {
     }
 
     let mousePosition = e.target.id;
+
+    if (!this.selectedFleet.ships[this.selectedFleet.currentShip]) {
+      return;
+    }
 
     switch (this.orientation) {
       case shipOrientation.TOP: {
@@ -430,6 +434,7 @@ export class GameComponent implements OnInit {
         const shipPoints = this.shipService.calculateLShipTop(cellId);
 
         this.setLShip(shipPoints);
+        this.removeShipBorder(location, ship);
         this.displayNextShip(genericFleet);
       }
     } else {
@@ -500,6 +505,7 @@ export class GameComponent implements OnInit {
 
       if (location <= endPoint && (location % 10 === 0 || location % 10 > 2)) {
         this.setLShip(shipPoints);
+        this.removeShipBorder(location, ship);
         this.displayNextShip(genericFleet);
       }
     } else {
@@ -530,6 +536,7 @@ export class GameComponent implements OnInit {
 
       if (location > endPoint && location % 10 < 9 && location % 10 != 0) {
         this.setLShip(shipPoints);
+        this.removeShipBorder(location, ship);
         this.displayNextShip(genericFleet);
       }
     } else {
@@ -558,6 +565,10 @@ export class GameComponent implements OnInit {
   setShip(location: number, ship: any, orientation: string, genericFleet: any) {
     //if (!(this.checkOverlap(location, ship.length, orientation, genericFleet))) {
     if (!genericFleet.ships[genericFleet.currentShip]) {
+      this.shipPlacementPhase = false;
+      this.displayRotationControl = false;
+      this.gamePhase = true;
+
       return;
     }
 

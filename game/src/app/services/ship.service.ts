@@ -217,16 +217,127 @@ export class ShipService {
 
     switch (orientation) {
       case shipOrientation.TOP: {
+        let lShapedTopBorder = [];
 
-        return [];
+        // add right side
+        if (location % 10 !== 9) {
+          lShapedTopBorder = [
+            ...lShapedTopBorder,
+            ...[
+              cellId - inc + 2,
+              cellId - 2 * inc + 2,
+              cellId - 3 * inc + 2
+            ]
+          ];
+        }
+
+        // add left side
+        if (location % 10 !== 1) {
+          lShapedTopBorder = [
+            ...lShapedTopBorder,
+            ...[
+              cellId + inc - 1,
+              cellId - 1,
+              cellId - inc - 1,
+              cellId - 2 * inc - 1,
+              cellId - 3 * inc - 1,
+            ]
+          ];
+        }
+
+        return [
+          ...lShapedTopBorder,
+          ... [
+            cellId - inc * 3,
+            cellId - inc * 3 + 1,
+            cellId + inc,
+            cellId + inc + 1,
+            cellId + 1,
+            cellId - inc + 1
+          ]
+        ];
       }
       case shipOrientation.LEFT: {
+        let lShapedLeftBorder = [];
 
-        return [];
+        // add right side
+        if (location % 10 !== 8) {
+          lShapedLeftBorder = [
+            ...lShapedLeftBorder,
+            ...[
+              cellId - inc + 3,
+              cellId - 2 * inc + 3,
+              cellId + 3,
+            ]
+          ];
+        }
+
+        // add left side
+        if (location % 10 !== 1) {
+          lShapedLeftBorder = [
+            ...lShapedLeftBorder,
+            ...[
+              cellId - 1,
+              cellId + inc - 1,
+              cellId - inc - 1,
+              cellId - 2 * inc - 1,
+            ]
+          ];
+        }
+
+        return [
+          ...lShapedLeftBorder,
+          ... [
+            cellId + inc,
+            cellId + inc + 1,
+            cellId + 1,
+            cellId + 2,
+            cellId - 2 * inc,
+            cellId - 2 * inc + 1,
+            cellId - 2 * inc + 2
+          ]
+        ];
       }
       case shipOrientation.RIGHT: {
+        let lShapedRightBorder = [];
 
-        return [];
+        // add right side
+        if (location % 10 !== 0) {
+          lShapedRightBorder = [
+            ...lShapedRightBorder,
+            ...[
+              cellId + 1,
+              cellId - inc + 1,
+              cellId + inc + 1,
+              cellId + 2 * inc + 1
+            ]
+          ];
+        }
+
+        // add left side
+        if (location % 10 !== 3) {
+          lShapedRightBorder = [
+            ...lShapedRightBorder,
+            ...[
+              cellId + inc - 3,
+              cellId + 2 * inc - 3,
+              cellId - 3
+            ]
+          ];
+        }
+
+        return [
+          ...lShapedRightBorder,
+          ... [
+            cellId - inc,
+            cellId - inc - 1,
+            cellId - 1,
+            cellId - 2,
+            cellId + 2 * inc,
+            cellId + 2 * inc - 1,
+            cellId + 2 * inc - 2
+          ]
+        ];
       }
       case shipOrientation.BOTTOM: {
         let lShapedBottomBorder = [];

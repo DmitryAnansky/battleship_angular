@@ -32,7 +32,12 @@
       <div class="col">
         <div class="panel">
           <app-game-information [consoleText]="consoleText"></app-game-information>
-          <app-control-panel (onPlaceShips)="onPlaceShips()" (onRotateClick)="onRotateClick()" [displayRotationControl]="displayRotationControl"></app-control-panel>
+          <app-control-panel (onPlaceShips)="onPlaceShips()"
+                             (onRotateClick)="onRotateClick()"
+                             [displayRotationControl]="displayRotationControl"
+                             [gamePhase]="gamePhase"
+          >
+          </app-control-panel>
         </div>
       </div>
     </div>

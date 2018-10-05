@@ -2,7 +2,7 @@
   <div class="layout">
     <button class='buttons btn btn-dark'
             (click)="onClickPlaceShips()"
-            *ngIf="!displayRotationControl">
+            *ngIf="!gamePhase && !displayRotationControl">
       Place Ships
     </button>
     <button class='buttons btn btn-dark' (click)="onClickRotateShips()"

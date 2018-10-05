@@ -8,6 +8,7 @@ import {Router} from '@angular/router';
 })
 export class ControlPanelComponent implements OnInit {
   @Input() displayRotationControl;
+  @Input() gamePhase;
   @Output() onPlaceShips: EventEmitter<any> = new EventEmitter();
   @Output() onRotateClick: EventEmitter<any> = new EventEmitter();
 
