@@ -3,29 +3,26 @@
     <div class="row">
       <div class="col">
         <div class="board">
-            <app-bot-grid [botGrid]="botGrid"></app-bot-grid>
+            <app-bot-grid
+              [botGrid]="botGrid"
+              [titleTopNumbers]="titleTopNumbers"
+              [titleLeftAlphabet]="titleLeftAlphabet"
+            >
+            </app-bot-grid>
 
-            <div class="bottom">
-              <span *ngFor="let titleNumber of titleTopNumbers"
-                    class="title-top" [ngClass]="{hideZero: titleNumber === 0}">{{titleNumber}}</span>
-
-              <ul class="grid">
-                <li *ngFor="let cell of playerGrid" data-id="{{cell.id + 1}}"
-                    (mouseenter) ="onMouseEnterPoint($event)"
-                    (mouseleave)="onMouseExitPoint($event)"
-                    (click)="onPointClick($event)"
-                    [ngClass]="{highlight: cell.isHovered,
-                     missed: cell.isMiss,
-                     ship: cell.isShip,
-                     shipBorder: cell.isBorder
-                     }"
-                    class="points {{cell.id + 1}}">
-                  <span [ngClass]="{hole: !cell.isShip}"></span>
-                </li>
-              </ul>
-
-              <span class="title-left" *ngFor="let titleAlphabet of titleLeftAlphabet">{{titleAlphabet}}</span>
-            </div>
+            <app-player-grid [(playerGrid)]="playerGrid"
+                             [(shipPlacementPhase)]="shipPlacementPhase"
+                             [(selectedFleet)]="selectedFleet"
+                             [(selectedShip)]="selectedShip"
+                             [(displayRotationControl)]="displayRotationControl"
+                             [(gamePhase)]="gamePhase"
+                             [(consoleText)]="consoleText"
+                             [titleTopNumbers]="titleTopNumbers"
+                             [titleLeftAlphabet]="titleLeftAlphabet"
+                             [orientation]="orientation"
+                             [shipOrientation]="shipOrientation"
+            >
+            </app-player-grid>
           </div>
       </div>
 

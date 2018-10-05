@@ -572,4 +572,8 @@ export class PlayerGridComponent implements OnInit {
     this.selectedFleetChange.emit(this.selectedFleet);
     this.shipPlacementPhaseChange.emit(this.shipPlacementPhase);
   }
+
+  checkOverlap = function (location, length, orientation, genFleet) {
+    // ToDo: implement
+  }
 }
