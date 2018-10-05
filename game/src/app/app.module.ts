@@ -11,6 +11,7 @@ import { ControlPanelComponent } from './game/control-panel/control-panel.compon
 import { GameInformationComponent } from './game/game-information/game-information.component';
 import { BotGridComponent } from './game/bot-grid/bot-grid.component';
 import { ShipService } from './services/ship.service';
+import { PlayerGridComponent } from './game/player-grid/player-grid.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { ShipService } from './services/ship.service';
     GameComponent,
     ControlPanelComponent,
     GameInformationComponent,
-    BotGridComponent
+    BotGridComponent,
+    PlayerGridComponent
   ],
   imports: [
     BrowserModule,
