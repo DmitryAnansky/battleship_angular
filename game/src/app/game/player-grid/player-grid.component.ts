@@ -15,7 +15,7 @@ export class PlayerGridComponent implements OnInit {
   @Input() titleTopNumbers;
   @Input() titleLeftAlphabet;
   @Input() orientation;
-  @Input() shipOrientation;
+  @Input() shipsOrientation;
 
   @Input() playerGrid;
   @Output() playerGridChange: EventEmitter<any> = new EventEmitter();
@@ -61,19 +61,19 @@ export class PlayerGridComponent implements OnInit {
     const pointLocation = parseInt(e.target.id);
 
     switch (this.orientation) {
-      case this.shipOrientation.TOP: {
+      case this.shipsOrientation.TOP: {
         this.removeShipTop(pointLocation);
         break;
       }
-      case this.shipOrientation.LEFT: {
+      case this.shipsOrientation.LEFT: {
         this.removeShipLeft(pointLocation);
         break;
       }
-      case this.shipOrientation.RIGHT: {
+      case this.shipsOrientation.RIGHT: {
         this.removeShipRight(pointLocation);
         break;
       }
-      case this.shipOrientation.BOTTOM: {
+      case this.shipsOrientation.BOTTOM: {
         this.removeShipBottom(pointLocation);
         break;
       }
@@ -96,19 +96,19 @@ export class PlayerGridComponent implements OnInit {
     }
 
     switch (this.orientation) {
-      case this.shipOrientation.TOP: {
+      case this.shipsOrientation.TOP: {
         this.displayShipTop(parseInt(mousePosition), this.selectedShip);
         break;
       }
-      case this.shipOrientation.LEFT: {
+      case this.shipsOrientation.LEFT: {
         this.displayShipLeft(parseInt(mousePosition), this.selectedShip);
         break;
       }
-      case this.shipOrientation.RIGHT: {
+      case this.shipsOrientation.RIGHT: {
         this.displayShipRight(parseInt(mousePosition), this.selectedShip);
         break;
       }
-      case this.shipOrientation.BOTTOM: {
+      case this.shipsOrientation.BOTTOM: {
         this.displayShipBottom(parseInt(mousePosition), this.selectedShip);
         break;
       }
@@ -391,19 +391,19 @@ export class PlayerGridComponent implements OnInit {
     }
 
     switch (this.orientation) {
-      case this.shipOrientation.TOP: {
+      case this.shipsOrientation.TOP: {
         this.setShipTop(location, ship, orientation, genericFleet);
         break;
       }
-      case this.shipOrientation.LEFT: {
+      case this.shipsOrientation.LEFT: {
         this.setShipLeft(location, ship, orientation, genericFleet);
         break;
       }
-      case this.shipOrientation.RIGHT: {
+      case this.shipsOrientation.RIGHT: {
         this.setShipRight(location, ship, orientation, genericFleet);
         break;
       }
-      case this.shipOrientation.BOTTOM: {
+      case this.shipsOrientation.BOTTOM: {
         this.setShipBottom(location, ship, orientation, genericFleet);
         break;
       }

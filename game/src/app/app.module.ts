@@ -12,6 +12,7 @@ import { GameInformationComponent } from './game/game-information/game-informati
 import { BotGridComponent } from './game/bot-grid/bot-grid.component';
 import { ShipService } from './services/ship.service';
 import { PlayerGridComponent } from './game/player-grid/player-grid.component';
+import {CommonService} from './services/common.service';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,7 @@ import { PlayerGridComponent } from './game/player-grid/player-grid.component';
     FormsModule,
     HttpModule
   ],
-  providers: [ShipService],
+  providers: [ShipService, CommonService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

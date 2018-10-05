@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {Fleet} from '../models/fleet.model';
 import {Ship} from '../models/ship.model';
-import {ShipService} from '../services/ship.service';
+import {CommonService} from '../services/common.service';
 
 declare var $: any;
 
-const SHIP_ORIENTATION = {
+const SHIPS_ORIENTATION = {
   TOP: 'TOP',
   BOTTOM: 'BOTTOM',
   LEFT: 'LEFT',
@@ -33,16 +33,16 @@ export class GameComponent implements OnInit {
   public playerFleet: Fleet;
   public botFleet: Fleet;
   public orientation: string;
-  public shipOrientation: any;
+  public shipsOrientation: any;
 
-  constructor(private shipService: ShipService) {
+  constructor(private commonService: CommonService) {
   }
 
   ngOnInit() {
-    this.shipOrientation = SHIP_ORIENTATION;
+    this.shipsOrientation = SHIPS_ORIENTATION;
     this.titleLeftAlphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
     this.titleTopNumbers = Array.from(Array(11).keys());
-    this.orientation = this.shipOrientation.RIGHT;
+    this.orientation = this.shipsOrientation.RIGHT;
     this.playerGrid = this.getGrid(100);
     this.botGrid = this.getGrid(100);
   }
@@ -71,9 +71,9 @@ export class GameComponent implements OnInit {
   }
 
   onRotateClick() {
-    const orientationOptions = Object.keys(this.shipOrientation);
+    const orientationOptions = Object.keys(this.shipsOrientation);
 
-    this.orientation = orientationOptions[this.getRandomInt(0, orientationOptions.length)];
+    this.orientation = orientationOptions[this.commonService.getRandomInt(0, orientationOptions.length)];
   }
 
   placeShip(ship: Ship, fleet: Fleet) {
@@ -81,8 +81,4 @@ export class GameComponent implements OnInit {
     this.selectedFleet = fleet;
     this.shipPlacementPhase = true;
   }
-
-  getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min)) + min;
-  };
 }
