@@ -1,14 +1,14 @@
 @import "../../theme/variables";
 
-.info-page-container {
+.winner-page-container {
   background: $background-blue;
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100vh;
 
-  .intro-card {
-    border-radius: 3px;
+  .winner-card {
+    border-radius: 10px;
     width: 200px;
     height: 100px;
   }

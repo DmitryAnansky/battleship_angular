@@ -76,6 +76,8 @@ html, body {
   background: #FFFFE0;
 }
 
-.hit {
-  background: #FF0000;
+.card-body {
+  background: $background-grey;
+  border-radius: 8px;
+  text-align: center;
 }

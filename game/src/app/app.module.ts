@@ -13,6 +13,7 @@ import { BotGridComponent } from './game/bot-grid/bot-grid.component';
 import { ShipService } from './services/ship.service';
 import { PlayerGridComponent } from './game/player-grid/player-grid.component';
 import {CommonService} from './services/common.service';
+import { WinnerComponent } from './winner/winner.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import {CommonService} from './services/common.service';
     ControlPanelComponent,
     GameInformationComponent,
     BotGridComponent,
-    PlayerGridComponent
+    PlayerGridComponent,
+    WinnerComponent
   ],
   imports: [
     BrowserModule,
