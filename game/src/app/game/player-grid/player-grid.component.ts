@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ShipService} from '../../services/ship.service';
 import {Ship} from '../../models/ship.model';
 import {Fleet} from '../../models/fleet.model';
+import {intersection} from "lodash";
 
 const L_SHAPED = 'lShape';
 
@@ -598,10 +599,8 @@ export class PlayerGridComponent implements OnInit {
       return false;
     }
 
-    // ToDo: calculate intersection
-    console.log(borderPoints);
-    console.log(shipsPoints);
-    return false;
-    // ToDo: implement
+    const shipsBorderPositionIntersection = intersection(borderPoints, shipsPoints);
+
+    return shipsBorderPositionIntersection.length > 0;
   }
 }
