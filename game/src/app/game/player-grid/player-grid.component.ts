@@ -568,7 +568,7 @@ export class PlayerGridComponent implements OnInit {
     this.shipPlacementPhaseChange.emit(this.shipPlacementPhase);
   }
 
-  checkOverlap(location, ship, orientation, grid) {
+  checkOverlap(location: number, ship: any, orientation: string, grid: any) {
     const borderPoints = [...this.shipService.calculateBorderPoints(location, ship, orientation), ...[location - 1]];
     const shipsPoints = grid.filter(element => element.isShip === true).map(ship => ship.id);
 

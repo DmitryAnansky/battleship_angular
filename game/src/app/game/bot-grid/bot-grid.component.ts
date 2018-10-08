@@ -33,7 +33,7 @@ export class BotGridComponent implements OnInit {
   }
 
   serBotsFleet(grid: any) {
-    const fleet = this.shipService.getBotsFleetPosition();
+    const fleet = this.botService.getBotsFleetPosition();
 
     fleet.map(element => {
       grid[element].isShip = true;

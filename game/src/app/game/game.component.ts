@@ -29,7 +29,6 @@ export class GameComponent implements OnInit {
     ' The Game will start immediately after all ship\'s positioning.';
   public displayRotationControl: boolean = false;
   public playerFleet: Fleet;
-  public botFleet: Fleet;
   public orientation: string;
   public shipsOrientation: any;
 
