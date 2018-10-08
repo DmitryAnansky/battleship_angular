@@ -3,7 +3,14 @@
         class="title-top" [ngClass]="{hideZero: titleNumber === 0}">{{titleNumber}}</span>
 
   <ul class="grid">
-    <li *ngFor="let i of botGrid" data-id="{{i + 1}}" class="points {{i + 1}}">
+    <li *ngFor="let cell of botGrid" data-id="{{cell.id + 1}}"
+        (click)="onPointClick($event)"
+        [ngClass]="{
+          missed: cell.isMiss,
+          hit: cell.isHit,
+          ship: cell.isShip
+          }"
+        class="points {{cell.id + 1}}">
       <span class="hole"></span>
     </li>
   </ul>

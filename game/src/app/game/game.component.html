@@ -4,9 +4,12 @@
       <div class="col">
         <div class="board">
             <app-bot-grid
-              [botGrid]="botGrid"
+              [(botGrid)]="botGrid"
+              [(playerGrid)]="playerGrid"
               [titleTopNumbers]="titleTopNumbers"
               [titleLeftAlphabet]="titleLeftAlphabet"
+              [(gamePhase)]="gamePhase"
+              [(consoleText)]="consoleText"
             >
             </app-bot-grid>
 

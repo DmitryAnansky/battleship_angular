@@ -3,8 +3,6 @@ import {Fleet} from '../models/fleet.model';
 import {Ship} from '../models/ship.model';
 import {CommonService} from '../services/common.service';
 
-declare var $: any;
-
 const SHIP_ORIENTATIONS = {
   TOP: 'TOP',
   BOTTOM: 'BOTTOM',

@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {CommonService} from './common.service';
 
 const shipOrientation = {
   TOP: 'TOP',
@@ -7,11 +8,17 @@ const shipOrientation = {
   RIGHT: 'RIGHT'
 };
 const lShaped = 'lShape';
+const botsFleetCombinations = [
+  [0, 1, 2, 12, 8, 79, 60, 70, 80, 90],
+  [4, 14, 24, 25, 41, 42, 43, 44, 78, 81],
+  [98, 99, 89, 79, 9, 5, 50, 60, 70, 80],
+  [35, 45, 55, 56, 98, 2, 32, 42, 52, 62]
+];
 
 @Injectable()
 export class ShipService {
 
-  constructor() {
+  constructor(private commonService: CommonService) {
   }
 
   calculateLShipTop(cellId: number) {
@@ -422,5 +429,11 @@ export class ShipService {
     }
 
     return this.calculateIShipBorderPoints(location, cellId, ship, orientation);
+  }
+
+  getBotsFleetPosition() {
+    const luckyNumber = this.commonService.getRandomInt(0, botsFleetCombinations.length);
+
+    return botsFleetCombinations[luckyNumber];
   }
 }
