@@ -5,7 +5,7 @@ export class CommonService {
 
   constructor() { }
 
-  getRandomInt(min, max) {
+  getRandomInt(min: number, max: number) {
     return Math.floor(Math.random() * (max - min)) + min;
   };
 }

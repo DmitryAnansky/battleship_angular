@@ -49,9 +49,6 @@ export class PlayerGridComponent implements OnInit {
     const activePointId = parseInt(e.currentTarget.id);
 
     if (this.shipPlacementPhase) {
-      //const point = this.playerGrid.find(element => element.id === activePointId - 1);
-
-      //point.isMiss = true;
       this.setShip(activePointId, this.selectedShip, this.orientation, this.selectedFleet);
     }
   }
@@ -424,15 +421,15 @@ export class PlayerGridComponent implements OnInit {
       this.shipPlacementPhaseChange.emit(this.shipPlacementPhase);
       this.gamePhaseChange.emit(this.gamePhase);
       this.displayRotationControlChange.emit(this.displayRotationControl);
+
+      this.consoleText = 'Player can select sector to attack bots Fleet.';
+      this.consoleTextChange.emit(this.consoleText);
     }
   }
 
   setShipTop(location: number, ship: any, orientation: string, genericFleet: any) {
     const cellId = location - 1;
     const endPoint = (ship.length * 10) - 10;
-
-    // TODO: change this part
-    genericFleet.ships[genericFleet.currentShip].populateVertHits(location);
 
     if (ship.type === L_SHAPED) {
       const endPoint = ((ship.length + 1) * 10) - 10;
@@ -468,9 +465,6 @@ export class PlayerGridComponent implements OnInit {
     const cellId = location - 1;
     const endPoint = (ship.length * 10) - 10;
 
-    // TODO: change this part
-    genericFleet.ships[genericFleet.currentShip].populateVertHits(location);
-
     if (ship.type === L_SHAPED) {
       const endPoint = ((ship.length - 1) * 10) - 10;
 
@@ -503,8 +497,6 @@ export class PlayerGridComponent implements OnInit {
 
   setShipRight(location: number, ship: any, orientation: string, genericFleet: any) {
     const cellId = location - 1;
-    // TODO: change this part
-    genericFleet.ships[genericFleet.currentShip].populateHorzHits(location);
 
     if (ship.type === L_SHAPED) {
       const shipPoints = this.shipService.calculateLShipRight(cellId);
@@ -535,8 +527,6 @@ export class PlayerGridComponent implements OnInit {
 
   setShipLeft(location: number, ship: any, orientation: string, genericFleet: any) {
     const cellId = location - 1;
-    // TODO: change this part
-    genericFleet.ships[genericFleet.currentShip].populateHorzHits(location);
 
     if (ship.type === L_SHAPED) {
       const shipPoints = this.shipService.calculateLShipLeft(cellId);
@@ -564,10 +554,7 @@ export class PlayerGridComponent implements OnInit {
   }
 
   displayNextShip(fleet: any) {
-    if (++fleet.currentShip == fleet.numOfShips) {
-      // TODO: generate bot FLEET
-      // this.createCpuFleet
-    } else {
+    if (++fleet.currentShip !== fleet.numOfShips) {
       this.placeShip(fleet.ships[fleet.currentShip], fleet);
     }
   }

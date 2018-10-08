@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ShipService} from '../../services/ship.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-bot-grid',
@@ -15,7 +16,7 @@ export class BotGridComponent implements OnInit {
   @Input() gamePhase;
   @Input() consoleText;
 
-  constructor(private shipService: ShipService) { }
+  constructor(private shipService: ShipService, private router: Router) { }
 
   ngOnInit() {
     if (this.botGrid) {
@@ -23,7 +24,7 @@ export class BotGridComponent implements OnInit {
     }
   }
 
-  serBotsFleet(grid) {
+  serBotsFleet(grid: any) {
     const fleet = this.shipService.getBotsFleetPosition();
 
     fleet.map(element => {
@@ -54,5 +55,15 @@ export class BotGridComponent implements OnInit {
     } else {
       point.isMiss = true;
     }
+
+    if (!this.shipsAlive()) {
+      this.router.navigate(['/winner', 'Player']);
+    }
+  }
+
+  shipsAlive() {
+    const fleetAliveShipPoints = this.botGrid.filter(point => point.isShip && !point.isHit);
+
+    return fleetAliveShipPoints.length > 0;
   }
 }
