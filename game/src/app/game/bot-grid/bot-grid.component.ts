@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ShipService} from '../../services/ship.service';
 import {Router} from '@angular/router';
+import {BotService} from '../../services/bot.service';
 
 @Component({
   selector: 'app-bot-grid',
@@ -9,14 +10,21 @@ import {Router} from '@angular/router';
 })
 export class BotGridComponent implements OnInit {
   @Input() botGrid;
-  @Input() playerGrid;
   @Output() botGridChange: EventEmitter<any> = new EventEmitter();
+
+  @Input() playerGrid;
+  @Output() playerGridChange: EventEmitter<any> = new EventEmitter();
+
   @Input() titleTopNumbers;
   @Input() titleLeftAlphabet;
   @Input() gamePhase;
-  @Input() consoleText;
 
-  constructor(private shipService: ShipService, private router: Router) { }
+  @Input() consoleText;
+  @Output() consoleTextChange: EventEmitter<string> = new EventEmitter();
+
+  constructor(private shipService: ShipService,
+              private botService: BotService,
+              private router: Router) { }
 
   ngOnInit() {
     if (this.botGrid) {
@@ -30,6 +38,8 @@ export class BotGridComponent implements OnInit {
     fleet.map(element => {
       grid[element].isShip = true;
     });
+
+    this.botGridChange.emit(this.botGrid);
   }
 
   onPointClick(e) {
@@ -52,17 +62,42 @@ export class BotGridComponent implements OnInit {
 
     if (point.isShip) {
       point.isHit = true;
+      this.consoleText = 'Hit';
     } else {
       point.isMiss = true;
+      this.consoleText = 'Miss';
+
+      this.botMakeShot();
     }
 
-    if (!this.shipsAlive()) {
+    this.botGridChange.emit(this.botGrid);
+    this.consoleTextChange.emit(this.consoleText);
+
+    if (!this.shipsAlive(this.botGrid)) {
       this.router.navigate(['/winner', 'Player']);
     }
   }
 
-  shipsAlive() {
-    const fleetAliveShipPoints = this.botGrid.filter(point => point.isShip && !point.isHit);
+  botMakeShot() {
+    const newShot = this.botService.getNextShot(this.playerGrid);
+
+    if (this.playerGrid[newShot].isShip) {
+      this.playerGrid[newShot].isHit = true;
+      this.playerGridChange.emit(this.playerGrid);
+
+      if (!this.shipsAlive(this.playerGrid)) {
+        this.router.navigate(['/winner', 'Bot']);
+      }
+
+      this.botMakeShot();
+    } else {
+      this.playerGrid[newShot].isMiss = true;
+      this.playerGridChange.emit(this.playerGrid);
+    }
+  }
+
+  shipsAlive(grid:any) {
+    const fleetAliveShipPoints = grid.filter(point => point.isShip && !point.isHit);
 
     return fleetAliveShipPoints.length > 0;
   }

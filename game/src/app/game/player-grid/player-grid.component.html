@@ -10,7 +10,8 @@
         [ngClass]="{highlight: cell.isHovered,
                      missed: cell.isMiss,
                      ship: cell.isShip,
-                     shipBorder: cell.isBorder
+                     shipBorder: cell.isBorder,
+                     hit: cell.isHit
                      }"
         class="points {{cell.id + 1}}">
       <span [ngClass]="{hole: !cell.isShip}"></span>

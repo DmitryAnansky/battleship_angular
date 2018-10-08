@@ -379,7 +379,6 @@ export class PlayerGridComponent implements OnInit {
   setShip(location: number, ship: any, orientation: string, genericFleet: any) {
     if (this.checkOverlap(location, ship, orientation, this.playerGrid)) {
       this.consoleText = `${this.selectedShip.type} can not be placed on this position`;
-
       this.consoleTextChange.emit(this.consoleText);
       return;
     }

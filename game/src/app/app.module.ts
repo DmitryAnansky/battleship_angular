@@ -14,6 +14,7 @@ import { ShipService } from './services/ship.service';
 import { PlayerGridComponent } from './game/player-grid/player-grid.component';
 import {CommonService} from './services/common.service';
 import { WinnerComponent } from './winner/winner.component';
+import {BotService} from './services/bot.service';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,7 @@ import { WinnerComponent } from './winner/winner.component';
     FormsModule,
     HttpModule
   ],
-  providers: [ShipService, CommonService],
+  providers: [ShipService, CommonService, BotService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
