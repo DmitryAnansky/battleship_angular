@@ -27,7 +27,6 @@ export class Fleet{
       this.ships[i] = new Ship(this.shipDetails[i].name);
       this.ships[i].length = this.shipDetails[i].length;
       this.ships[i].type = this.shipDetails[i].type;
-      this.ships[i].rotation = 'top';
     }
   };
 }
