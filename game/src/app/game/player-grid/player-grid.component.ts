@@ -380,43 +380,50 @@ export class PlayerGridComponent implements OnInit {
   }
 
   setShip(location: number, ship: any, orientation: string, genericFleet: any) {
-    if (!(this.checkOverlap(location, ship, orientation, this.playerGrid))) {
-      if (!genericFleet.ships[genericFleet.currentShip]) {
-        this.shipPlacementPhase = false;
-        this.displayRotationControl = false;
-        this.gamePhase = true;
+    if (this.checkOverlap(location, ship, orientation, this.playerGrid)) {
+      this.consoleText = `${this.selectedShip.type} can not be placed on this position`;
 
-        this.shipPlacementPhaseChange.emit(this.shipPlacementPhase);
-        this.gamePhaseChange.emit(this.gamePhase);
-        this.displayRotationControlChange.emit(this.displayRotationControl);
+      this.consoleTextChange.emit(this.consoleText);
+      return;
+    }
 
-        return;
+    switch (this.orientation) {
+      case this.shipsOrientation.TOP: {
+        this.setShipTop(location, ship, orientation, genericFleet);
+        break;
       }
-
-      switch (this.orientation) {
-        case this.shipsOrientation.TOP: {
-          this.setShipTop(location, ship, orientation, genericFleet);
-          break;
-        }
-        case this.shipsOrientation.LEFT: {
-          this.setShipLeft(location, ship, orientation, genericFleet);
-          break;
-        }
-        case this.shipsOrientation.RIGHT: {
-          this.setShipRight(location, ship, orientation, genericFleet);
-          break;
-        }
-        case this.shipsOrientation.BOTTOM: {
-          this.setShipBottom(location, ship, orientation, genericFleet);
-          break;
-        }
-        default: {
-          this.setShipBottom(location, ship, orientation, genericFleet);
-          break;
-        }
+      case this.shipsOrientation.LEFT: {
+        this.setShipLeft(location, ship, orientation, genericFleet);
+        break;
       }
+      case this.shipsOrientation.RIGHT: {
+        this.setShipRight(location, ship, orientation, genericFleet);
+        break;
+      }
+      case this.shipsOrientation.BOTTOM: {
+        this.setShipBottom(location, ship, orientation, genericFleet);
+        break;
+      }
+      default: {
+        this.setShipBottom(location, ship, orientation, genericFleet);
+        break;
+      }
+    }
 
-      this.playerGridChange.emit(this.playerGrid);
+    this.consoleText = `${this.selectedShip.type} has been placed
+        [${genericFleet.currentShip}/${genericFleet.numOfShips}]`;
+
+    this.consoleTextChange.emit(this.consoleText);
+    this.playerGridChange.emit(this.playerGrid);
+
+    if (!genericFleet.ships[genericFleet.currentShip]) {
+      this.shipPlacementPhase = false;
+      this.displayRotationControl = false;
+      this.gamePhase = true;
+
+      this.shipPlacementPhaseChange.emit(this.shipPlacementPhase);
+      this.gamePhaseChange.emit(this.gamePhase);
+      this.displayRotationControlChange.emit(this.displayRotationControl);
     }
   }
 
@@ -426,10 +433,6 @@ export class PlayerGridComponent implements OnInit {
 
     // TODO: change this part
     genericFleet.ships[genericFleet.currentShip].populateVertHits(location);
-
-    this.consoleText = `${this.selectedShip.type} has been placed
-     [${genericFleet.currentShip + 1}/${genericFleet.numOfShips}]`;
-    this.consoleTextChange.emit(this.consoleText);
 
     if (ship.type === L_SHAPED) {
       const endPoint = ((ship.length + 1) * 10) - 10;
@@ -468,10 +471,6 @@ export class PlayerGridComponent implements OnInit {
     // TODO: change this part
     genericFleet.ships[genericFleet.currentShip].populateVertHits(location);
 
-    this.consoleText = `${this.selectedShip.type} has been placed
-     [${genericFleet.currentShip + 1}/${genericFleet.numOfShips}]`;
-    this.consoleTextChange.emit(this.consoleText);
-
     if (ship.type === L_SHAPED) {
       const endPoint = ((ship.length - 1) * 10) - 10;
 
@@ -507,10 +506,6 @@ export class PlayerGridComponent implements OnInit {
     // TODO: change this part
     genericFleet.ships[genericFleet.currentShip].populateHorzHits(location);
 
-    this.consoleText = `${this.selectedShip.type} has been placed
-     [${genericFleet.currentShip + 1}/${genericFleet.numOfShips}]`;
-    this.consoleTextChange.emit(this.consoleText);
-
     if (ship.type === L_SHAPED) {
       const shipPoints = this.shipService.calculateLShipRight(cellId);
       const endPoint = 90;
@@ -542,10 +537,6 @@ export class PlayerGridComponent implements OnInit {
     const cellId = location - 1;
     // TODO: change this part
     genericFleet.ships[genericFleet.currentShip].populateHorzHits(location);
-
-    this.consoleText = `${this.selectedShip.type} has been placed
-     [${genericFleet.currentShip + 1}/${genericFleet.numOfShips}]`;
-    this.consoleTextChange.emit(this.consoleText);
 
     if (ship.type === L_SHAPED) {
       const shipPoints = this.shipService.calculateLShipLeft(cellId);
