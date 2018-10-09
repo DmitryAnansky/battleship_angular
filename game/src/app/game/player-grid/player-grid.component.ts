@@ -430,8 +430,7 @@ export class PlayerGridComponent implements OnInit {
         const shipPoints = this.shipService.calculateLShipTop(cellId);
 
         this.setLShip(shipPoints);
-        this.removeShipBorder(location, ship);
-        this.displayNextShip(genericFleet);
+        this.displayNextFleetShip(location, ship, genericFleet);
       }
     } else {
       let inc = 0;
@@ -447,8 +446,7 @@ export class PlayerGridComponent implements OnInit {
           inc = inc + 10;
         }
 
-        this.removeShipBorder(location, ship);
-        this.displayNextShip(genericFleet);
+        this.displayNextFleetShip(location, ship, genericFleet);
       }
     }
   }
@@ -464,8 +462,7 @@ export class PlayerGridComponent implements OnInit {
         const shipPoints = this.shipService.calculateLShipBottom(cellId);
 
         this.setLShip(shipPoints);
-        this.removeShipBorder(location, ship);
-        this.displayNextShip(genericFleet);
+        this.displayNextFleetShip(location, ship, genericFleet);
       }
     } else {
       let inc = 0;
@@ -481,8 +478,7 @@ export class PlayerGridComponent implements OnInit {
           inc = inc + 10;
         }
 
-        this.removeShipBorder(location, ship);
-        this.displayNextShip(genericFleet);
+        this.displayNextFleetShip(location, ship, genericFleet);
       }
     }
   }
@@ -496,8 +492,7 @@ export class PlayerGridComponent implements OnInit {
 
       if (location <= endPoint && (location % 10 === 0 || location % 10 > 2)) {
         this.setLShip(shipPoints);
-        this.removeShipBorder(location, ship);
-        this.displayNextShip(genericFleet);
+        this.displayNextFleetShip(location, ship, genericFleet);
       }
     } else {
       const endPoint = location + ship.length - 2;
@@ -511,8 +506,7 @@ export class PlayerGridComponent implements OnInit {
           }
         }
 
-        this.removeShipBorder(location, this.selectedShip);
-        this.displayNextShip(genericFleet);
+        this.displayNextFleetShip(location, ship, genericFleet);
       }
     }
   }
@@ -526,8 +520,7 @@ export class PlayerGridComponent implements OnInit {
 
       if (location > endPoint && location % 10 < 9 && location % 10 != 0) {
         this.setLShip(shipPoints);
-        this.removeShipBorder(location, ship);
-        this.displayNextShip(genericFleet);
+        this.displayNextFleetShip(location, ship, genericFleet);
       }
     } else {
       if (ship.length === 1 || location % 10 >= 4 || location % 10 === 0) {
@@ -539,10 +532,14 @@ export class PlayerGridComponent implements OnInit {
           }
         }
 
-        this.removeShipBorder(location, ship);
-        this.displayNextShip(genericFleet);
+        this.displayNextFleetShip(location, ship, genericFleet);
       }
     }
+  }
+
+  displayNextFleetShip(location: number, ship: any, fleet: any) {
+    this.removeShipBorder(location, ship);
+    this.displayNextShip(fleet);
   }
 
   displayNextShip(fleet: any) {
