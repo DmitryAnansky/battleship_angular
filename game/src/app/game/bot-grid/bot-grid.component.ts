@@ -74,7 +74,7 @@ export class BotGridComponent implements OnInit {
     this.botGridChange.emit(this.botGrid);
     this.consoleTextChange.emit(this.consoleText);
 
-    if (!this.shipsAlive(this.botGrid)) {
+    if (!this.shipService.shipsAlive(this.botGrid)) {
       this.router.navigate(['/winner', 'Player']);
     }
   }
@@ -86,7 +86,7 @@ export class BotGridComponent implements OnInit {
       this.playerGrid[newShot].isHit = true;
       this.playerGridChange.emit(this.playerGrid);
 
-      if (!this.shipsAlive(this.playerGrid)) {
+      if (!this.shipService.shipsAlive(this.playerGrid)) {
         this.router.navigate(['/winner', 'Bot']);
       }
 
@@ -95,11 +95,5 @@ export class BotGridComponent implements OnInit {
       this.playerGrid[newShot].isMiss = true;
       this.playerGridChange.emit(this.playerGrid);
     }
-  }
-
-  shipsAlive(grid:any) {
-    const fleetAliveShipPoints = grid.filter(point => point.isShip && !point.isHit);
-
-    return fleetAliveShipPoints.length > 0;
   }
 }

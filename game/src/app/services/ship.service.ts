@@ -423,4 +423,10 @@ export class ShipService {
 
     return this.calculateIShipBorderPoints(location, cellId, ship, orientation);
   }
+
+  shipsAlive(grid:any) {
+    const fleetAliveShipPoints = grid.filter(point => point.isShip && !point.isHit);
+
+    return fleetAliveShipPoints.length > 0;
+  }
 }
