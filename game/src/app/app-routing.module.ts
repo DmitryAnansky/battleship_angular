@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import {IntroComponent} from './intro/intro.component';
 import {GameComponent} from './game/game.component';
 import {WinnerComponent} from './winner/winner.component';
+import {NotFoundComponent} from './not-found/not-found.component';
 
 
 const routes: Routes = [
@@ -22,6 +23,15 @@ const routes: Routes = [
   {
     path: 'winner/:name',
     component: WinnerComponent
+  },
+  {
+    path: '404',
+    component: NotFoundComponent,
+  },
+  {
+    path: '**',
+    redirectTo: '/404',
+    pathMatch: 'full'
   }
 ];
 

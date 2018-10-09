@@ -2,12 +2,13 @@ import {Component, OnInit} from '@angular/core';
 import {Fleet} from '../models/fleet.model';
 import {Ship} from '../models/ship.model';
 import {CommonService} from '../services/common.service';
+import {GameConstants} from './game_constants';
 
 const SHIP_ORIENTATIONS = {
-  TOP: 'TOP',
-  BOTTOM: 'BOTTOM',
-  LEFT: 'LEFT',
-  RIGHT: 'RIGHT'
+  TOP: GameConstants.TOP,
+  BOTTOM: GameConstants.BOTTOM,
+  LEFT: GameConstants.LEFT,
+  RIGHT: GameConstants.RIGHT
 };
 
 @Component({

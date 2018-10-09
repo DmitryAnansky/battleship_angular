@@ -1,12 +1,12 @@
 import {Injectable} from '@angular/core';
+import {GameConstants} from '../game/game_constants';
 
 const shipOrientation = {
-  TOP: 'TOP',
-  BOTTOM: 'BOTTOM',
-  LEFT: 'LEFT',
-  RIGHT: 'RIGHT'
+  TOP: GameConstants.TOP,
+  BOTTOM: GameConstants.BOTTOM,
+  LEFT: GameConstants.LEFT,
+  RIGHT: GameConstants.RIGHT
 };
-const lShaped = 'lShape';
 
 @Injectable()
 export class ShipService {
@@ -413,7 +413,7 @@ export class ShipService {
   calculateBorderPoints(location: number, ship: any, orientation: string) {
     const cellId = location - 1;
 
-    if (ship.type === lShaped) {
+    if (ship.type === GameConstants.L_SHAPED) {
       return this.calculateLShipBorderPoints(location, cellId, ship, orientation);
     }
 

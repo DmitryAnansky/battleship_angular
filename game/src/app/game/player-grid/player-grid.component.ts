@@ -3,8 +3,7 @@ import {ShipService} from '../../services/ship.service';
 import {Ship} from '../../models/ship.model';
 import {Fleet} from '../../models/fleet.model';
 import {intersection} from "lodash";
-
-const L_SHAPED = 'lShape';
+import {GameConstants} from '../../game/game_constants';
 
 @Component({
   selector: 'app-player-grid',
@@ -124,7 +123,7 @@ export class PlayerGridComponent implements OnInit {
 
     let inc = 0;
 
-    if (ship.type === L_SHAPED) {
+    if (ship.type === GameConstants.L_SHAPED) {
       const endPoint = ((ship.length + 1) * 10) - 10;
 
       if (ship.length === 1 || (location + endPoint > 60 && location % 10 !== 0)) {
@@ -157,7 +156,7 @@ export class PlayerGridComponent implements OnInit {
 
     let inc = 0;
 
-    if (ship.type === L_SHAPED) {
+    if (ship.type === GameConstants.L_SHAPED) {
       const endPoint = ((ship.length - 1) * 10) - 10;
 
       if (location + endPoint <= 100 && location % 10 !== 0) {
@@ -189,7 +188,7 @@ export class PlayerGridComponent implements OnInit {
   displayShipLeft(location: number, ship: any) {
     const cellId = location - 1;
 
-    if (ship.type === L_SHAPED) {
+    if (ship.type === GameConstants.L_SHAPED) {
       const shipPoints = this.shipService.calculateLShipLeft(cellId);
       const endPoint = 10;
 
@@ -212,7 +211,7 @@ export class PlayerGridComponent implements OnInit {
   displayShipRight(location: number, ship: any) {
     const cellId = location - 1;
 
-    if (this.selectedShip.type === L_SHAPED) {
+    if (this.selectedShip.type === GameConstants.L_SHAPED) {
       const shipPoints = this.shipService.calculateLShipRight(cellId);
       const endPoint = 90;
 
@@ -239,7 +238,7 @@ export class PlayerGridComponent implements OnInit {
 
     let inc = 0;
 
-    if (this.selectedShip.type === L_SHAPED) {
+    if (this.selectedShip.type === GameConstants.L_SHAPED) {
       const shipPoints = this.shipService.calculateLShipTop(cellId);
 
       this.removeShip(shipPoints);
@@ -263,7 +262,7 @@ export class PlayerGridComponent implements OnInit {
 
     let inc = 0;
 
-    if (this.selectedShip.type === L_SHAPED) {
+    if (this.selectedShip.type === GameConstants.L_SHAPED) {
       const shipPoints = this.shipService.calculateLShipBottom(cellId);
 
       this.removeShip(shipPoints);
@@ -285,7 +284,7 @@ export class PlayerGridComponent implements OnInit {
   removeShipLeft(location: number) {
     const cellId = location - 1;
 
-    if (this.selectedShip.type === L_SHAPED) {
+    if (this.selectedShip.type === GameConstants.L_SHAPED) {
       const shipPoints = this.shipService.calculateLShipLeft(cellId);
 
       this.removeShip(shipPoints);
@@ -305,7 +304,7 @@ export class PlayerGridComponent implements OnInit {
   removeShipRight(location: number) {
     const cellId = location - 1;
 
-    if (this.selectedShip.type === L_SHAPED) {
+    if (this.selectedShip.type === GameConstants.L_SHAPED) {
       const shipPoints = this.shipService.calculateLShipRight(cellId);
 
       this.removeShip(shipPoints);
@@ -430,7 +429,7 @@ export class PlayerGridComponent implements OnInit {
     const cellId = location - 1;
     const endPoint = (ship.length * 10) - 10;
 
-    if (ship.type === L_SHAPED) {
+    if (ship.type === GameConstants.L_SHAPED) {
       const endPoint = ((ship.length + 1) * 10) - 10;
 
       if (ship.length === 1 || (location + endPoint > 60 && location % 10 !== 0)) {
@@ -464,7 +463,7 @@ export class PlayerGridComponent implements OnInit {
     const cellId = location - 1;
     const endPoint = (ship.length * 10) - 10;
 
-    if (ship.type === L_SHAPED) {
+    if (ship.type === GameConstants.L_SHAPED) {
       const endPoint = ((ship.length - 1) * 10) - 10;
 
       if (location + endPoint <= 100 && location % 10 !== 0) {
@@ -497,7 +496,7 @@ export class PlayerGridComponent implements OnInit {
   setShipRight(location: number, ship: any, orientation: string, genericFleet: any) {
     const cellId = location - 1;
 
-    if (ship.type === L_SHAPED) {
+    if (ship.type === GameConstants.L_SHAPED) {
       const shipPoints = this.shipService.calculateLShipRight(cellId);
       const endPoint = 90;
 
@@ -527,7 +526,7 @@ export class PlayerGridComponent implements OnInit {
   setShipLeft(location: number, ship: any, orientation: string, genericFleet: any) {
     const cellId = location - 1;
 
-    if (ship.type === L_SHAPED) {
+    if (ship.type === GameConstants.L_SHAPED) {
       const shipPoints = this.shipService.calculateLShipLeft(cellId);
       const endPoint = 10;
 

@@ -1,4 +1,5 @@
 import {Ship} from './ship.model';
+import {GameConstants} from '../game/game_constants';
 
 export class Fleet{
   private name: string;
@@ -11,10 +12,10 @@ export class Fleet{
   constructor(name) {
     this.name = name;
     this.shipDetails = [
-      { 'name': 'lShaped', 'length': 4, 'type': 'lShape'},
-      { 'name': 'iShaped', 'length': 4, 'type': 'iShape'},
-      { 'name': 'dotShaped', 'length': 1, 'type': 'dotShape'},
-      { 'name': 'dotShaped', 'length': 1, 'type': 'dotShape'}
+      { 'name': 'lShaped', 'length': 4, 'type': GameConstants.L_SHAPED},
+      { 'name': 'iShaped', 'length': 4, 'type': GameConstants.I_SHAPED},
+      { 'name': 'dotShaped', 'length': 1, 'type': GameConstants.DOT_SHAPED},
+      { 'name': 'dotShaped', 'length': 1, 'type': GameConstants.DOT_SHAPED}
     ];
     this.numOfShips = this.shipDetails.length;
     this.ships = [];

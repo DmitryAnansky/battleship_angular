@@ -15,6 +15,8 @@ import {PlayerGridComponent} from './game/player-grid/player-grid.component';
 import {CommonService} from './services/common.service';
 import {WinnerComponent} from './winner/winner.component';
 import {BotService} from './services/bot.service';
+import {GameConstants} from './game/game_constants';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,8 @@ import {BotService} from './services/bot.service';
     GameInformationComponent,
     BotGridComponent,
     PlayerGridComponent,
-    WinnerComponent
+    WinnerComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +36,7 @@ import {BotService} from './services/bot.service';
     FormsModule,
     HttpModule
   ],
-  providers: [ShipService, CommonService, BotService],
+  providers: [ShipService, CommonService, BotService, GameConstants],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
