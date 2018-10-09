@@ -81,6 +81,8 @@ export class PlayerGridComponent implements OnInit {
         break;
       }
     }
+
+    this.removeShipBorder(pointLocation, this.selectedShip);
   }
 
   onMouseEnterPoint(e) {
@@ -253,8 +255,6 @@ export class PlayerGridComponent implements OnInit {
         inc = inc + 10;
       }
     }
-
-    this.removeShipBorder(location, this.selectedShip);
   };
 
   removeShipBottom(location: number) {
@@ -277,8 +277,6 @@ export class PlayerGridComponent implements OnInit {
         inc = inc + 10;
       }
     }
-
-    this.removeShipBorder(location, this.selectedShip);
   };
 
   removeShipLeft(location: number) {
@@ -297,8 +295,6 @@ export class PlayerGridComponent implements OnInit {
         }
       }
     }
-
-    this.removeShipBorder(location, this.selectedShip);
   };
 
   removeShipRight(location: number) {
@@ -317,8 +313,6 @@ export class PlayerGridComponent implements OnInit {
         }
       }
     }
-
-    this.removeShipBorder(location, this.selectedShip);
   };
 
   removeShip(shipPoints: number[]) {
