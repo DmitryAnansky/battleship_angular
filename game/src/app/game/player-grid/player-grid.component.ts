@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {ShipService} from '../../services/ship.service';
 import {Ship} from '../../models/ship.model';
 import {Fleet} from '../../models/fleet.model';
@@ -12,7 +12,7 @@ import {Grid} from '../grid';
   styleUrls: ['./player-grid.component.scss']
 })
 
-export class PlayerGridComponent implements OnInit {
+export class PlayerGridComponent {
   @Input() titleTopNumbers;
   @Input() titleLeftAlphabet;
   @Input() orientation;
@@ -40,9 +40,6 @@ export class PlayerGridComponent implements OnInit {
   @Output() consoleTextChange: EventEmitter<string> = new EventEmitter();
 
   constructor(private shipService: ShipService) {
-  }
-
-  ngOnInit() {
   }
 
   onPointClick(e) {

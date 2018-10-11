@@ -4,7 +4,6 @@ export interface ShipEntity {
   length: number;
 }
 
-
 export interface ShipOrientation {
   TOP: string,
   BOTTOM: string,
