@@ -1,5 +1,7 @@
 import {Injectable} from '@angular/core';
 import {GameConstants} from '../game/game_constants';
+import {Grid} from '../game/grid';
+import {Ship} from '../models/ship.model';
 
 const shipOrientation = {
   TOP: GameConstants.TOP,
@@ -38,7 +40,7 @@ export class ShipService {
     return [cellId, cellId - inc, cellId - (inc - 1), cellId - (inc - 2)];
   }
 
-  calculateIShipBorderPoints(location: number, cellId: number, ship: any, orientation: string) {
+  calculateIShipBorderPoints(location: number, cellId: number, ship: Ship, orientation: string) {
     const inc = 10;
 
     switch (orientation) {
@@ -212,7 +214,7 @@ export class ShipService {
     }
   }
 
-  calculateLShipBorderPoints(location: number, cellId: number, ship: any, orientation: string) {
+  calculateLShipBorderPoints(location: number, cellId: number, ship: Ship, orientation: string) {
     const inc = 10;
 
     switch (orientation) {
@@ -410,7 +412,7 @@ export class ShipService {
     ];
   }
 
-  calculateBorderPoints(location: number, ship: any, orientation: string) {
+  calculateBorderPoints(location: number, ship: Ship, orientation: string) {
     const cellId = location - 1;
 
     if (ship.type === GameConstants.L_SHAPED) {
@@ -424,7 +426,7 @@ export class ShipService {
     return this.calculateIShipBorderPoints(location, cellId, ship, orientation);
   }
 
-  shipsAlive(grid:any) {
+  shipsAlive(grid:Grid[]) {
     const fleetAliveShipPoints = grid.filter(point => point.isShip && !point.isHit);
 
     return fleetAliveShipPoints.length > 0;

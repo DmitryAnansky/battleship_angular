@@ -12,11 +12,11 @@ import {GameInformationComponent} from './game/game-information/game-information
 import {BotGridComponent} from './game/bot-grid/bot-grid.component';
 import {ShipService} from './services/ship.service';
 import {PlayerGridComponent} from './game/player-grid/player-grid.component';
-import {CommonService} from './services/common.service';
 import {WinnerComponent} from './winner/winner.component';
 import {BotService} from './services/bot.service';
 import {GameConstants} from './game/game_constants';
 import { NotFoundComponent } from './not-found/not-found.component';
+import {UtilsService} from './services/utils.service';
 
 @NgModule({
   declarations: [
@@ -36,7 +36,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
     FormsModule,
     HttpModule
   ],
-  providers: [ShipService, CommonService, BotService, GameConstants],
+  providers: [ShipService, UtilsService, BotService, GameConstants],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

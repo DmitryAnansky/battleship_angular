@@ -1,12 +1,13 @@
 import {Ship} from './ship.model';
 import {GameConstants} from '../game/game_constants';
+import {ShipEntity} from '../game/ship';
 
 export class Fleet{
-  private name: string;
-  private shipDetails: {'name': string, length: number, type: string}[];
-  private numOfShips: number;
-  public ships: any[];
-  private currentShipSize: number;
+  public name: string;
+  public shipDetails: {'name': string, length: number, type: string}[];
+  public numOfShips: number;
+  public ships: ShipEntity[];
+  public currentShipSize: number;
   public currentShip: number;
 
   constructor(name) {

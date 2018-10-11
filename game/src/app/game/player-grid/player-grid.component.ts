@@ -4,6 +4,7 @@ import {Ship} from '../../models/ship.model';
 import {Fleet} from '../../models/fleet.model';
 import {intersection} from "lodash";
 import {GameConstants} from '../../game/game_constants';
+import {Grid} from '../grid';
 
 @Component({
   selector: 'app-player-grid',
@@ -18,16 +19,16 @@ export class PlayerGridComponent implements OnInit {
   @Input() shipsOrientation;
 
   @Input() playerGrid;
-  @Output() playerGridChange: EventEmitter<any> = new EventEmitter();
+  @Output() playerGridChange: EventEmitter<Grid[]> = new EventEmitter();
 
   @Input() shipPlacementPhase;
   @Output() shipPlacementPhaseChange: EventEmitter<boolean> = new EventEmitter();
 
   @Input() selectedShip;
-  @Output() selectedShipChange: EventEmitter<any> = new EventEmitter();
+  @Output() selectedShipChange: EventEmitter<Ship> = new EventEmitter();
 
   @Input() selectedFleet;
-  @Output() selectedFleetChange: EventEmitter<any> = new EventEmitter();
+  @Output() selectedFleetChange: EventEmitter<Fleet> = new EventEmitter();
 
   @Input() displayRotationControl;
   @Output() displayRotationControlChange: EventEmitter<boolean> = new EventEmitter();
@@ -120,7 +121,7 @@ export class PlayerGridComponent implements OnInit {
     }
   }
 
-  displayShipTop(location: number, ship: any) {
+  displayShipTop(location: number, ship: Ship) {
     const cellId = location - 1;
 
     let inc = 0;
@@ -153,7 +154,7 @@ export class PlayerGridComponent implements OnInit {
     }
   };
 
-  displayShipBottom(location: number, ship: any) {
+  displayShipBottom(location: number, ship: Ship) {
     const cellId = location - 1;
 
     let inc = 0;
@@ -187,7 +188,7 @@ export class PlayerGridComponent implements OnInit {
     }
   };
 
-  displayShipLeft(location: number, ship: any) {
+  displayShipLeft(location: number, ship: Ship) {
     const cellId = location - 1;
 
     if (ship.type === GameConstants.L_SHAPED) {
@@ -210,7 +211,7 @@ export class PlayerGridComponent implements OnInit {
     }
   };
 
-  displayShipRight(location: number, ship: any) {
+  displayShipRight(location: number, ship: Ship) {
     const cellId = location - 1;
 
     if (this.selectedShip.type === GameConstants.L_SHAPED) {
@@ -335,7 +336,7 @@ export class PlayerGridComponent implements OnInit {
     });
   }
 
-  displayShipBorder(location: number, ship: any) {
+  displayShipBorder(location: number, ship: Ship) {
     const borderPoints = this.shipService.calculateBorderPoints(location, ship, this.orientation);
 
     borderPoints.map(id => {
@@ -347,7 +348,7 @@ export class PlayerGridComponent implements OnInit {
     });
   }
 
-  removeShipBorder(location: number, ship: any) {
+  removeShipBorder(location: number, ship: Ship) {
     const borderPoints = this.shipService.calculateBorderPoints(location, ship, this.orientation);
 
     borderPoints.map(id => {
@@ -369,7 +370,7 @@ export class PlayerGridComponent implements OnInit {
     });
   }
 
-  setShip(location: number, ship: any, orientation: string, genericFleet: any) {
+  setShip(location: number, ship: Ship, orientation: string, genericFleet: Fleet) {
     if (this.checkOverlap(location, ship, orientation, this.playerGrid)) {
       this.consoleText = `${this.selectedShip.type} can not be placed on this position`;
       this.consoleTextChange.emit(this.consoleText);
@@ -419,7 +420,7 @@ export class PlayerGridComponent implements OnInit {
     }
   }
 
-  setShipTop(location: number, ship: any, orientation: string, genericFleet: any) {
+  setShipTop(location: number, ship: Ship, orientation: string, genericFleet: Fleet) {
     const cellId = location - 1;
     const endPoint = (ship.length * 10) - 10;
 
@@ -451,7 +452,7 @@ export class PlayerGridComponent implements OnInit {
     }
   }
 
-  setShipBottom(location: number, ship: any, orientation: string, genericFleet: any) {
+  setShipBottom(location: number, ship: Ship, orientation: string, genericFleet: Fleet) {
     const cellId = location - 1;
     const endPoint = (ship.length * 10) - 10;
 
@@ -483,7 +484,7 @@ export class PlayerGridComponent implements OnInit {
     }
   }
 
-  setShipRight(location: number, ship: any, orientation: string, genericFleet: any) {
+  setShipRight(location: number, ship: Ship, orientation: string, genericFleet: Fleet) {
     const cellId = location - 1;
 
     if (ship.type === GameConstants.L_SHAPED) {
@@ -511,7 +512,7 @@ export class PlayerGridComponent implements OnInit {
     }
   }
 
-  setShipLeft(location: number, ship: any, orientation: string, genericFleet: any) {
+  setShipLeft(location: number, ship: Ship, orientation: string, genericFleet: Fleet) {
     const cellId = location - 1;
 
     if (ship.type === GameConstants.L_SHAPED) {
@@ -537,12 +538,12 @@ export class PlayerGridComponent implements OnInit {
     }
   }
 
-  displayNextFleetShip(location: number, ship: any, fleet: any) {
+  displayNextFleetShip(location: number, ship: Ship, fleet: Fleet) {
     this.removeShipBorder(location, ship);
     this.displayNextShip(fleet);
   }
 
-  displayNextShip(fleet: any) {
+  displayNextShip(fleet: Fleet) {
     if (++fleet.currentShip !== fleet.numOfShips) {
       this.placeShip(fleet.ships[fleet.currentShip], fleet);
     }
@@ -558,7 +559,7 @@ export class PlayerGridComponent implements OnInit {
     this.shipPlacementPhaseChange.emit(this.shipPlacementPhase);
   }
 
-  checkOverlap(location: number, ship: any, orientation: string, grid: any) {
+  checkOverlap(location: number, ship: Ship, orientation: string, grid: Grid[]) {
     const borderPoints = [...this.shipService.calculateBorderPoints(location, ship, orientation), ...[location - 1]];
     const shipsPoints = grid.filter(element => element.isShip === true).map(ship => ship.id);
 

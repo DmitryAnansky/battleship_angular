@@ -1,7 +1,9 @@
-export class Ship{
-  private name: string;
-  private type: string;
-  private length: number = 0;
+import {ShipEntity} from '../game/ship';
+
+export class Ship implements ShipEntity{
+  public name: string;
+  public type: string;
+  public length: number = 0;
 
   constructor(...args) {
     Object.assign(this, ...args);

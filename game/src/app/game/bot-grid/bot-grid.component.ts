@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ShipService} from '../../services/ship.service';
 import {Router} from '@angular/router';
 import {BotService} from '../../services/bot.service';
+import {Grid} from '../grid';
 
 @Component({
   selector: 'app-bot-grid',
@@ -11,10 +12,10 @@ import {BotService} from '../../services/bot.service';
 
 export class BotGridComponent implements OnInit {
   @Input() botGrid;
-  @Output() botGridChange: EventEmitter<any> = new EventEmitter();
+  @Output() botGridChange: EventEmitter<Grid[]> = new EventEmitter();
 
   @Input() playerGrid;
-  @Output() playerGridChange: EventEmitter<any> = new EventEmitter();
+  @Output() playerGridChange: EventEmitter<Grid[]> = new EventEmitter();
 
   @Input() titleTopNumbers;
   @Input() titleLeftAlphabet;
@@ -33,7 +34,7 @@ export class BotGridComponent implements OnInit {
     }
   }
 
-  serBotsFleet(grid: any) {
+  serBotsFleet(grid: Grid[]) {
     const fleet = this.botService.getBotsFleetPosition();
 
     fleet.map(element => {

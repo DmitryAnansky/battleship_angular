@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {Fleet} from '../models/fleet.model';
-import {Ship} from '../models/ship.model';
-import {CommonService} from '../services/common.service';
 import {GameConstants} from './game_constants';
+import {UtilsService} from '../services/utils.service';
+import {Grid} from './grid';
+import {ShipEntity, ShipOrientation} from './ship';
 
 const SHIP_ORIENTATIONS = {
   TOP: GameConstants.TOP,
@@ -19,10 +20,10 @@ const SHIP_ORIENTATIONS = {
 
 export class GameComponent implements OnInit {
   public titleTopNumbers: number[];
-  public selectedShip: any;
-  public playerGrid: any;
-  public botGrid: any;
-  public selectedFleet: any;
+  public selectedShip: ShipEntity;
+  public playerGrid: Grid[];
+  public botGrid: Grid[];
+  public selectedFleet: Fleet;
   public shipPlacementPhase: boolean = false;
   public gamePhase: boolean = false;
   public titleLeftAlphabet: string[];
@@ -31,9 +32,9 @@ export class GameComponent implements OnInit {
   public displayRotationControl: boolean = false;
   public playerFleet: Fleet;
   public orientation: string;
-  public shipsOrientation: any;
+  public shipsOrientation: ShipOrientation;
 
-  constructor(private commonService: CommonService) {
+  constructor(private utilsService: UtilsService) {
   }
 
   ngOnInit() {
@@ -71,10 +72,10 @@ export class GameComponent implements OnInit {
   onRotateClick() {
     const orientationOptions = Object.keys(this.shipsOrientation);
 
-    this.orientation = orientationOptions[this.commonService.getRandomInt(0, orientationOptions.length)];
+    this.orientation = orientationOptions[this.utilsService.getRandomInt(0, orientationOptions.length)];
   }
 
-  placeShip(ship: Ship, fleet: Fleet) {
+  placeShip(ship: ShipEntity, fleet: Fleet) {
     this.selectedShip = ship;
     this.selectedFleet = fleet;
     this.shipPlacementPhase = true;

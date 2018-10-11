@@ -6,16 +6,13 @@ import {Router} from '@angular/router';
   templateUrl: './control-panel.component.html',
   styleUrls: ['./control-panel.component.scss']
 })
-export class ControlPanelComponent implements OnInit {
+export class ControlPanelComponent {
   @Input() displayRotationControl;
   @Input() gamePhase;
   @Output() onPlaceShips: EventEmitter<any> = new EventEmitter();
   @Output() onRotateClick: EventEmitter<any> = new EventEmitter();
 
   constructor(private router: Router) { }
-
-  ngOnInit() {
-  }
 
   onExitClick() {
     this.router.navigate(['/intro']);
