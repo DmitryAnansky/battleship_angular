@@ -3,7 +3,7 @@ import {Fleet} from '../models/fleet.model';
 import {GameConstants} from './game_constants';
 import {Grid} from './grid';
 import {ShipEntity, ShipOrientation} from './ship';
-import Utils from '../utils';
+import {getRandomInt} from '../utils';
 
 const SHIP_ORIENTATIONS = {
   TOP: GameConstants.TOP,
@@ -72,7 +72,7 @@ export class GameComponent implements OnInit {
   onRotateClick() {
     const orientationOptions = Object.keys(this.shipsOrientation);
 
-    this.orientation = orientationOptions[Utils.getRandomInt(0, orientationOptions.length)];
+    this.orientation = orientationOptions[getRandomInt(0, orientationOptions.length)];
   }
 
   placeShip(ship: ShipEntity, fleet: Fleet) {

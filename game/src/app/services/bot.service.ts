@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import Utils from '../utils';
+import {Injectable} from '@angular/core';
+import {getRandomFromArray, getRandomInt} from '../utils';
 
 const botsFleetCombinations = [
   [0, 1, 2, 12, 8, 79, 60, 70, 80, 90],
@@ -17,11 +17,11 @@ export class BotService {
     const availablePoints = grid.filter(point => (!point.isMiss || point.isHit) && (point.isMiss || !point.isHit));
     const availablePointsIds = availablePoints.map(point => point.id);
 
-    return Utils.getRandomFromArray(availablePointsIds);
+    return getRandomFromArray(availablePointsIds);
   }
 
   getBotsFleetPosition() {
-    const luckyNumber = Utils.getRandomInt(0, botsFleetCombinations.length);
+    const luckyNumber = getRandomInt(0, botsFleetCombinations.length);
 
     return botsFleetCombinations[luckyNumber];
   }
