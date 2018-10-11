@@ -2,7 +2,6 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {ShipService} from '../../services/ship.service';
 import {Ship} from '../../models/ship.model';
 import {Fleet} from '../../models/fleet.model';
-import {intersection} from "lodash";
 import {GameConstants} from '../../game/game_constants';
 import {Grid} from '../grid';
 
@@ -368,7 +367,7 @@ export class PlayerGridComponent {
   }
 
   setShip(location: number, ship: Ship, orientation: string, genericFleet: Fleet) {
-    if (this.checkOverlap(location, ship, orientation, this.playerGrid)) {
+    if (this.shipService.checkOverlap(location, ship, orientation, this.playerGrid)) {
       this.consoleText = `${this.selectedShip.type} can not be placed on this position`;
       this.consoleTextChange.emit(this.consoleText);
       return;
@@ -554,18 +553,5 @@ export class PlayerGridComponent {
     this.selectedShipChange.emit(this.selectedShip);
     this.selectedFleetChange.emit(this.selectedFleet);
     this.shipPlacementPhaseChange.emit(this.shipPlacementPhase);
-  }
-
-  checkOverlap(location: number, ship: Ship, orientation: string, grid: Grid[]) {
-    const borderPoints = [...this.shipService.calculateBorderPoints(location, ship, orientation), ...[location - 1]];
-    const shipsPoints = grid.filter(element => element.isShip === true).map(ship => ship.id);
-
-    if (!shipsPoints) {
-      return false;
-    }
-
-    const shipsBorderPositionIntersection = intersection(borderPoints, shipsPoints);
-
-    return shipsBorderPositionIntersection.length > 0;
   }
 }

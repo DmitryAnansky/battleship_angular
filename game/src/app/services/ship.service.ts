@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {GameConstants} from '../game/game_constants';
 import {Grid} from '../game/grid';
 import {Ship} from '../models/ship.model';
+import {intersection} from "lodash";
 
 const shipOrientation = {
   TOP: GameConstants.TOP,
@@ -430,5 +431,18 @@ export class ShipService {
     const fleetAliveShipPoints = grid.filter(point => point.isShip && !point.isHit);
 
     return fleetAliveShipPoints.length > 0;
+  }
+
+  checkOverlap(location: number, ship: Ship, orientation: string, grid: Grid[]) {
+    const borderPoints = [...this.calculateBorderPoints(location, ship, orientation), ...[location - 1]];
+    const shipsPoints = grid.filter(element => element.isShip === true).map(ship => ship.id);
+
+    if (!shipsPoints) {
+      return false;
+    }
+
+    const shipsBorderPositionIntersection = intersection(borderPoints, shipsPoints);
+
+    return shipsBorderPositionIntersection.length > 0;
   }
 }
