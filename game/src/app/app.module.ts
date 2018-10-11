@@ -16,7 +16,6 @@ import {WinnerComponent} from './winner/winner.component';
 import {BotService} from './services/bot.service';
 import {GameConstants} from './game/game_constants';
 import { NotFoundComponent } from './not-found/not-found.component';
-import {UtilsService} from './services/utils.service';
 
 @NgModule({
   declarations: [
@@ -36,7 +35,7 @@ import {UtilsService} from './services/utils.service';
     FormsModule,
     HttpModule
   ],
-  providers: [ShipService, UtilsService, BotService, GameConstants],
+  providers: [ShipService, BotService, GameConstants],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

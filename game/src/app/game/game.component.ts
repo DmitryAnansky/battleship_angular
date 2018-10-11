@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {Fleet} from '../models/fleet.model';
 import {GameConstants} from './game_constants';
-import {UtilsService} from '../services/utils.service';
 import {Grid} from './grid';
 import {ShipEntity, ShipOrientation} from './ship';
+import Utils from '../utils';
 
 const SHIP_ORIENTATIONS = {
   TOP: GameConstants.TOP,
@@ -34,7 +34,7 @@ export class GameComponent implements OnInit {
   public orientation: string;
   public shipsOrientation: ShipOrientation;
 
-  constructor(private utilsService: UtilsService) {
+  constructor() {
   }
 
   ngOnInit() {
@@ -72,7 +72,7 @@ export class GameComponent implements OnInit {
   onRotateClick() {
     const orientationOptions = Object.keys(this.shipsOrientation);
 
-    this.orientation = orientationOptions[this.utilsService.getRandomInt(0, orientationOptions.length)];
+    this.orientation = orientationOptions[Utils.getRandomInt(0, orientationOptions.length)];
   }
 
   placeShip(ship: ShipEntity, fleet: Fleet) {
