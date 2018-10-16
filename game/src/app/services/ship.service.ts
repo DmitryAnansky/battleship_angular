@@ -41,8 +41,9 @@ export class ShipService {
     return [cellId, cellId - inc, cellId - (inc - 1), cellId - (inc - 2)];
   }
 
-  calculateIShipBorderPoints(location: number, cellId: number, ship: Ship, orientation: string) {
+  calculateIShipBorderPoints(location: number, ship: Ship, orientation: string) {
     const inc = 10;
+    const cellId = location - 1;
 
     switch (orientation) {
       case shipOrientation.TOP: {
@@ -215,8 +216,9 @@ export class ShipService {
     }
   }
 
-  calculateLShipBorderPoints(location: number, cellId: number, ship: Ship, orientation: string) {
+  calculateLShipBorderPoints(location: number, ship: Ship, orientation: string) {
     const inc = 10;
+    const cellId = location - 1;
 
     switch (orientation) {
       case shipOrientation.TOP: {
@@ -389,8 +391,9 @@ export class ShipService {
     }
   }
 
-  calculateDotShipBorderPoints(location: number, cellId: number) {
+  calculateDotShipBorderPoints(location: number) {
     const inc = 10;
+    const cellId = location - 1;
 
     let dotShapedShipBorder = [];
 
@@ -414,17 +417,15 @@ export class ShipService {
   }
 
   calculateBorderPoints(location: number, ship: Ship, orientation: string) {
-    const cellId = location - 1;
-
     if (ship.type === GameConstants.L_SHAPED) {
-      return this.calculateLShipBorderPoints(location, cellId, ship, orientation);
+      return this.calculateLShipBorderPoints(location, ship, orientation);
     }
 
     if (ship.length === 1) {
-      return this.calculateDotShipBorderPoints(location, cellId);
+      return this.calculateDotShipBorderPoints(location);
     }
 
-    return this.calculateIShipBorderPoints(location, cellId, ship, orientation);
+    return this.calculateIShipBorderPoints(location, ship, orientation);
   }
 
   shipsAlive(grid: Grid[]) {

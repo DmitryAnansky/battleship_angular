@@ -14,8 +14,7 @@ describe('GridService', () => {
   }));
 
   it('check: getGrid(num: number) - should return new grid', inject([GridService], (service: GridService) => {
-    const gridService = new GridService();
-    const grid = gridService.getGrid(100);
+    const grid = service.getGrid(100);
     const validationCheck = grid.length === 100 &&
       grid.every(cell => cell.hasOwnProperty('isShip') &&
         cell.hasOwnProperty('isMiss') &&

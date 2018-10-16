@@ -33,10 +33,9 @@ describe('BotService', () => {
   }));
 
   it('check: getNextShot - should return next bot shot', inject([BotService], (service: BotService) => {
-    const botService = new BotService();
     const gridService = new GridService();
     const grid = gridService.getGrid(100);
-    const nextShot = botService.getNextShot(grid);
+    const nextShot = service.getNextShot(grid);
     const checkValidation = !grid[nextShot].isHit && !grid[nextShot].isMiss;
 
     expect(

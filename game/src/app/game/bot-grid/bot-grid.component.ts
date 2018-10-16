@@ -30,14 +30,14 @@ export class BotGridComponent implements OnInit {
 
   ngOnInit() {
     if (this.botGrid) {
-      this.serBotsFleet(this.botGrid);
+      this.setBotsFleet(this.botGrid);
     }
   }
 
   /**
    * @param {Grid[]} grid - Somebody's grid.
    */
-  serBotsFleet(grid: Grid[]) {
+  setBotsFleet(grid: Grid[]) {
     const fleet = this.botService.getBotsFleetPosition();
 
     fleet.map(element => {
