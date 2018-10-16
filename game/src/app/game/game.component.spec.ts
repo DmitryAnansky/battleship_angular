@@ -8,6 +8,7 @@ import {ControlPanelComponent} from './control-panel/control-panel.component';
 import {ShipService} from '../services/ship.service';
 import {BotService} from '../services/bot.service';
 import {Router} from '@angular/router';
+import {GridService} from '../services/grid.service';
 
 describe('GameComponent', () => {
   let component: GameComponent;
@@ -19,7 +20,7 @@ describe('GameComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ GameComponent, BotGridComponent, PlayerGridComponent, GameInformationComponent, ControlPanelComponent ],
-      providers: [ ShipService, BotService, { provide: Router, useValue: mockRouter } ]
+      providers: [ ShipService, BotService, { provide: Router, useValue: mockRouter }, GridService ]
     })
     .compileComponents();
   }));

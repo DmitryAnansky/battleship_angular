@@ -4,6 +4,7 @@ import {GameConstants} from './game_constants';
 import {Grid} from './grid';
 import {ShipEntity, ShipOrientation} from './ship';
 import {getRandomInt} from '../utils';
+import {GridService} from '../services/grid.service';
 
 const SHIP_ORIENTATIONS = {
   TOP: GameConstants.TOP,
@@ -34,7 +35,7 @@ export class GameComponent implements OnInit {
   public orientation: string;
   public shipsOrientation: ShipOrientation;
 
-  constructor() {
+  constructor(private gridService: GridService) {
   }
 
   ngOnInit() {
@@ -42,21 +43,8 @@ export class GameComponent implements OnInit {
     this.titleLeftAlphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
     this.titleTopNumbers = Array.from(Array(11).keys());
     this.orientation = this.shipsOrientation.BOTTOM;
-    this.playerGrid = this.getGrid(100);
-    this.botGrid = this.getGrid(100);
-  }
-
-  getGrid(num: number) {
-    return Array.from(Array(num).keys()).map((id) => {
-      return {
-        id: id,
-        isShip: false,
-        isHit: false,
-        isMiss: false,
-        isHovered: false,
-        isBorder: false
-      };
-    });
+    this.playerGrid = this.gridService.getGrid(100);
+    this.botGrid = this.gridService.getGrid(100);
   }
 
   onPlaceShips() {

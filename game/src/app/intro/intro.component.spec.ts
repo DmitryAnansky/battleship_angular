@@ -5,7 +5,6 @@ import {Router} from '@angular/router';
 
 describe('IntroComponent', () => {
   let component: IntroComponent;
-  let fixture: ComponentFixture<IntroComponent>;
   const mockRouter = {
     navigate: jasmine.createSpy('navigate')
   };
@@ -19,7 +18,7 @@ describe('IntroComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(IntroComponent);
+    const fixture = TestBed.createComponent(IntroComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
