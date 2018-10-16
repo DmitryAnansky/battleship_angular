@@ -34,6 +34,9 @@ export class BotGridComponent implements OnInit {
     }
   }
 
+  /**
+   * @param {Grid[]} grid - Somebody's grid.
+   */
   serBotsFleet(grid: Grid[]) {
     const fleet = this.botService.getBotsFleetPosition();
 
@@ -44,6 +47,9 @@ export class BotGridComponent implements OnInit {
     this.botGridChange.emit(this.botGrid);
   }
 
+  /**
+   * @param {MouseEvent} e
+   */
   onPointClick(e) {
     if (!this.gamePhase) {
       return;

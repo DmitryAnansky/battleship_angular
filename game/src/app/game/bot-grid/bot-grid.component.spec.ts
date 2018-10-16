@@ -1,14 +1,21 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BotGridComponent } from './bot-grid.component';
+import {ShipService} from '../../services/ship.service';
+import {BotService} from '../../services/bot.service';
+import {Router} from '@angular/router';
 
 describe('BotGridComponent', () => {
   let component: BotGridComponent;
   let fixture: ComponentFixture<BotGridComponent>;
+  const mockRouter = {
+    navigate: jasmine.createSpy('navigate')
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BotGridComponent ]
+      declarations: [ BotGridComponent ],
+      providers: [ShipService, BotService, { provide: Router, useValue: mockRouter }]
     })
     .compileComponents();
   }));

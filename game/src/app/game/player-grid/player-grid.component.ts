@@ -41,6 +41,9 @@ export class PlayerGridComponent {
   constructor(private shipService: ShipService) {
   }
 
+  /**
+   * @param {MouseEvent} e
+   */
   onPointClick(e) {
     const activePointId = parseInt(e.currentTarget.id, 10);
 
@@ -49,6 +52,9 @@ export class PlayerGridComponent {
     }
   }
 
+  /**
+   * @param {MouseEvent} e
+   */
   onMouseExitPoint(e) {
     if (!this.shipPlacementPhase) {
       return;
@@ -82,6 +88,9 @@ export class PlayerGridComponent {
     this.removeShipBorder(pointLocation, this.selectedShip);
   }
 
+  /**
+   * @param {MouseEvent} e
+   */
   onMouseEnterPoint(e) {
     if (!this.shipPlacementPhase) {
       return;
