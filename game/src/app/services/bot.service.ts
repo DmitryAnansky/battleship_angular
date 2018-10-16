@@ -25,4 +25,8 @@ export class BotService {
 
     return botsFleetCombinations[luckyNumber];
   }
+
+  getFixedFleetPosition(botsFleetCombinationId: number) {
+    return botsFleetCombinations[botsFleetCombinationId];
+  }
 }

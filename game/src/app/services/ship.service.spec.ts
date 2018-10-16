@@ -128,5 +128,23 @@ describe('ShipService', () => {
     })
   );
 
-  // ToDo: create test grid to check 100% ships overlap
+  it(`check: checkOverlap(location: number, ship: Ship, orientation: string, grid: Grid[])
+   - should return true if the ships overlap`,
+    inject([ShipService], (service: ShipService) => {
+      const gridService = new GridService();
+      const botService = new BotService();
+      const grid = gridService.getGrid(100);
+      const fleet = botService.getFixedFleetPosition(0);
+
+      fleet.map(element => {
+        grid[element].isShip = true;
+      });
+
+      const ship = new Ship({ 'name': 'dotShaped', 'length': 1, 'type': GameConstants.DOT_SHAPED});
+      const orientation = GameConstants.BOTTOM;
+      const checkOverlap = service.checkOverlap(1, ship, orientation, grid);
+
+      expect(checkOverlap).toBeTruthy();
+    })
+  );
 });
