@@ -32,7 +32,7 @@ describe('WinnerComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create WinnerComponent', () => {
     expect(component).toBeTruthy();
   });
 

@@ -9,7 +9,7 @@ describe('GridService', () => {
     });
   });
 
-  it('should create service', inject([GridService], (service: GridService) => {
+  it('should create GridService', inject([GridService], (service: GridService) => {
     expect(service).toBeTruthy();
   }));
 

@@ -17,7 +17,7 @@ describe('BotService', () => {
     });
   });
 
-  it('should create service', inject([BotService], (service: BotService) => {
+  it('should create BotService', inject([BotService], (service: BotService) => {
     expect(service).toBeTruthy();
   }));
 
