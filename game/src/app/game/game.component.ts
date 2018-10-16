@@ -24,12 +24,12 @@ export class GameComponent implements OnInit {
   public playerGrid: Grid[];
   public botGrid: Grid[];
   public selectedFleet: Fleet;
-  public shipPlacementPhase: boolean = false;
-  public gamePhase: boolean = false;
+  public shipPlacementPhase = false;
+  public gamePhase = false;
   public titleLeftAlphabet: string[];
   public consoleText: string = 'Please place your ships on the game battle field.\n' +
     ' The Game will start immediately after all ship\'s positioning.';
-  public displayRotationControl: boolean = false;
+  public displayRotationControl = false;
   public playerFleet: Fleet;
   public orientation: string;
   public shipsOrientation: ShipOrientation;

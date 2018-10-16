@@ -49,10 +49,10 @@ export class BotGridComponent implements OnInit {
       return;
     }
 
-    const activePointId = parseInt(e.currentTarget.id);
+    const activePointId = parseInt(e.currentTarget.id, 10);
     const gridPoint = activePointId - 1;
 
-    let point = this.botGrid.find(element => element.id === gridPoint);
+    const point = this.botGrid.find(element => element.id === gridPoint);
 
     if (!point) {
       return;

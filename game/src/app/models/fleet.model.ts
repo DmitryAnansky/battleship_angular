@@ -2,7 +2,7 @@ import {Ship} from './ship.model';
 import {GameConstants} from '../game/game_constants';
 import {ShipEntity} from '../game/ship';
 
-export class Fleet{
+export class Fleet {
   public name: string;
   public shipDetails: {'name': string, length: number, type: string}[];
   public numOfShips: number;
@@ -25,7 +25,7 @@ export class Fleet{
   }
 
   initShips() {
-    for(let i = 0; i < this.numOfShips; i++) {
+    for (let i = 0; i < this.numOfShips; i++) {
       this.ships[i] = new Ship(this.shipDetails[i].name);
       this.ships[i].length = this.shipDetails[i].length;
       this.ships[i].type = this.shipDetails[i].type;
