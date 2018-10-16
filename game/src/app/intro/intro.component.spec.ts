@@ -27,4 +27,24 @@ describe('IntroComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should render New Game button', async(() => {
+    const fixture = TestBed.createComponent(IntroComponent);
+
+    fixture.detectChanges();
+
+    const compiled = fixture.debugElement.nativeElement;
+
+    expect(compiled.querySelector('.btn-dark').textContent).toContain('New Game');
+  }));
+
+  it('should render game name text', async(() => {
+    const fixture = TestBed.createComponent(IntroComponent);
+
+    fixture.detectChanges();
+
+    const compiled = fixture.debugElement.nativeElement;
+
+    expect(compiled.querySelector('.card-title').textContent).toContain('Battle ship');
+  }));
 });

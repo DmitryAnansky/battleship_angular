@@ -6,7 +6,6 @@ import {Observable} from 'rxjs';
 
 describe('WinnerComponent', () => {
   let component: WinnerComponent;
-  let fixture: ComponentFixture<WinnerComponent>;
   const mockRouter = {
     navigate: jasmine.createSpy('navigate')
   };
@@ -26,6 +25,8 @@ describe('WinnerComponent', () => {
   }));
 
   beforeEach(() => {
+    let fixture: ComponentFixture<WinnerComponent>;
+
     fixture = TestBed.createComponent(WinnerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -34,4 +35,32 @@ describe('WinnerComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it(`should get name of winner from active route`, async(() => {
+    const fixture = TestBed.createComponent(WinnerComponent);
+    const app = fixture.debugElement.componentInstance;
+
+    expect(app.route.params.value.name).toEqual('Player');
+  }));
+
+
+  it('should render winner name text', async(() => {
+    const fixture = TestBed.createComponent(WinnerComponent);
+
+    fixture.detectChanges();
+
+    const compiled = fixture.debugElement.nativeElement;
+
+    expect(compiled.querySelector('.card-title').textContent).toContain('Player won!');
+  }));
+
+  it('should render New Game button', async(() => {
+    const fixture = TestBed.createComponent(WinnerComponent);
+
+    fixture.detectChanges();
+
+    const compiled = fixture.debugElement.nativeElement;
+
+    expect(compiled.querySelector('.btn-dark').textContent).toContain('New Game');
+  }));
 });
