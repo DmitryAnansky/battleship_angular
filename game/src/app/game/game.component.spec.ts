@@ -90,7 +90,7 @@ describe('GameComponent', () => {
     expect(compiled.querySelector('app-player-grid .title-left')).not.toEqual(null);
   }));
 
-  it('if Place Ship clicked Random rotate button should appear', async(() => {
+  it('if Place Ship clicked onPlaceShips should be called', async(() => {
     spyOn(component, 'onPlaceShips');
 
     const button = fixture.debugElement.nativeElement.querySelector('.place-ship-btn');
@@ -99,6 +99,21 @@ describe('GameComponent', () => {
 
     fixture.whenStable().then(() => {
       expect(component.onPlaceShips).toHaveBeenCalled();
+    });
+  }));
+
+  it('if RandomRotation clicked onRotateClick should be called', async(() => {
+    component.displayRotationControl = true;
+    fixture.detectChanges();
+
+    spyOn(component, 'onRotateClick');
+
+    const rotation_button = fixture.debugElement.nativeElement.querySelector('.random-rotation-btn');
+
+    rotation_button.click();
+
+    fixture.whenStable().then(() => {
+      expect(component.onRotateClick).toHaveBeenCalled();
     });
   }));
 });

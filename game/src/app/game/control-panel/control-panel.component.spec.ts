@@ -40,4 +40,16 @@ describe('ControlPanelComponent', () => {
 
     expect(compiled.querySelector('.place-ship-btn').textContent).toContain('Place Ship');
   }));
+
+  it('if Exit button clicked onExitClick should be called', async(() => {
+    spyOn(component, 'onExitClick');
+
+    const button = fixture.debugElement.nativeElement.querySelector('.exit-btn');
+
+    button.click();
+
+    fixture.whenStable().then(() => {
+      expect(component.onExitClick).toHaveBeenCalled();
+    });
+  }));
 });

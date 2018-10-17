@@ -5,7 +5,7 @@
             *ngIf="!gamePhase && !displayRotationControl">
       Place Ships
     </button>
-    <button class='buttons btn btn-dark' (click)="onClickRotateShips()"
+    <button class='buttons btn btn-dark random-rotation-btn' (click)="onClickRotateShips()"
             *ngIf="displayRotationControl">Random Rotation</button>
     <button class='buttons btn btn-dark exit-btn' (click)="onExitClick()">Exit</button>
   </div>
