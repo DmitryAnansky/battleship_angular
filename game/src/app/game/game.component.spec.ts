@@ -11,6 +11,7 @@ import {Router} from '@angular/router';
 import {GridService} from '../services/grid.service';
 
 describe('GameComponent', () => {
+  let fixture: ComponentFixture<GameComponent>;
   let component: GameComponent;
   const mockRouter = {
     navigate: jasmine.createSpy('navigate')
@@ -25,7 +26,7 @@ describe('GameComponent', () => {
   }));
 
   beforeEach(() => {
-    const fixture = TestBed.createComponent(GameComponent);
+    fixture = TestBed.createComponent(GameComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -35,93 +36,69 @@ describe('GameComponent', () => {
   });
 
   it('should display app-game-information component', async(() => {
-    const fixture = TestBed.createComponent(GameComponent);
-
-    fixture.detectChanges();
-
     const compiled = fixture.debugElement.nativeElement;
 
     expect(compiled.querySelector('app-game-information')).not.toEqual(null);
   }));
 
   it('should display start text inside app-game-information component', async(() => {
-    const fixture = TestBed.createComponent(GameComponent);
     const startGameText = 'Please place your ships on the game battle field.';
-
-    fixture.detectChanges();
-
     const compiled = fixture.debugElement.nativeElement;
 
     expect(compiled.querySelector('app-game-information .game-progress-log').textContent).toContain(startGameText);
   }));
 
   it('should display app-bot-grid component', async(() => {
-    const fixture = TestBed.createComponent(GameComponent);
-
-    fixture.detectChanges();
-
     const compiled = fixture.debugElement.nativeElement;
 
     expect(compiled.querySelector('app-bot-grid')).not.toEqual(null);
   }));
 
   it('should display app-player-grid component', async(() => {
-    const fixture = TestBed.createComponent(GameComponent);
-
-    fixture.detectChanges();
-
     const compiled = fixture.debugElement.nativeElement;
 
     expect(compiled.querySelector('app-player-grid')).not.toEqual(null);
   }));
 
   it('should display app-control-panel component', async(() => {
-    const fixture = TestBed.createComponent(GameComponent);
-
-    fixture.detectChanges();
-
     const compiled = fixture.debugElement.nativeElement;
 
     expect(compiled.querySelector('app-control-panel')).not.toEqual(null);
   }));
 
   it('should contain bot grid with title-top', async(() => {
-    const fixture = TestBed.createComponent(GameComponent);
-
-    fixture.detectChanges();
-
     const compiled = fixture.debugElement.nativeElement;
 
     expect(compiled.querySelector('app-bot-grid .title-top')).not.toEqual(null);
   }));
 
   it('should contain bot grid with title-left', async(() => {
-    const fixture = TestBed.createComponent(GameComponent);
-
-    fixture.detectChanges();
-
     const compiled = fixture.debugElement.nativeElement;
 
     expect(compiled.querySelector('app-bot-grid .title-left')).not.toEqual(null);
   }));
 
   it('should contain player grid with title-top', async(() => {
-    const fixture = TestBed.createComponent(GameComponent);
-
-    fixture.detectChanges();
-
     const compiled = fixture.debugElement.nativeElement;
 
     expect(compiled.querySelector('app-player-grid .title-top')).not.toEqual(null);
   }));
 
   it('should contain player grid with title-left', async(() => {
-    const fixture = TestBed.createComponent(GameComponent);
-
-    fixture.detectChanges();
-
     const compiled = fixture.debugElement.nativeElement;
 
     expect(compiled.querySelector('app-player-grid .title-left')).not.toEqual(null);
+  }));
+
+  it('if Place Ship clicked Random rotate button should appear', async(() => {
+    spyOn(component, 'onPlaceShips');
+
+    const button = fixture.debugElement.nativeElement.querySelector('.place-ship-btn');
+
+    button.click();
+
+    fixture.whenStable().then(() => {
+      expect(component.onPlaceShips).toHaveBeenCalled();
+    });
   }));
 });

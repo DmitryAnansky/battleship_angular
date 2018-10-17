@@ -1,4 +1,4 @@
-import { async, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import { BotGridComponent } from './bot-grid.component';
 import {ShipService} from '../../services/ship.service';
@@ -6,6 +6,7 @@ import {BotService} from '../../services/bot.service';
 import {Router} from '@angular/router';
 
 describe('BotGridComponent', () => {
+  let fixture: ComponentFixture<BotGridComponent>;
   let component: BotGridComponent;
 
   const mockRouter = {
@@ -21,7 +22,7 @@ describe('BotGridComponent', () => {
   }));
 
   beforeEach(() => {
-    const fixture = TestBed.createComponent(BotGridComponent);
+    fixture = TestBed.createComponent(BotGridComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -31,10 +32,6 @@ describe('BotGridComponent', () => {
   });
 
   it('should contain grid', async(() => {
-    const fixture = TestBed.createComponent(BotGridComponent);
-
-    fixture.detectChanges();
-
     const compiled = fixture.debugElement.nativeElement;
 
     expect(compiled.querySelector('.grid')).not.toEqual(null);
