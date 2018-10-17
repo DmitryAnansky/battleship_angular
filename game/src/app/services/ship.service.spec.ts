@@ -48,32 +48,36 @@ describe('ShipService', () => {
   it('check: calculateLShipTop(cellId: number) - should return LShip points with TOP orientation',
     inject([ShipService], (service: ShipService) => {
       const shipPoints = service.calculateLShipTop(25);
+      const testLShipTop = [ 25, 15, 5, 6 ];
 
-      expect(shipPoints).toEqual([ 25, 15, 5, 6 ]);
+      expect(shipPoints).toEqual(testLShipTop);
     })
   );
 
   it('check: calculateLShipBottom(cellId: number) - should return LShip points with BOTTOM orientation',
     inject([ShipService], (service: ShipService) => {
       const shipPoints = service.calculateLShipBottom(50);
+      const testLShipBottom = [ 50, 60, 70, 71 ];
 
-      expect(shipPoints).toEqual([ 50, 60, 70, 71 ]);
+      expect(shipPoints).toEqual(testLShipBottom);
     })
   );
 
   it('check: calculateLShipLeft(cellId: number) - should return LShip points with LEFT orientation',
     inject([ShipService], (service: ShipService) => {
       const shipPoints = service.calculateLShipLeft(55);
+      const testLShipLeft = [ 55, 45, 46, 47 ];
 
-      expect(shipPoints).toEqual([ 55, 45, 46, 47 ]);
+      expect(shipPoints).toEqual(testLShipLeft);
     })
   );
 
   it('check: calculateLShipRight(cellId: number) - should return LShip points with RIGHT orientation',
     inject([ShipService], (service: ShipService) => {
       const shipPoints = service.calculateLShipRight(55);
+      const testLShipRight = [ 55, 65, 64, 63 ];
 
-      expect(shipPoints).toEqual([ 55, 65, 64, 63 ]);
+      expect(shipPoints).toEqual(testLShipRight);
     })
   );
 
@@ -83,8 +87,9 @@ describe('ShipService', () => {
       const ship = new Ship({ 'name': 'iShaped', 'length': 4, 'type': GameConstants.I_SHAPED});
       const orientation = GameConstants.BOTTOM;
       const shipPoints = service.calculateIShipBorderPoints(54, ship, orientation);
+      const testIShipBorderPoints = [ 44, 54, 64, 74, 84, 94, 42, 52, 62, 72, 82, 92, 43, 93 ];
 
-      expect(shipPoints).toEqual([ 44, 54, 64, 74, 84, 94, 42, 52, 62, 72, 82, 92, 43, 93 ]);
+      expect(shipPoints).toEqual(testIShipBorderPoints);
     })
   );
 
@@ -94,8 +99,9 @@ describe('ShipService', () => {
       const ship = new Ship({ 'name': 'lShaped', 'length': 4, 'type': GameConstants.L_SHAPED});
       const orientation = GameConstants.BOTTOM;
       const shipPoints = service.calculateLShipBorderPoints(54, ship, orientation);
+      const testLShipBorderPoints = [ 65, 75, 85, 82, 72, 62, 52, 42, 43, 83, 84, 64, 54, 44 ];
 
-      expect(shipPoints).toEqual([ 65, 75, 85, 82, 72, 62, 52, 42, 43, 83, 84, 64, 54, 44 ]);
+      expect(shipPoints).toEqual(testLShipBorderPoints);
     })
   );
 
@@ -103,8 +109,9 @@ describe('ShipService', () => {
    - should return dotShip border points`,
     inject([ShipService], (service: ShipService) => {
       const shipPoints = service.calculateDotShipBorderPoints(54);
+      const testDotShipBorderPoints = [ 44, 54, 64, 42, 52, 62, 43, 63 ];
 
-      expect(shipPoints).toEqual([ 44, 54, 64, 42, 52, 62, 43, 63 ]);
+      expect(shipPoints).toEqual(testDotShipBorderPoints);
     })
   );
 

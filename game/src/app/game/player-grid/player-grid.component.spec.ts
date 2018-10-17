@@ -1,11 +1,10 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, TestBed } from '@angular/core/testing';
 
 import { PlayerGridComponent } from './player-grid.component';
 import {ShipService} from '../../services/ship.service';
 
 describe('PlayerGridComponent', () => {
   let component: PlayerGridComponent;
-  let fixture: ComponentFixture<PlayerGridComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -16,12 +15,22 @@ describe('PlayerGridComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PlayerGridComponent);
+    const fixture = TestBed.createComponent(PlayerGridComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create PlayerGridComponent', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should contain grid', async(() => {
+    const fixture = TestBed.createComponent(PlayerGridComponent);
+
+    fixture.detectChanges();
+
+    const compiled = fixture.debugElement.nativeElement;
+
+    expect(compiled.querySelector('.grid')).not.toEqual(null);
+  }));
 });
