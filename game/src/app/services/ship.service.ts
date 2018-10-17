@@ -17,31 +17,31 @@ export class ShipService {
   constructor() {
   }
 
-  calculateLShipTop(cellId: number) {
+  calculateLShipTop(cellId: number): number[] {
     const inc = 10;
 
     return [cellId, cellId - inc, cellId - 2 * inc, cellId - (2 * inc - 1)];
   }
 
-  calculateLShipBottom(cellId: number) {
+  calculateLShipBottom(cellId: number): number[] {
     const inc = 10;
 
     return [cellId, cellId + inc, cellId + 2 * inc, cellId + (2 * inc + 1)];
   }
 
-  calculateLShipRight(cellId: number) {
+  calculateLShipRight(cellId: number): number[] {
     const inc = 10;
 
     return [cellId, cellId + inc, cellId + (inc - 1), cellId + (inc - 2)];
   }
 
-  calculateLShipLeft(cellId: number) {
+  calculateLShipLeft(cellId: number): number[] {
     const inc = 10;
 
     return [cellId, cellId - inc, cellId - (inc - 1), cellId - (inc - 2)];
   }
 
-  calculateIShipBorderPoints(location: number, ship: Ship, orientation: string) {
+  calculateIShipBorderPoints(location: number, ship: Ship, orientation: string): number[] {
     const inc = 10;
     const cellId = location - 1;
 
@@ -216,7 +216,7 @@ export class ShipService {
     }
   }
 
-  calculateLShipBorderPoints(location: number, ship: Ship, orientation: string) {
+  calculateLShipBorderPoints(location: number, ship: Ship, orientation: string): number[] {
     const inc = 10;
     const cellId = location - 1;
 
@@ -391,7 +391,7 @@ export class ShipService {
     }
   }
 
-  calculateDotShipBorderPoints(location: number) {
+  calculateDotShipBorderPoints(location: number): number[] {
     const inc = 10;
     const cellId = location - 1;
 
@@ -416,7 +416,7 @@ export class ShipService {
     ];
   }
 
-  calculateBorderPoints(location: number, ship: Ship, orientation: string) {
+  calculateBorderPoints(location: number, ship: Ship, orientation: string): number[] {
     if (ship.type === GameConstants.L_SHAPED) {
       return this.calculateLShipBorderPoints(location, ship, orientation);
     }
@@ -428,13 +428,13 @@ export class ShipService {
     return this.calculateIShipBorderPoints(location, ship, orientation);
   }
 
-  shipsAlive(grid: Grid[]) {
+  shipsAlive(grid: Grid[]): boolean {
     const fleetAliveShipPoints = grid.filter(point => point.isShip && !point.isHit);
 
     return fleetAliveShipPoints.length > 0;
   }
 
-  checkOverlap(location: number, ship: Ship, orientation: string, grid: Grid[]) {
+  checkOverlap(location: number, ship: Ship, orientation: string, grid: Grid[]): boolean {
     const borderPoints = [...this.calculateBorderPoints(location, ship, orientation), ...[location - 1]];
     const shipsPoints = grid.filter(element => element.isShip === true).map(shipCell => shipCell.id);
 

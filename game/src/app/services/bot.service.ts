@@ -13,20 +13,20 @@ export class BotService {
 
   constructor() { }
 
-  getNextShot(grid) {
+  getNextShot(grid): number {
     const availablePoints = grid.filter(point => (!point.isMiss || point.isHit) && (point.isMiss || !point.isHit));
     const availablePointsIds = availablePoints.map(point => point.id);
 
     return getRandomFromArray(availablePointsIds);
   }
 
-  getBotsFleetPosition() {
+  getBotsFleetPosition(): number[] {
     const luckyNumber = getRandomInt(0, botsFleetCombinations.length);
 
     return botsFleetCombinations[luckyNumber];
   }
 
-  getFixedFleetPosition(botsFleetCombinationId: number) {
+  getFixedFleetPosition(botsFleetCombinationId: number): number[] {
     return botsFleetCombinations[botsFleetCombinationId];
   }
 }

@@ -24,7 +24,7 @@ export class Fleet {
     this.currentShip = 0;
   }
 
-  initShips() {
+  initShips(): void {
     for (let i = 0; i < this.numOfShips; i++) {
       this.ships[i] = new Ship(this.shipDetails[i].name);
       this.ships[i].length = this.shipDetails[i].length;
