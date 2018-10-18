@@ -34,9 +34,6 @@ export class BotGridComponent implements OnInit {
     }
   }
 
-  /**
-   * @param {Grid[]} grid - Somebody's grid.
-   */
   setBotsFleet(grid: Grid[]): void {
     const fleet = this.botService.getBotsFleetPosition();
 
