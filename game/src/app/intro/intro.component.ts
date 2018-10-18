@@ -10,7 +10,7 @@ export class IntroComponent {
 
   constructor(private router: Router) { }
 
-  onNewGameClick() {
+  onNewGameClick(): void {
     this.router.navigate(['/game']);
   }
 }

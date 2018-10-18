@@ -44,7 +44,7 @@ export class PlayerGridComponent {
   /**
    * @param {MouseEvent} e
    */
-  onPointClick(e) {
+  onPointClick(e): void {
     const activePointId = parseInt(e.currentTarget.id, 10);
 
     if (this.shipPlacementPhase) {
@@ -55,7 +55,7 @@ export class PlayerGridComponent {
   /**
    * @param {MouseEvent} e
    */
-  onMouseExitPoint(e) {
+  onMouseExitPoint(e): void {
     if (!this.shipPlacementPhase) {
       return;
     }
@@ -91,7 +91,7 @@ export class PlayerGridComponent {
   /**
    * @param {MouseEvent} e
    */
-  onMouseEnterPoint(e) {
+  onMouseEnterPoint(e): void {
     if (!this.shipPlacementPhase) {
       return;
     }
@@ -126,7 +126,7 @@ export class PlayerGridComponent {
     }
   }
 
-  displayShipTop(location: number, ship: Ship) {
+  displayShipTop(location: number, ship: Ship): void {
     const cellId = location - 1;
 
     let inc = 0;
@@ -159,7 +159,7 @@ export class PlayerGridComponent {
     }
   };
 
-  displayShipBottom(location: number, ship: Ship) {
+  displayShipBottom(location: number, ship: Ship): void {
     const cellId = location - 1;
 
     let inc = 0;
@@ -193,7 +193,7 @@ export class PlayerGridComponent {
     }
   };
 
-  displayShipLeft(location: number, ship: Ship) {
+  displayShipLeft(location: number, ship: Ship): void {
     const cellId = location - 1;
 
     if (ship.type === GameConstants.L_SHAPED) {
@@ -216,7 +216,7 @@ export class PlayerGridComponent {
     }
   };
 
-  displayShipRight(location: number, ship: Ship) {
+  displayShipRight(location: number, ship: Ship): void {
     const cellId = location - 1;
 
     if (this.selectedShip.type === GameConstants.L_SHAPED) {
@@ -241,7 +241,7 @@ export class PlayerGridComponent {
     }
   };
 
-  removeShipTop(location: number) {
+  removeShipTop(location: number): void {
     const cellId = location - 1;
 
     let inc = 0;
@@ -263,7 +263,7 @@ export class PlayerGridComponent {
     }
   };
 
-  removeShipBottom(location: number) {
+  removeShipBottom(location: number): void {
     const cellId = location - 1;
 
     let inc = 0;
@@ -285,7 +285,7 @@ export class PlayerGridComponent {
     }
   };
 
-  removeShipLeft(location: number) {
+  removeShipLeft(location: number): void {
     const cellId = location - 1;
 
     if (this.selectedShip.type === GameConstants.L_SHAPED) {
@@ -303,7 +303,7 @@ export class PlayerGridComponent {
     }
   };
 
-  removeShipRight(location: number) {
+  removeShipRight(location: number): void {
     const cellId = location - 1;
 
     if (this.selectedShip.type === GameConstants.L_SHAPED) {
@@ -321,7 +321,7 @@ export class PlayerGridComponent {
     }
   };
 
-  removeShip(shipPoints: number[]) {
+  removeShip(shipPoints: number[]): void {
     shipPoints.map(id => {
       const point = this.playerGrid.find(element => element.id === id);
 
@@ -331,7 +331,7 @@ export class PlayerGridComponent {
     });
   }
 
-  displayShip(shipPoints: number[]) {
+  displayShip(shipPoints: number[]): void {
     shipPoints.map(id => {
       const point = this.playerGrid.find(element => element.id === id);
 
@@ -341,7 +341,7 @@ export class PlayerGridComponent {
     });
   }
 
-  displayShipBorder(location: number, ship: Ship) {
+  displayShipBorder(location: number, ship: Ship): void {
     const borderPoints = this.shipService.calculateBorderPoints(location, ship, this.orientation);
 
     borderPoints.map(id => {
@@ -353,7 +353,7 @@ export class PlayerGridComponent {
     });
   }
 
-  removeShipBorder(location: number, ship: Ship) {
+  removeShipBorder(location: number, ship: Ship): void {
     const borderPoints = this.shipService.calculateBorderPoints(location, ship, this.orientation);
 
     borderPoints.map(id => {
@@ -365,7 +365,7 @@ export class PlayerGridComponent {
     });
   }
 
-  setLShip(shipPoints: number[]) {
+  setLShip(shipPoints: number[]): void {
     shipPoints.map(id => {
       const point = this.playerGrid.find(element => element.id === id);
 
@@ -375,7 +375,7 @@ export class PlayerGridComponent {
     });
   }
 
-  setShip(location: number, ship: Ship, orientation: string, genericFleet: Fleet) {
+  setShip(location: number, ship: Ship, orientation: string, genericFleet: Fleet): void {
     if (this.shipService.checkOverlap(location, ship, orientation, this.playerGrid)) {
       this.consoleText = `${this.selectedShip.type} can not be placed on this position`;
       this.consoleTextChange.emit(this.consoleText);
@@ -425,7 +425,7 @@ export class PlayerGridComponent {
     }
   }
 
-  setShipTop(location: number, ship: Ship, orientation: string, genericFleet: Fleet) {
+  setShipTop(location: number, ship: Ship, orientation: string, genericFleet: Fleet): void {
     const cellId = location - 1;
 
     if (ship.type === GameConstants.L_SHAPED) {
@@ -458,7 +458,7 @@ export class PlayerGridComponent {
     }
   }
 
-  setShipBottom(location: number, ship: Ship, orientation: string, genericFleet: Fleet) {
+  setShipBottom(location: number, ship: Ship, orientation: string, genericFleet: Fleet): void {
     const cellId = location - 1;
 
     if (ship.type === GameConstants.L_SHAPED) {
@@ -491,7 +491,7 @@ export class PlayerGridComponent {
     }
   }
 
-  setShipRight(location: number, ship: Ship, orientation: string, genericFleet: Fleet) {
+  setShipRight(location: number, ship: Ship, orientation: string, genericFleet: Fleet): void {
     const cellId = location - 1;
 
     if (ship.type === GameConstants.L_SHAPED) {
@@ -519,7 +519,7 @@ export class PlayerGridComponent {
     }
   }
 
-  setShipLeft(location: number, ship: Ship, orientation: string, genericFleet: Fleet) {
+  setShipLeft(location: number, ship: Ship, orientation: string, genericFleet: Fleet): void {
     const cellId = location - 1;
 
     if (ship.type === GameConstants.L_SHAPED) {
@@ -545,18 +545,18 @@ export class PlayerGridComponent {
     }
   }
 
-  displayNextFleetShip(location: number, ship: Ship, fleet: Fleet) {
+  displayNextFleetShip(location: number, ship: Ship, fleet: Fleet): void {
     this.removeShipBorder(location, ship);
     this.displayNextShip(fleet);
   }
 
-  displayNextShip(fleet: Fleet) {
+  displayNextShip(fleet: Fleet): void {
     if (++fleet.currentShip !== fleet.numOfShips) {
       this.placeShip(fleet.ships[fleet.currentShip], fleet);
     }
   }
 
-  placeShip(ship: Ship, fleet: Fleet) {
+  placeShip(ship: Ship, fleet: Fleet): void {
     this.selectedShip = ship;
     this.selectedFleet = fleet;
     this.shipPlacementPhase = true;

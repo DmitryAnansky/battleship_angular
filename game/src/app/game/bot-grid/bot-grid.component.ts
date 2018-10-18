@@ -28,7 +28,7 @@ export class BotGridComponent implements OnInit {
               private botService: BotService,
               private router: Router) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     if (this.botGrid) {
       this.setBotsFleet(this.botGrid);
     }
@@ -50,7 +50,7 @@ export class BotGridComponent implements OnInit {
   /**
    * @param {MouseEvent} e
    */
-  onPointClick(e) {
+  onPointClick(e): void {
     if (!this.gamePhase) {
       return;
     }
@@ -86,7 +86,7 @@ export class BotGridComponent implements OnInit {
     }
   }
 
-  botMakeShot() {
+  botMakeShot(): void {
     const newShot = this.botService.getNextShot(this.playerGrid);
 
     if (this.playerGrid[newShot].isShip) {

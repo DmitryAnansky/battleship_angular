@@ -38,7 +38,7 @@ export class GameComponent implements OnInit {
   constructor(private gridService: GridService) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.shipsOrientation = SHIP_ORIENTATIONS;
     this.titleLeftAlphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
     this.titleTopNumbers = Array.from(Array(11).keys());
@@ -47,7 +47,7 @@ export class GameComponent implements OnInit {
     this.botGrid = this.gridService.getGrid(100);
   }
 
-  onPlaceShips() {
+  onPlaceShips(): void {
     this.displayRotationControl = true;
     this.consoleText = 'Use the mouse to place your ships on the battle field.';
 
@@ -57,13 +57,13 @@ export class GameComponent implements OnInit {
     this.placeShip(this.playerFleet.ships[this.playerFleet.currentShip], this.playerFleet);
   }
 
-  onRotateClick() {
+  onRotateClick(): void {
     const orientationOptions = Object.keys(this.shipsOrientation);
 
     this.orientation = orientationOptions[getRandomInt(0, orientationOptions.length)];
   }
 
-  placeShip(ship: ShipEntity, fleet: Fleet) {
+  placeShip(ship: ShipEntity, fleet: Fleet): void {
     this.selectedShip = ship;
     this.selectedFleet = fleet;
     this.shipPlacementPhase = true;

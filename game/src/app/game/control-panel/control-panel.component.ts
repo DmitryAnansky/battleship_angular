@@ -14,15 +14,15 @@ export class ControlPanelComponent {
 
   constructor(private router: Router) { }
 
-  onExitClick() {
+  onExitClick(): void {
     this.router.navigate(['/intro']);
   }
 
-  onClickPlaceShips() {
+  onClickPlaceShips(): void {
     this.onPlaceShips.emit();
   }
 
-  onClickRotateShips() {
+  onClickRotateShips(): void {
     this.onRotateClick.emit();
   }
 }

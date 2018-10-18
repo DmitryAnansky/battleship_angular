@@ -11,13 +11,13 @@ export class WinnerComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private router: Router) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.route.params.subscribe((params: any) => {
       this.winner = params.hasOwnProperty('name') ? params.name : 'no one';
     });
   }
 
-  onNewGameClick() {
+  onNewGameClick(): void {
     this.router.navigate(['/game']);
   }
 
