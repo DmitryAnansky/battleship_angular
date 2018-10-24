@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {ShipService} from '../../services/ship.service';
 import {Ship} from '../../models/ship.model';
 import {Fleet} from '../../models/fleet.model';
-import {Shape} from '../../game/game_constants';
+import {Orientation, Shape} from '../../game/game_constants';
 import {Grid} from '../grid';
 
 @Component({
@@ -15,7 +15,6 @@ export class PlayerGridComponent {
   @Input() titleTopNumbers;
   @Input() titleLeftAlphabet;
   @Input() orientation;
-  @Input() shipsOrientation;
 
   @Input() playerGrid;
   @Output() playerGridChange: EventEmitter<Grid[]> = new EventEmitter();
@@ -63,19 +62,19 @@ export class PlayerGridComponent {
     const pointLocation = parseInt(e.target.id, 10);
 
     switch (this.orientation) {
-      case this.shipsOrientation.TOP: {
+      case Orientation.TOP: {
         this.removeShipTop(pointLocation);
         break;
       }
-      case this.shipsOrientation.LEFT: {
+      case Orientation.LEFT: {
         this.removeShipLeft(pointLocation);
         break;
       }
-      case this.shipsOrientation.RIGHT: {
+      case Orientation.RIGHT: {
         this.removeShipRight(pointLocation);
         break;
       }
-      case this.shipsOrientation.BOTTOM: {
+      case Orientation.BOTTOM: {
         this.removeShipBottom(pointLocation);
         break;
       }
@@ -103,19 +102,19 @@ export class PlayerGridComponent {
     }
 
     switch (this.orientation) {
-      case this.shipsOrientation.TOP: {
+      case Orientation.TOP: {
         this.displayShipTop(mousePosition, this.selectedShip);
         break;
       }
-      case this.shipsOrientation.LEFT: {
+      case Orientation.LEFT: {
         this.displayShipLeft(mousePosition, this.selectedShip);
         break;
       }
-      case this.shipsOrientation.RIGHT: {
+      case Orientation.RIGHT: {
         this.displayShipRight(mousePosition, this.selectedShip);
         break;
       }
-      case this.shipsOrientation.BOTTOM: {
+      case Orientation.BOTTOM: {
         this.displayShipBottom(mousePosition, this.selectedShip);
         break;
       }
@@ -375,7 +374,7 @@ export class PlayerGridComponent {
     });
   }
 
-  setShip(location: number, ship: Ship, orientation: string, genericFleet: Fleet): void {
+  setShip(location: number, ship: Ship, orientation: Orientation, genericFleet: Fleet): void {
     if (this.shipService.checkOverlap(location, ship, orientation, this.playerGrid)) {
       this.consoleText = `${this.selectedShip.type} can not be placed on this position`;
       this.consoleTextChange.emit(this.consoleText);
@@ -383,19 +382,19 @@ export class PlayerGridComponent {
     }
 
     switch (this.orientation) {
-      case this.shipsOrientation.TOP: {
+      case Orientation.TOP: {
         this.setShipTop(location, ship, orientation, genericFleet);
         break;
       }
-      case this.shipsOrientation.LEFT: {
+      case Orientation.LEFT: {
         this.setShipLeft(location, ship, orientation, genericFleet);
         break;
       }
-      case this.shipsOrientation.RIGHT: {
+      case Orientation.RIGHT: {
         this.setShipRight(location, ship, orientation, genericFleet);
         break;
       }
-      case this.shipsOrientation.BOTTOM: {
+      case Orientation.BOTTOM: {
         this.setShipBottom(location, ship, orientation, genericFleet);
         break;
       }
@@ -425,7 +424,7 @@ export class PlayerGridComponent {
     }
   }
 
-  setShipTop(location: number, ship: Ship, orientation: string, genericFleet: Fleet): void {
+  setShipTop(location: number, ship: Ship, orientation: Orientation, genericFleet: Fleet): void {
     const cellId = location - 1;
 
     if (ship.type === Shape.L_SHAPED) {
@@ -458,7 +457,7 @@ export class PlayerGridComponent {
     }
   }
 
-  setShipBottom(location: number, ship: Ship, orientation: string, genericFleet: Fleet): void {
+  setShipBottom(location: number, ship: Ship, orientation: Orientation, genericFleet: Fleet): void {
     const cellId = location - 1;
 
     if (ship.type === Shape.L_SHAPED) {
@@ -491,7 +490,7 @@ export class PlayerGridComponent {
     }
   }
 
-  setShipRight(location: number, ship: Ship, orientation: string, genericFleet: Fleet): void {
+  setShipRight(location: number, ship: Ship, orientation: Orientation, genericFleet: Fleet): void {
     const cellId = location - 1;
 
     if (ship.type === Shape.L_SHAPED) {
@@ -519,7 +518,7 @@ export class PlayerGridComponent {
     }
   }
 
-  setShipLeft(location: number, ship: Ship, orientation: string, genericFleet: Fleet): void {
+  setShipLeft(location: number, ship: Ship, orientation: Orientation, genericFleet: Fleet): void {
     const cellId = location - 1;
 
     if (ship.type === Shape.L_SHAPED) {

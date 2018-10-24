@@ -3,7 +3,7 @@ import { TestBed, inject } from '@angular/core/testing';
 import { ShipService } from './ship.service';
 import {GridService} from './grid.service';
 import {BotService} from './bot.service';
-import {GameConstants, Shape} from '../game/game_constants';
+import {Orientation, Shape} from '../game/game_constants';
 import {Ship} from '../models/ship.model';
 
 describe('ShipService', () => {
@@ -85,7 +85,7 @@ describe('ShipService', () => {
    - should return IShip border points`,
     inject([ShipService], (service: ShipService) => {
       const ship = new Ship({ 'name': 'iShaped', 'length': 4, 'type': Shape.I_SHAPED});
-      const orientation = GameConstants.BOTTOM;
+      const orientation = Orientation.BOTTOM;
       const shipPoints = service.calculateIShipBorderPoints(54, ship, orientation);
       const testIShipBorderPoints = [ 44, 54, 64, 74, 84, 94, 42, 52, 62, 72, 82, 92, 43, 93 ];
 
@@ -97,7 +97,7 @@ describe('ShipService', () => {
    - should return LShip border points`,
     inject([ShipService], (service: ShipService) => {
       const ship = new Ship({ 'name': 'lShaped', 'length': 4, 'type': Shape.L_SHAPED});
-      const orientation = GameConstants.BOTTOM;
+      const orientation = Orientation.BOTTOM;
       const shipPoints = service.calculateLShipBorderPoints(54, ship, orientation);
       const testLShipBorderPoints = [ 65, 75, 85, 82, 72, 62, 52, 42, 43, 83, 84, 64, 54, 44 ];
 
@@ -128,7 +128,7 @@ describe('ShipService', () => {
       });
 
       const ship = new Ship({ 'name': 'dotShaped', 'length': 1, 'type': Shape.DOT_SHAPED});
-      const orientation = GameConstants.BOTTOM;
+      const orientation = Orientation.BOTTOM;
       const checkOverlap = service.checkOverlap(84, ship, orientation, grid);
 
       expect(checkOverlap).toBeFalsy();
@@ -148,7 +148,7 @@ describe('ShipService', () => {
       });
 
       const ship = new Ship({ 'name': 'dotShaped', 'length': 1, 'type': Shape.DOT_SHAPED});
-      const orientation = GameConstants.BOTTOM;
+      const orientation = Orientation.BOTTOM;
       const checkOverlap = service.checkOverlap(1, ship, orientation, grid);
 
       expect(checkOverlap).toBeTruthy();

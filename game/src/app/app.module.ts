@@ -14,7 +14,6 @@ import {ShipService} from './services/ship.service';
 import {PlayerGridComponent} from './game/player-grid/player-grid.component';
 import {WinnerComponent} from './winner/winner.component';
 import {BotService} from './services/bot.service';
-import {GameConstants} from './game/game_constants';
 import { NotFoundComponent } from './not-found/not-found.component';
 import {GridService} from './services/grid.service';
 
@@ -36,7 +35,7 @@ import {GridService} from './services/grid.service';
     FormsModule,
     HttpModule
   ],
-  providers: [ShipService, BotService, GameConstants, GridService],
+  providers: [ShipService, BotService, GridService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

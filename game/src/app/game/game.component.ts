@@ -1,17 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {Fleet} from '../models/fleet.model';
-import {GameConstants} from './game_constants';
+import {Orientation} from './game_constants';
 import {Grid} from './grid';
-import {ShipEntity, ShipOrientation} from './ship';
+import {ShipEntity} from './ship';
 import {getRandomInt} from '../utils';
 import {GridService} from '../services/grid.service';
-
-const SHIP_ORIENTATIONS = {
-  TOP: GameConstants.TOP,
-  BOTTOM: GameConstants.BOTTOM,
-  LEFT: GameConstants.LEFT,
-  RIGHT: GameConstants.RIGHT
-};
 
 @Component({
   selector: 'app-game',
@@ -32,17 +25,15 @@ export class GameComponent implements OnInit {
     ' The Game will start immediately after all ship\'s positioning.';
   public displayRotationControl = false;
   public playerFleet: Fleet;
-  public orientation: string;
-  public shipsOrientation: ShipOrientation;
+  public orientation: Orientation | any;
 
   constructor(private gridService: GridService) {
   }
 
   ngOnInit(): void {
-    this.shipsOrientation = SHIP_ORIENTATIONS;
     this.titleLeftAlphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
     this.titleTopNumbers = Array.from(Array(11).keys());
-    this.orientation = this.shipsOrientation.BOTTOM;
+    this.orientation = Orientation.BOTTOM;
     this.playerGrid = this.gridService.getGrid(100);
     this.botGrid = this.gridService.getGrid(100);
   }
@@ -58,7 +49,7 @@ export class GameComponent implements OnInit {
   }
 
   onRotateClick(): void {
-    const orientationOptions = Object.keys(this.shipsOrientation);
+    const orientationOptions = Object.keys(Orientation);
 
     this.orientation = orientationOptions[getRandomInt(0, orientationOptions.length)];
   }

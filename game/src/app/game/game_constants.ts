@@ -4,9 +4,9 @@ export enum Shape {
   DOT_SHAPED = 'dotShape'
 }
 
-export class GameConstants {
-  public static TOP = 'TOP';
-  public static BOTTOM = 'BOTTOM';
-  public static LEFT = 'LEFT';
-  public static RIGHT = 'RIGHT';
+export enum Orientation {
+  TOP = 'TOP',
+  BOTTOM = 'BOTTOM',
+  LEFT = 'LEFT',
+  RIGHT = 'RIGHT'
 }

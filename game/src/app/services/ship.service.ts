@@ -1,15 +1,8 @@
 import {Injectable} from '@angular/core';
-import {GameConstants, Shape} from '../game/game_constants';
+import {Orientation, Shape} from '../game/game_constants';
 import {Grid} from '../game/grid';
 import {Ship} from '../models/ship.model';
 import {intersection} from 'lodash';
-
-const shipOrientation = {
-  TOP: GameConstants.TOP,
-  BOTTOM: GameConstants.BOTTOM,
-  LEFT: GameConstants.LEFT,
-  RIGHT: GameConstants.RIGHT
-};
 
 @Injectable()
 export class ShipService {
@@ -41,12 +34,12 @@ export class ShipService {
     return [cellId, cellId - inc, cellId - (inc - 1), cellId - (inc - 2)];
   }
 
-  calculateIShipBorderPoints(location: number, ship: Ship, orientation: string): number[] {
+  calculateIShipBorderPoints(location: number, ship: Ship, orientation: Orientation): number[] {
     const inc = 10;
     const cellId = location - 1;
 
     switch (orientation) {
-      case shipOrientation.TOP: {
+      case Orientation.TOP: {
         let iShapedTopBorder = [];
 
         // add right side
@@ -87,7 +80,7 @@ export class ShipService {
           ]
         ];
       }
-      case shipOrientation.LEFT: {
+      case Orientation.LEFT: {
         let iShapedLeftBorder = [];
 
         // add right side
@@ -128,7 +121,7 @@ export class ShipService {
           ]
         ];
       }
-      case shipOrientation.RIGHT: {
+      case Orientation.RIGHT: {
         let iShapedRightBorder = [];
 
         // add right side
@@ -169,7 +162,7 @@ export class ShipService {
           ]
         ];
       }
-      case shipOrientation.BOTTOM: {
+      case Orientation.BOTTOM: {
         let iShapedBottomBorder = [];
 
         // add right side
@@ -216,12 +209,12 @@ export class ShipService {
     }
   }
 
-  calculateLShipBorderPoints(location: number, ship: Ship, orientation: string): number[] {
+  calculateLShipBorderPoints(location: number, ship: Ship, orientation: Orientation): number[] {
     const inc = 10;
     const cellId = location - 1;
 
     switch (orientation) {
-      case shipOrientation.TOP: {
+      case Orientation.TOP: {
         let lShapedTopBorder = [];
 
         // add right side
@@ -262,7 +255,7 @@ export class ShipService {
           ]
         ];
       }
-      case shipOrientation.LEFT: {
+      case Orientation.LEFT: {
         let lShapedLeftBorder = [];
 
         // add right side
@@ -303,7 +296,7 @@ export class ShipService {
           ]
         ];
       }
-      case shipOrientation.RIGHT: {
+      case Orientation.RIGHT: {
         let lShapedRightBorder = [];
 
         // add right side
@@ -344,7 +337,7 @@ export class ShipService {
           ]
         ];
       }
-      case shipOrientation.BOTTOM: {
+      case Orientation.BOTTOM: {
         let lShapedBottomBorder = [];
 
         // add right side
@@ -416,7 +409,7 @@ export class ShipService {
     ];
   }
 
-  calculateBorderPoints(location: number, ship: Ship, orientation: string): number[] {
+  calculateBorderPoints(location: number, ship: Ship, orientation: Orientation): number[] {
     if (ship.type === Shape.L_SHAPED) {
       return this.calculateLShipBorderPoints(location, ship, orientation);
     }
@@ -434,7 +427,7 @@ export class ShipService {
     return fleetAliveShipPoints.length > 0;
   }
 
-  checkOverlap(location: number, ship: Ship, orientation: string, grid: Grid[]): boolean {
+  checkOverlap(location: number, ship: Ship, orientation: Orientation, grid: Grid[]): boolean {
     const borderPoints = [...this.calculateBorderPoints(location, ship, orientation), ...[location - 1]];
     const shipsPoints = grid.filter(element => element.isShip === true).map(shipCell => shipCell.id);
 
