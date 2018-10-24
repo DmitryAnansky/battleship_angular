@@ -13,14 +13,14 @@ import {GridService} from '../services/grid.service';
 })
 
 export class GameComponent implements OnInit {
-  public titleTopNumbers: number[];
+  public readonly titleTopNumbers: number[] = Array.from(Array(11).keys());
   public selectedShip: ShipEntity;
   public playerGrid: Grid[];
   public botGrid: Grid[];
   public selectedFleet: Fleet;
   public shipPlacementPhase = false;
   public gamePhase = false;
-  public titleLeftAlphabet: string[];
+  public readonly titleLeftAlphabet: string[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
   public consoleText: string = 'Please place your ships on the game battle field.\n' +
     ' The Game will start immediately after all ship\'s positioning.';
   public displayRotationControl = false;
@@ -31,8 +31,6 @@ export class GameComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.titleLeftAlphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
-    this.titleTopNumbers = Array.from(Array(11).keys());
     this.orientation = Orientation.BOTTOM;
     this.playerGrid = this.gridService.getGrid(100);
     this.botGrid = this.gridService.getGrid(100);

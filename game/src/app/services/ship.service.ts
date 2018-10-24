@@ -42,7 +42,7 @@ export class ShipService {
       case Orientation.TOP: {
         let iShapedTopBorder = [];
 
-        // add right side
+        // add right side border
         if (location % 10 !== 0) {
           iShapedTopBorder = [
             ...iShapedTopBorder,
@@ -57,7 +57,7 @@ export class ShipService {
           ];
         }
 
-        // add left side
+        // add left side border
         if (location % 10 !== 1) {
           iShapedTopBorder = [
             ...iShapedTopBorder,
@@ -83,7 +83,7 @@ export class ShipService {
       case Orientation.LEFT: {
         let iShapedLeftBorder = [];
 
-        // add right side
+        // add right side border
         if (location % 10 !== 0) {
           iShapedLeftBorder = [
             ...iShapedLeftBorder,
@@ -95,7 +95,7 @@ export class ShipService {
           ];
         }
 
-        // add left side
+        // add left side border
         if (location % 10 !== 4) {
           iShapedLeftBorder = [
             ...iShapedLeftBorder,
@@ -124,7 +124,7 @@ export class ShipService {
       case Orientation.RIGHT: {
         let iShapedRightBorder = [];
 
-        // add right side
+        // add right side border
         if (location % 10 < 7) {
           iShapedRightBorder = [
             ...iShapedRightBorder,
@@ -136,7 +136,7 @@ export class ShipService {
           ];
         }
 
-        // add left side
+        // add left side border
         if (location % 10 !== 1) {
           iShapedRightBorder = [
             ...iShapedRightBorder,
@@ -165,7 +165,7 @@ export class ShipService {
       case Orientation.BOTTOM: {
         let iShapedBottomBorder = [];
 
-        // add right side
+        // add right side border
         if (location % 10 !== 0) {
           iShapedBottomBorder = [
             ...iShapedBottomBorder,
@@ -180,7 +180,7 @@ export class ShipService {
           ];
         }
 
-        // add left side
+        // add left side border
         if (location % 10 !== 1) {
           iShapedBottomBorder = [
             ...iShapedBottomBorder,
@@ -217,7 +217,7 @@ export class ShipService {
       case Orientation.TOP: {
         let lShapedTopBorder = [];
 
-        // add right side
+        // add right side border
         if (location % 10 !== 9) {
           lShapedTopBorder = [
             ...lShapedTopBorder,
@@ -229,7 +229,7 @@ export class ShipService {
           ];
         }
 
-        // add left side
+        // add left side border
         if (location % 10 !== 1) {
           lShapedTopBorder = [
             ...lShapedTopBorder,
@@ -258,7 +258,7 @@ export class ShipService {
       case Orientation.LEFT: {
         let lShapedLeftBorder = [];
 
-        // add right side
+        // add right side border
         if (location % 10 !== 8) {
           lShapedLeftBorder = [
             ...lShapedLeftBorder,
@@ -270,7 +270,7 @@ export class ShipService {
           ];
         }
 
-        // add left side
+        // add left side border
         if (location % 10 !== 1) {
           lShapedLeftBorder = [
             ...lShapedLeftBorder,
@@ -299,7 +299,7 @@ export class ShipService {
       case Orientation.RIGHT: {
         let lShapedRightBorder = [];
 
-        // add right side
+        // add right side border
         if (location % 10 !== 0) {
           lShapedRightBorder = [
             ...lShapedRightBorder,
@@ -312,7 +312,7 @@ export class ShipService {
           ];
         }
 
-        // add left side
+        // add left side border
         if (location % 10 !== 3) {
           lShapedRightBorder = [
             ...lShapedRightBorder,
@@ -340,7 +340,7 @@ export class ShipService {
       case Orientation.BOTTOM: {
         let lShapedBottomBorder = [];
 
-        // add right side
+        // add right side border
         if (location % 10 !== 9) {
           lShapedBottomBorder = [
             ...lShapedBottomBorder,
@@ -352,7 +352,7 @@ export class ShipService {
           ];
         }
 
-        // add left side
+        // add left side border
         if (location % 10 !== 1) {
           lShapedBottomBorder = [
             ...lShapedBottomBorder,
@@ -390,12 +390,12 @@ export class ShipService {
 
     let dotShapedShipBorder = [];
 
-    // add right side
+    // add right side border
     if (location % 10 !== 0) {
       dotShapedShipBorder = [...dotShapedShipBorder, ...[(cellId + 1) - inc, cellId + 1, (cellId + 1) + inc]];
     }
 
-    // add left side
+    // add left side border
     if (location % 10 !== 1) {
       dotShapedShipBorder = [...dotShapedShipBorder, ...[(cellId - 1) - inc, cellId - 1, (cellId - 1) + inc]];
     }
