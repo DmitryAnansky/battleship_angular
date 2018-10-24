@@ -61,29 +61,7 @@ export class PlayerGridComponent {
 
     const pointLocation = parseInt(e.target.id, 10);
 
-    switch (this.orientation) {
-      case Orientation.TOP: {
-        this.removeShipTop(pointLocation);
-        break;
-      }
-      case Orientation.LEFT: {
-        this.removeShipLeft(pointLocation);
-        break;
-      }
-      case Orientation.RIGHT: {
-        this.removeShipRight(pointLocation);
-        break;
-      }
-      case Orientation.BOTTOM: {
-        this.removeShipBottom(pointLocation);
-        break;
-      }
-      default: {
-        this.removeShipBottom(pointLocation);
-        break;
-      }
-    }
-
+    this.removeShip();
     this.removeShipBorder(pointLocation, this.selectedShip);
   }
 
@@ -240,94 +218,17 @@ export class PlayerGridComponent {
     }
   };
 
-  removeShipTop(location: number): void {
-    const cellId = location - 1;
-
-    let inc = 0;
-
-    if (this.selectedShip.type === Shape.L_SHAPED) {
-      const shipPoints = this.shipService.calculateLShipTop(cellId);
-
-      this.removeShip(shipPoints);
-    } else {
-      for (let i = location; i < location + 4; i++) {
-        const point = this.playerGrid.find(element => element.id === (cellId - inc));
+  removeShip(): void {
+    this.playerGrid
+      .filter(element => element.isHovered === true)
+      .map(element => element.id)
+      .map(id => {
+        const point = this.playerGrid.find(element => element.id === id);
 
         if (point) {
           point.isHovered = false;
         }
-
-        inc = inc + 10;
-      }
-    }
-  };
-
-  removeShipBottom(location: number): void {
-    const cellId = location - 1;
-
-    let inc = 0;
-
-    if (this.selectedShip.type === Shape.L_SHAPED) {
-      const shipPoints = this.shipService.calculateLShipBottom(cellId);
-
-      this.removeShip(shipPoints);
-    } else {
-      for (let i = location; i < location + 4; i++) {
-        const point = this.playerGrid.find(element => element.id === (cellId + inc));
-
-        if (point) {
-          point.isHovered = false;
-        }
-
-        inc = inc + 10;
-      }
-    }
-  };
-
-  removeShipLeft(location: number): void {
-    const cellId = location - 1;
-
-    if (this.selectedShip.type === Shape.L_SHAPED) {
-      const shipPoints = this.shipService.calculateLShipLeft(cellId);
-
-      this.removeShip(shipPoints);
-    } else {
-      for (let i = cellId; i > cellId - 4; i--) {
-        const point = this.playerGrid.find(element => element.id === i);
-
-        if (point) {
-          point.isHovered = false;
-        }
-      }
-    }
-  };
-
-  removeShipRight(location: number): void {
-    const cellId = location - 1;
-
-    if (this.selectedShip.type === Shape.L_SHAPED) {
-      const shipPoints = this.shipService.calculateLShipRight(cellId);
-
-      this.removeShip(shipPoints);
-    } else {
-      for (let i = cellId; i < location + 3; i++) {
-        const point = this.playerGrid.find(element => element.id === i);
-
-        if (point) {
-          point.isHovered = false;
-        }
-      }
-    }
-  };
-
-  removeShip(shipPoints: number[]): void {
-    shipPoints.map(id => {
-      const point = this.playerGrid.find(element => element.id === id);
-
-      if (point) {
-        point.isHovered = false;
-      }
-    });
+      });
   }
 
   displayShip(shipPoints: number[]): void {
