@@ -1,6 +1,8 @@
+import {Shape} from './game_constants';
+
 export interface ShipEntity {
   name: string;
-  type: string;
+  type: Shape;
   length: number;
 }
 

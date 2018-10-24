@@ -1,14 +1,14 @@
-import {GameConstants} from '../game/game_constants';
+import {Shape} from '../game/game_constants';
 import {ShipEntity} from '../game/ship';
 import {Ship} from './ship.model';
 
 export class Fleet {
   public name: string;
   public readonly shipDetails: Ship[] = [
-    { name: 'lShaped', length: 4, type: GameConstants.L_SHAPED },
-    { name: 'iShaped', length: 4, type: GameConstants.I_SHAPED },
-    { name: 'dotShaped', length: 1, type: GameConstants.DOT_SHAPED },
-    { name: 'dotShaped', length: 1, type: GameConstants.DOT_SHAPED }
+    { name: 'lShaped', length: 4, type: Shape.L_SHAPED },
+    { name: 'iShaped', length: 4, type: Shape.I_SHAPED },
+    { name: 'dotShaped', length: 1, type: Shape.DOT_SHAPED },
+    { name: 'dotShaped', length: 1, type: Shape.DOT_SHAPED }
   ];
   public ships: ShipEntity[];
   public currentShip: number;

@@ -1,8 +1,10 @@
-export class GameConstants {
-  public static L_SHAPED = 'lShape';
-  public static I_SHAPED = 'iShape';
-  public static DOT_SHAPED = 'dotShape';
+export enum Shape {
+  L_SHAPED = 'lShape',
+  I_SHAPED = 'iShape',
+  DOT_SHAPED = 'dotShape'
+}
 
+export class GameConstants {
   public static TOP = 'TOP';
   public static BOTTOM = 'BOTTOM';
   public static LEFT = 'LEFT';

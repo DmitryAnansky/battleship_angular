@@ -1,8 +1,9 @@
 import {ShipEntity} from '../game/ship';
+import {Shape} from '../game/game_constants';
 
 export class Ship implements ShipEntity {
   public name: string;
-  public type: string;
+  public type: Shape;
   public length = 0;
 
   constructor(...args) {

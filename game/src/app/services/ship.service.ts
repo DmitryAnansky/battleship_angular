@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {GameConstants} from '../game/game_constants';
+import {GameConstants, Shape} from '../game/game_constants';
 import {Grid} from '../game/grid';
 import {Ship} from '../models/ship.model';
 import {intersection} from 'lodash';
@@ -417,7 +417,7 @@ export class ShipService {
   }
 
   calculateBorderPoints(location: number, ship: Ship, orientation: string): number[] {
-    if (ship.type === GameConstants.L_SHAPED) {
+    if (ship.type === Shape.L_SHAPED) {
       return this.calculateLShipBorderPoints(location, ship, orientation);
     }
 
