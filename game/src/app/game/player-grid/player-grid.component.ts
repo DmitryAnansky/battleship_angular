@@ -406,7 +406,7 @@ export class PlayerGridComponent {
     }
 
     this.consoleText = `${this.selectedShip.type} has been placed
-        [${genericFleet.currentShip}/${genericFleet.numOfShips}]`;
+        [${genericFleet.currentShip}/${genericFleet.shipDetails.length}]`;
 
     this.consoleTextChange.emit(this.consoleText);
     this.playerGridChange.emit(this.playerGrid);
@@ -551,7 +551,7 @@ export class PlayerGridComponent {
   }
 
   displayNextShip(fleet: Fleet): void {
-    if (++fleet.currentShip !== fleet.numOfShips) {
+    if (++fleet.currentShip !== fleet.shipDetails.length) {
       this.placeShip(fleet.ships[fleet.currentShip], fleet);
     }
   }

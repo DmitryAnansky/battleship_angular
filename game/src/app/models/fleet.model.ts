@@ -5,7 +5,6 @@ import {ShipEntity} from '../game/ship';
 export class Fleet {
   public name: string;
   public shipDetails: {'name': string, length: number, type: string}[];
-  public numOfShips: number;
   public ships: ShipEntity[];
   public currentShipSize: number;
   public currentShip: number;
@@ -18,14 +17,13 @@ export class Fleet {
       { 'name': 'dotShaped', 'length': 1, 'type': GameConstants.DOT_SHAPED},
       { 'name': 'dotShaped', 'length': 1, 'type': GameConstants.DOT_SHAPED}
     ];
-    this.numOfShips = this.shipDetails.length;
     this.ships = [];
     this.currentShipSize = 0;
     this.currentShip = 0;
   }
 
   initShips(): void {
-    for (let i = 0; i < this.numOfShips; i++) {
+    for (let i = 0; i < this.shipDetails.length; i++) {
       this.ships[i] = new Ship(this.shipDetails[i].name);
       this.ships[i].length = this.shipDetails[i].length;
       this.ships[i].type = this.shipDetails[i].type;
