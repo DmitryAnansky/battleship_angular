@@ -1,11 +1,23 @@
 import { browser, element, by } from 'protractor';
 
 export class GamePage {
-  navigateTo() {
-    return browser.get('/');
+  navigateTo(url: string) {
+    return browser.get(url);
   }
 
-  getParagraphText() {
-    return element(by.css('app-root h1')).getText();
+  getElementText(query: string) {
+    return element(by.css(query)).getText();
+  }
+
+  getStartGameTitle() {
+    return this.getElementText('.card-body h5');
+  }
+
+  getStartGameText() {
+    return this.getElementText('.card-body .card-text');
+  }
+
+  getStartNewGameBtnText() {
+    return this.getElementText('.card-body .btn-dark');
   }
 }
