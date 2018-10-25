@@ -41,17 +41,4 @@ describe('WinnerComponent', () => {
 
     expect(app.route.params.value.name).toEqual('Player');
   }));
-
-
-  it('should render winner name text', async(() => {
-    const compiled = fixture.debugElement.nativeElement;
-
-    expect(compiled.querySelector('.card-title').textContent).toContain('Player won!');
-  }));
-
-  it('should render New Game button', async(() => {
-    const compiled = fixture.debugElement.nativeElement;
-
-    expect(compiled.querySelector('.btn-dark').textContent).toContain('New Game');
-  }));
 });

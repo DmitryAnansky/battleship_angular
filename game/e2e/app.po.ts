@@ -20,4 +20,32 @@ export class GamePage {
   getStartNewGameBtnText() {
     return this.getElementText('.card-body .btn-dark');
   }
+
+  getNotFoundText() {
+    return this.getElementText('.not-found-page h1');
+  }
+
+  getWinnerText() {
+    return this.getElementText('.winner-page-container .card-title');
+  }
+
+  getHomeLinkText() {
+    return this.getElementText('.home-link');
+  }
+
+  clickHomeLink() {
+    return element(by.css('.home-link')).click();
+  }
+
+  clickNewGameBtn() {
+    return element(by.css('.card-body .btn-dark')).click();
+  }
+
+  getCurrentUrl() {
+    return browser.getCurrentUrl();
+  }
+
+  getBaseUrl() {
+    return browser.baseUrl;
+  }
 }

@@ -7,6 +7,8 @@ describe('game App', () => {
     page = new GamePage();
   });
 
+  // *Intro Page*
+
   it('should display title saying Battle ship', () => {
     page.navigateTo('/');
     page.getStartGameTitle().then((title) => {
@@ -27,6 +29,68 @@ describe('game App', () => {
     page.navigateTo('/');
     page.getStartNewGameBtnText().then((title) => {
       expect(title).toBe('New Game');
+    });
+  });
+
+  it('should navigate to game page after New Game button click', () => {
+    page.navigateTo('/intro');
+    page.clickNewGameBtn().then(() => {
+      page.getCurrentUrl().then(url => {
+        expect(url).toEqual(page.getBaseUrl() + '/game');
+      });
+    });
+  });
+
+  // *404 Page*
+
+  it('should display 404 text', () => {
+    page.navigateTo('/dsfsdf');
+    page.getNotFoundText().then((title) => {
+      expect(title).toBe('404, page not found');
+    });
+  });
+
+  it('should display Go to the main page link', () => {
+    page.navigateTo('/dsfsdf');
+    page.getHomeLinkText().then((title) => {
+      expect(title).toBe('Go to the main page');
+    });
+  });
+
+  it('should navigate to home page after Go to the main page link click', () => {
+    page.navigateTo('/404');
+    page.clickHomeLink().then(() => {
+      page.getCurrentUrl().then(url => {
+        expect(url).toEqual(page.getBaseUrl() + '/intro');
+      });
+    });
+  });
+
+  // *Winner Page*
+
+  it('should display New Game button', () => {
+    page.navigateTo('/winner/name');
+    page.getStartNewGameBtnText().then((title) => {
+      expect(title).toBe('New Game');
+    });
+  });
+
+  it('should display Winner name text', () => {
+    const winnerName = 'Bob';
+
+    page.navigateTo(`/winner/${winnerName}`);
+
+    page.getWinnerText().then((title) => {
+      expect(title).toBe('Bob won!');
+    });
+  });
+
+  it('should navigate to game page after New Game button click', () => {
+    page.navigateTo('/winner/name');
+    page.clickNewGameBtn().then(() => {
+      page.getCurrentUrl().then(url => {
+        expect(url).toEqual(page.getBaseUrl() + '/game');
+      });
     });
   });
 });
