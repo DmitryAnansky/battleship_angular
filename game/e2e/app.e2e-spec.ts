@@ -93,4 +93,38 @@ describe('game App', () => {
       });
     });
   });
+
+  // *Game Page*
+
+  it('should display New Game button', () => {
+    page.navigateTo('/game');
+    page.getPlaceShipsBtnText().then((title) => {
+      expect(title).toBe('Place Ships');
+    });
+  });
+
+  it('should display Exit button', () => {
+    page.navigateTo('/game');
+    page.getExitBtnText().then((title) => {
+      expect(title).toBe('Exit');
+    });
+  });
+
+  it('should display Welcome console text', () => {
+    const welcomeText = 'Please place your ships on the game battle field. The Game will start immediately after all ship\'s positioning.';
+
+    page.navigateTo('/game');
+    page.getConsoleWelcomeText().then((text) => {
+      expect(text).toBe(welcomeText);
+    });
+  });
+
+  it('should navigate to intro page after Exit button click', () => {
+    page.navigateTo('/game');
+    page.clickExitBtn().then(() => {
+      page.getCurrentUrl().then(url => {
+        expect(url).toEqual(page.getBaseUrl() + '/intro');
+      });
+    });
+  });
 });

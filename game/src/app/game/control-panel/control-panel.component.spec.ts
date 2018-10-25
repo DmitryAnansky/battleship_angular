@@ -29,18 +29,6 @@ describe('ControlPanelComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should render Exit button', async(() => {
-    const compiled = fixture.debugElement.nativeElement;
-
-    expect(compiled.querySelector('.exit-btn').textContent).toContain('Exit');
-  }));
-
-  it('should render Place Ship button', async(() => {
-    const compiled = fixture.debugElement.nativeElement;
-
-    expect(compiled.querySelector('.place-ship-btn').textContent).toContain('Place Ship');
-  }));
-
   it('if Exit button clicked onExitClick should be called', async(() => {
     spyOn(component, 'onExitClick');
 

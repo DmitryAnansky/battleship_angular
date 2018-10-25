@@ -35,19 +35,6 @@ describe('GameComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should display app-game-information component', async(() => {
-    const compiled = fixture.debugElement.nativeElement;
-
-    expect(compiled.querySelector('app-game-information')).not.toEqual(null);
-  }));
-
-  it('should display start text inside app-game-information component', async(() => {
-    const startGameText = 'Please place your ships on the game battle field.';
-    const compiled = fixture.debugElement.nativeElement;
-
-    expect(compiled.querySelector('app-game-information .game-progress-log').textContent).toContain(startGameText);
-  }));
-
   it('should display app-bot-grid component', async(() => {
     const compiled = fixture.debugElement.nativeElement;
 

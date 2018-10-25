@@ -21,6 +21,18 @@ export class GamePage {
     return this.getElementText('.card-body .btn-dark');
   }
 
+  getPlaceShipsBtnText() {
+    return this.getElementText('.control-panel .place-ship-btn');
+  }
+
+  getExitBtnText() {
+    return this.getElementText('.control-panel .exit-btn');
+  }
+
+  getConsoleWelcomeText() {
+    return this.getElementText('.progress-info .game-progress-log');
+  }
+
   getNotFoundText() {
     return this.getElementText('.not-found-page h1');
   }
@@ -39,6 +51,10 @@ export class GamePage {
 
   clickNewGameBtn() {
     return element(by.css('.card-body .btn-dark')).click();
+  }
+
+  clickExitBtn() {
+    return element(by.css('.exit-btn')).click();
   }
 
   getCurrentUrl() {
