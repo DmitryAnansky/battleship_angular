@@ -35,48 +35,6 @@ describe('GameComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should display app-bot-grid component', async(() => {
-    const compiled = fixture.debugElement.nativeElement;
-
-    expect(compiled.querySelector('app-bot-grid')).not.toEqual(null);
-  }));
-
-  it('should display app-player-grid component', async(() => {
-    const compiled = fixture.debugElement.nativeElement;
-
-    expect(compiled.querySelector('app-player-grid')).not.toEqual(null);
-  }));
-
-  it('should display app-control-panel component', async(() => {
-    const compiled = fixture.debugElement.nativeElement;
-
-    expect(compiled.querySelector('app-control-panel')).not.toEqual(null);
-  }));
-
-  it('should contain bot grid with title-top', async(() => {
-    const compiled = fixture.debugElement.nativeElement;
-
-    expect(compiled.querySelector('app-bot-grid .title-top')).not.toEqual(null);
-  }));
-
-  it('should contain bot grid with title-left', async(() => {
-    const compiled = fixture.debugElement.nativeElement;
-
-    expect(compiled.querySelector('app-bot-grid .title-left')).not.toEqual(null);
-  }));
-
-  it('should contain player grid with title-top', async(() => {
-    const compiled = fixture.debugElement.nativeElement;
-
-    expect(compiled.querySelector('app-player-grid .title-top')).not.toEqual(null);
-  }));
-
-  it('should contain player grid with title-left', async(() => {
-    const compiled = fixture.debugElement.nativeElement;
-
-    expect(compiled.querySelector('app-player-grid .title-left')).not.toEqual(null);
-  }));
-
   it('if Place Ship clicked onPlaceShips should be called', async(() => {
     spyOn(component, 'onPlaceShips');
 

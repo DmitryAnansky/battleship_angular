@@ -29,6 +29,10 @@ export class GamePage {
     return this.getElementText('.control-panel .exit-btn');
   }
 
+  getRandomRotationBtnText() {
+    return this.getElementText('.random-rotation-btn');
+  }
+
   getConsoleWelcomeText() {
     return this.getElementText('.progress-info .game-progress-log');
   }
@@ -55,6 +59,38 @@ export class GamePage {
 
   clickExitBtn() {
     return element(by.css('.exit-btn')).click();
+  }
+
+  clickPlaceShipsBtn() {
+    return element(by.css('.place-ship-btn')).click();
+  }
+
+  setShipPlayerGrid() {
+    return element(by.css('.bottom .grid .points')).click();
+  }
+
+  clickGridPosition1() {
+    return element(by.css('.bottom .shipN1')).click();
+  }
+
+  clickGridPosition4() {
+    return element(by.css('.bottom .shipN4')).click();
+  }
+
+  clickGridPosition6() {
+    return element(by.css('.bottom .shipN6')).click();
+  }
+
+  clickGridPosition8() {
+    return element(by.css('.bottom .shipN8')).click();
+  }
+
+  clickBotGridPosition8() {
+    return element(by.css('.top .shipN8')).click();
+  }
+
+  getPlayerShip() {
+    return element(by.css('.bottom .points.ship')).getAttribute('class');
   }
 
   getCurrentUrl() {

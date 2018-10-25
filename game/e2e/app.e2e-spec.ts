@@ -1,4 +1,4 @@
-import { GamePage } from './app.po';
+import {GamePage} from './app.po';
 
 describe('game App', () => {
   let page: GamePage;
@@ -34,11 +34,11 @@ describe('game App', () => {
 
   it('should navigate to game page after New Game button click', () => {
     page.navigateTo('/intro');
-    page.clickNewGameBtn().then(() => {
-      page.getCurrentUrl().then(url => {
+    page.clickNewGameBtn()
+      .then(() => page.getCurrentUrl())
+      .then(url => {
         expect(url).toEqual(page.getBaseUrl() + '/game');
       });
-    });
   });
 
   // *404 Page*
@@ -59,11 +59,11 @@ describe('game App', () => {
 
   it('should navigate to home page after Go to the main page link click', () => {
     page.navigateTo('/404');
-    page.clickHomeLink().then(() => {
-      page.getCurrentUrl().then(url => {
+    page.clickHomeLink()
+      .then(() => page.getCurrentUrl())
+      .then(url => {
         expect(url).toEqual(page.getBaseUrl() + '/intro');
       });
-    });
   });
 
   // *Winner Page*
@@ -87,11 +87,11 @@ describe('game App', () => {
 
   it('should navigate to game page after New Game button click', () => {
     page.navigateTo('/winner/name');
-    page.clickNewGameBtn().then(() => {
-      page.getCurrentUrl().then(url => {
+    page.clickNewGameBtn()
+      .then(() => page.getCurrentUrl())
+      .then(url => {
         expect(url).toEqual(page.getBaseUrl() + '/game');
       });
-    });
   });
 
   // *Game Page*
@@ -121,10 +121,86 @@ describe('game App', () => {
 
   it('should navigate to intro page after Exit button click', () => {
     page.navigateTo('/game');
-    page.clickExitBtn().then(() => {
-      page.getCurrentUrl().then(url => {
+    page.clickExitBtn()
+      .then(() => page.getCurrentUrl())
+      .then(url => {
         expect(url).toEqual(page.getBaseUrl() + '/intro');
       });
+  });
+
+  it('should display Random Rotate after Place Ships button click', () => {
+    page.navigateTo('/game');
+    page.clickPlaceShipsBtn()
+      .then(() => page.getRandomRotationBtnText())
+      .then((text) => {
+        expect(text).toBe('Random Rotation');
+      });
+  });
+
+  it('should display new text instruction after Place Ships button click', () => {
+    const newGameInstruction = 'Use the mouse to place your ships on the battle field.';
+
+    page.navigateTo('/game');
+    page.clickPlaceShipsBtn()
+      .then(() => page.getConsoleWelcomeText())
+      .then((text) => {
+        expect(text).toBe(newGameInstruction);
+      });
+  });
+
+  it('should place player ship', () => {
+    page.navigateTo('/game');
+    page.clickPlaceShipsBtn()
+      .then(() => page.setShipPlayerGrid())
+      .then(() => page.getPlayerShip())
+      .then(cssClass => {
+        expect(cssClass).toContain('ship');
+      });
+  });
+
+  it('should not be able to place player ship on existing ship position', () => {
+    const newGameInstruction = 'iShape can not be placed on this position';
+
+    page.navigateTo('/game');
+    page.clickPlaceShipsBtn()
+      .then(() => page.clickGridPosition1())
+      .then(() => page.clickGridPosition1())
+      .then(() => page.getConsoleWelcomeText())
+      .then((text) => {
+        expect(text).toBe(newGameInstruction);
+      });
+  });
+
+  it('should place players fleet', () => {
+    const newGameInstruction = 'Player can select sector to attack bots Fleet.';
+
+    page.navigateTo('/game');
+    page.clickPlaceShipsBtn().then(() => {
+      page.clickGridPosition1()
+        .then(() => page.clickGridPosition4())
+        .then(() => page.clickGridPosition6())
+        .then(() => page.clickGridPosition8())
+        .then(() => page.getConsoleWelcomeText())
+        .then((text) => {
+          expect(text).toBe(newGameInstruction);
+        });
+    });
+  });
+
+  it('should be able to make a shot', () => {
+    const miss = 'Miss';
+
+    page.navigateTo('/game');
+    page.clickPlaceShipsBtn().then(() => {
+      page.clickGridPosition1()
+        .then(() => page.clickGridPosition4())
+        .then(() => page.clickGridPosition6())
+        .then(() => page.clickGridPosition8())
+        .then(() => page.clickBotGridPosition8())
+        .then(() => page.getConsoleWelcomeText())
+        .then((text) => {
+          expect(text).toBe(miss);
+        });
     });
   });
 });

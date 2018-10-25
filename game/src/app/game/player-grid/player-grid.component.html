@@ -13,7 +13,7 @@
                      shipBorder: cell.isBorder,
                      hit: cell.isHit
                      }"
-        class="points {{cell.id + 1}}">
+        class="points {{cell.id + 1}} shipN{{cell.id + 1}}">
       <span [ngClass]="{hole: !cell.isShip}"></span>
     </li>
   </ul>
